@@ -1,0 +1,1150 @@
+{
+    "value0": {
+        "texture_keys": [
+            "Ground085_1K-PNG_NormalGL.png",
+            "night.jpg",
+            "GroundSand005_COL_1K.jpg",
+            "skybox_1.png",
+            "Ground085_1K-PNG_Color.png",
+            "GroundSand005_NRM_1K.jpg",
+            "heightmap.png"
+        ],
+        "sound_keys": [
+            "Footstep Dirt 1.ogg",
+            "Footstep Dirt 2.ogg",
+            "Footstep Dirt 3.ogg",
+            "Footstep Dirt 4.ogg",
+            "Footstep Dirt 5.ogg"
+        ],
+        "m_model_settings": [
+            {
+                "key": "cop.glb",
+                "value": {
+                    "material_settings": [
+                        {
+                            "uvScale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "uvOffset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "albedo": {
+                                "texture_key": "None",
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255,
+                                    "a": 255
+                                }
+                            },
+                            "normal": {
+                                "texture_key": "None",
+                                "scale": 1.0
+                            },
+                            "emission": {
+                                "texture_key": "None",
+                                "energy": 0.0
+                            },
+                            "orm": {
+                                "texture_key": "None",
+                                "occlusion": 1.0,
+                                "roughness": 1.0,
+                                "metalness": 0.0,
+                                "specular": 0.5
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "police_car.glb",
+                "value": {
+                    "material_settings": [
+                        {
+                            "uvScale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "uvOffset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "albedo": {
+                                "texture_key": "Gen_albedo_police_car.glb",
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255,
+                                    "a": 255
+                                }
+                            },
+                            "normal": {
+                                "texture_key": "None",
+                                "scale": 1.0
+                            },
+                            "emission": {
+                                "texture_key": "Gen_emission_police_car.glb",
+                                "energy": 10.0
+                            },
+                            "orm": {
+                                "texture_key": "None",
+                                "occlusion": 1.0,
+                                "roughness": 0.8945907354354858,
+                                "metalness": 0.0,
+                                "specular": 0.5
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "police_car_wheel.glb",
+                "value": {
+                    "material_settings": [
+                        {
+                            "uvScale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "uvOffset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "albedo": {
+                                "texture_key": "None",
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255,
+                                    "a": 255
+                                }
+                            },
+                            "normal": {
+                                "texture_key": "None",
+                                "scale": 1.0
+                            },
+                            "emission": {
+                                "texture_key": "None",
+                                "energy": 0.0
+                            },
+                            "orm": {
+                                "texture_key": "None",
+                                "occlusion": 1.0,
+                                "roughness": 0.8945907354354858,
+                                "metalness": 0.0,
+                                "specular": 0.5
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Gen_Heightmap_From_heightmap.png",
+                "value": {
+                    "material_settings": [
+                        {
+                            "uvScale": {
+                                "x": 10.0,
+                                "y": 10.0
+                            },
+                            "uvOffset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "albedo": {
+                                "texture_key": "Ground085_1K-PNG_Color.png",
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255,
+                                    "a": 255
+                                }
+                            },
+                            "normal": {
+                                "texture_key": "Ground085_1K-PNG_NormalGL.png",
+                                "scale": 1.0
+                            },
+                            "emission": {
+                                "texture_key": "None",
+                                "energy": 0.0
+                            },
+                            "orm": {
+                                "texture_key": "None",
+                                "occlusion": 1.0,
+                                "roughness": 1.0,
+                                "metalness": 0.0,
+                                "specular": 0.5
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "animation_lib_keys": [
+            "cop.glb"
+        ]
+    },
+    "value1": {
+        "background": {
+            "value0": {
+                "r": 130,
+                "g": 130,
+                "b": 130,
+                "a": 255
+            },
+            "value1": 1.0,
+            "value2": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "value3": "night.jpg",
+            "value4": 0.0
+        },
+        "ambient": {
+            "value0": {
+                "r": 83,
+                "g": 83,
+                "b": 83,
+                "a": 255
+            },
+            "value1": 1.0,
+            "value2": {
+                "value0": 3,
+                "value1": 4,
+                "value2": 4
+            }
+        },
+        "ssao": {
+            "value0": 0.029999999329447748,
+            "value1": false,
+            "value2": 1.0,
+            "value3": 0.20000000298023225,
+            "value4": 1.0,
+            "value5": 1.0,
+            "value6": 16
+        },
+        "ssil": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 0.029999999329447748,
+            "value3": false,
+            "value4": 1.0,
+            "value5": 0.20000000298023225,
+            "value6": 4.0,
+            "value7": 16
+        },
+        "ssgi": {
+            "value0": 4,
+            "value1": 1.0,
+            "value2": 0.10000000149011612,
+            "value3": false,
+            "value4": 1.0,
+            "value5": 0.0,
+            "value6": 4
+        },
+        "ssr": {
+            "value0": 4,
+            "value1": 0.25,
+            "value2": false,
+            "value3": 4.0,
+            "value4": 32,
+            "value5": 0.125,
+            "value6": 0.20000000298023225
+        },
+        "fog": {
+            "value0": {
+                "r": 161,
+                "g": 147,
+                "b": 162,
+                "a": 255
+            },
+            "value1": 0.029999999329447748,
+            "value2": 50.0,
+            "value3": 0,
+            "value4": 0.5,
+            "value5": 3.0
+        },
+        "volumetricFog": {
+            "value0": 0.10000000149011612,
+            "value1": 0.0,
+            "value2": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "value3": 0.0,
+            "value4": true,
+            "value5": 18.0,
+            "value6": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "value7": 0.10000000149011612,
+            "value8": 0.5,
+            "value9": 1.0
+        },
+        "dof": {
+            "value0": 4.0,
+            "value1": 1.0,
+            "value2": 30.0,
+            "value3": 1,
+            "value4": 0.0
+        },
+        "bloom": {
+            "value0": 1.0,
+            "value1": 0.10000000149011612,
+            "value2": 0.5,
+            "value3": 3,
+            "value4": 0.5,
+            "value5": 0.0
+        },
+        "autoExposure": {
+            "value0": 0.5,
+            "value1": 1.0,
+            "value2": false,
+            "value3": 0.0,
+            "value4": 1.0,
+            "value5": -1.0
+        },
+        "tonemap": {
+            "value0": 1.0,
+            "value1": 0,
+            "value2": 1.0
+        },
+        "color": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 1.0
+        }
+    },
+    "value2": {
+        "m_simulation_going": false,
+        "m_simulation_speed": 1.0,
+        "m_components": [
+            {
+                "key": {
+                    "value0": "a84432d6-28bc-41f0-b27a-31e26393ca7c"
+                },
+                "value": {
+                    "polymorphic_id": 2147483649,
+                    "polymorphic_name": "LightComponent",
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "a84432d6-28bc-41f0-b27a-31e26393ca7c"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 7.581562042236328,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": false
+                            },
+                            "m_enabled": true,
+                            "m_lumen": 25.0,
+                            "m_color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 255
+                            },
+                            "m_type": 1,
+                            "m_cast_shadows": true,
+                            "m_range": 10.0,
+                            "m_shadow_softness": 1.0,
+                            "m_depth_bias": 0.0010000000474974514
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "39cabcad-dd5c-4599-9c5c-98e29b5cb2ca"
+                },
+                "value": {
+                    "polymorphic_id": 2147483650,
+                    "polymorphic_name": "ModelComponent",
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "39cabcad-dd5c-4599-9c5c-98e29b5cb2ca"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 4.628932952880859,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": false
+                            },
+                            "m_model_key": "cop.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "f95ac99f-5cfc-48d9-a646-6bc5a6f70be2"
+                },
+                "value": {
+                    "polymorphic_id": 2147483651,
+                    "polymorphic_name": "AnimatedModelComponent",
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "f95ac99f-5cfc-48d9-a646-6bc5a6f70be2"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -13.006088256835938,
+                                                "y": 5.068246841430664,
+                                                "z": -6.489220142364502
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": false
+                            },
+                            "m_model_key": "cop.glb",
+                            "m_anim_idx": 2,
+                            "m_playing": true,
+                            "m_looping": true,
+                            "m_speed": 1.0
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "2e447aa6-88cb-4804-bc42-c21e84ec7de5"
+                },
+                "value": {
+                    "polymorphic_id": 1,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "2e447aa6-88cb-4804-bc42-c21e84ec7de5"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -0.8999999761581421,
+                                                "y": 0.20000000298023225,
+                                                "z": 2.200000047683716
+                                            },
+                                            "rotation": {
+                                                "x": -0.7071068286895752,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 0.7071068286895752
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": -0.8999999761581421,
+                                        "y": 0.20000000298023225,
+                                        "z": 2.200000047683716
+                                    },
+                                    "rotation": {
+                                        "x": -0.7071068286895752,
+                                        "y": -0.0,
+                                        "z": -0.0,
+                                        "w": 0.7071068286895752
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_enabled": true,
+                            "m_lumen": 15.0,
+                            "m_color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 255
+                            },
+                            "m_type": 1,
+                            "m_cast_shadows": true,
+                            "m_range": 10.0,
+                            "m_shadow_softness": 1.0,
+                            "m_depth_bias": 0.0010000000474974514
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "6434ae11-c9a2-4272-831b-ca082dcc9605"
+                },
+                "value": {
+                    "polymorphic_id": 3,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "6434ae11-c9a2-4272-831b-ca082dcc9605"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 7.105184555053711,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": false
+                            },
+                            "m_model_key": "cop.glb",
+                            "m_anim_idx": 1,
+                            "m_playing": true,
+                            "m_looping": true,
+                            "m_speed": 1.0
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "d3a3c155-fac0-45c1-b32c-6426c36518f0"
+                },
+                "value": {
+                    "polymorphic_id": 1,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "d3a3c155-fac0-45c1-b32c-6426c36518f0"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.8999999761581421,
+                                                "y": 0.20000000298023225,
+                                                "z": 2.200000047683716
+                                            },
+                                            "rotation": {
+                                                "x": -0.7071068286895752,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 0.7071068286895752
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.8999999761581421,
+                                        "y": 0.20000000298023225,
+                                        "z": 2.200000047683716
+                                    },
+                                    "rotation": {
+                                        "x": -0.7071068286895752,
+                                        "y": -0.0,
+                                        "z": -0.0,
+                                        "w": 0.7071068286895752
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_enabled": true,
+                            "m_lumen": 15.0,
+                            "m_color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 255
+                            },
+                            "m_type": 1,
+                            "m_cast_shadows": true,
+                            "m_range": 10.0,
+                            "m_shadow_softness": 1.0,
+                            "m_depth_bias": 0.0010000000474974514
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "de3f18da-0a2f-47ff-ac23-f662f1b2da17"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "de3f18da-0a2f-47ff-ac23-f662f1b2da17"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 128.0,
+                                                "y": 5.0,
+                                                "z": 128.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "Gen_Heightmap_From_heightmap.png"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "88c9cac7-42df-4167-bf91-4842c30febd2"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "88c9cac7-42df-4167-bf91-4842c30febd2"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 8.328181266784668,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": false
+                            },
+                            "m_model_key": "police_car.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "c8b39b84-2785-475d-9d73-2856d34f825c"
+                },
+                "value": {
+                    "polymorphic_id": 2147483652,
+                    "polymorphic_name": "ColliderComponent",
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "c8b39b84-2785-475d-9d73-2856d34f825c"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 128.0,
+                                                "y": 5.0,
+                                                "z": 128.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_shapes": [
+                                {
+                                    "m_type": 2,
+                                    "m_local_position": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "m_local_rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "m_radius": 1.0,
+                                    "m_half_extends": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "m_heightmap_texture_key": "heightmap.png",
+                                    "m_map_size": {
+                                        "x": 128.0,
+                                        "y": 5.0,
+                                        "z": 128.0
+                                    }
+                                }
+                            ],
+                            "m_type": 0,
+                            "m_linear_velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "m_angular_velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "a8e51774-49f2-4a34-89e7-4caa8675a8de"
+                },
+                "value": {
+                    "polymorphic_id": 1,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "a8e51774-49f2-4a34-89e7-4caa8675a8de"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": -0.29532065987586977,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 0.9553984999656677
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    }
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": -0.29532065987586977,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.9553984999656677
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": false
+                            },
+                            "m_enabled": true,
+                            "m_lumen": 2.0,
+                            "m_color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 255
+                            },
+                            "m_type": 0,
+                            "m_cast_shadows": true,
+                            "m_range": 15.0,
+                            "m_shadow_softness": 2.0,
+                            "m_depth_bias": 0.0010000000474974514
+                        }
+                    }
+                }
+            }
+        ],
+        "m_actors": [
+            {
+                "key": {
+                    "value0": "d6f4bbd5-a7c6-407e-969e-b5031b974b23"
+                },
+                "value": {
+                    "polymorphic_id": 2147483653,
+                    "polymorphic_name": "Heightmap",
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "component_ids": [
+                                    {
+                                        "value0": "de3f18da-0a2f-47ff-ac23-f662f1b2da17"
+                                    },
+                                    {
+                                        "value0": "c8b39b84-2785-475d-9d73-2856d34f825c"
+                                    }
+                                ],
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "d6f4bbd5-a7c6-407e-969e-b5031b974b23"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 128.0,
+                                                "y": 5.0,
+                                                "z": 128.0
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "m_heightmap_texture_key": "heightmap.png"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "df282bfa-511f-4278-8449-ad094f047de1"
+                },
+                "value": {
+                    "polymorphic_id": 1073741824,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "component_ids": [
+                                {
+                                    "value0": "a8e51774-49f2-4a34-89e7-4caa8675a8de"
+                                }
+                            ],
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": "df282bfa-511f-4278-8449-ad094f047de1"
+                                    }
+                                },
+                                "value1": {
+                                    "value0": {
+                                        "translation": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "rotation": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 1.0
+                                        },
+                                        "scale": {
+                                            "x": 1.0,
+                                            "y": 1.0,
+                                            "z": 1.0
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
