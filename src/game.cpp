@@ -69,8 +69,7 @@ int main() {
         UpdateMusicStream(ambient);
         if (IsKeyPressed(KEY_V)) debug = !debug;
         if (IsKeyPressed(KEY_F11)) {
-            SetWindowSize(GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()));
-            ToggleFullscreen();
+            ToggleBorderlessWindowed();
         }
         //camera.position = player->GetPosition();
         Lil::Engine::Get().Update();

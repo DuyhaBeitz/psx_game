@@ -1,4 +1,7 @@
 #include "Components/LightComponent.hpp"
+#include "Components/ModelComponent.hpp"
+
+#include "utils/MathHelper.hpp"
 
 #include "Car.hpp"
 #include "LilEngine.hpp"
@@ -24,14 +27,30 @@ void Car::SetupComponents() {
     light2->Local().translation = Vector3{-m_vehicle_config.half_vehicle_width, m_vehicle_config.half_vehicle_height, m_vehicle_config.half_vehicle_length + 0.4f};
     light2->Local().rotation = QuaternionFromAxisAngle(Vector3{1, 0, 0}, -M_PI/2.0f);
     light2->m_lumen = 15.0f;
+
+    ModelComponent* m_base_model = Lil::World().CreateComponent<ModelComponent>();
+    AttachComponent(m_base_model);
+    m_base_model->MarkRequired();
+    m_base_model->SetModel(m_base_model_key);
+
+
+    m_base_model = Lil::World().CreateComponent<ModelComponent>();
+    AttachComponent(m_base_model);
+    m_base_model->MarkRequired();
+    m_base_model->SetModel(m_base_model_key);
+
+    for (int i = 0; i < 4; i++) {
+        m_wheel_models[i] = Lil::World().CreateComponent<ModelComponent>();
+        AttachComponent(m_wheel_models[i]);
+        m_wheel_models[i]->MarkRequired();
+        m_wheel_models[i]->SetModel(m_wheel_model_key);
+    }
 }
 
-void Car::Draw()
-{
+void Car::Draw() {
     Vehicle::Draw();
-
-    for (Transform wheel_transform : GetWheelTransforms()) {
-        if (R3D_Model* m = Lil::Resources().GetModel(m_wheel_model_key)) R3D_DrawModelEx(*m, wheel_transform.translation, wheel_transform.rotation, wheel_transform.scale);
+    
+    for (int i = 0; i < 4; i++) {
+        m_wheel_models[i]->m_local_transform = GetLocalTransform(GetTransform(), GetWheelTransforms()[i]);
     }
-    if (R3D_Model* m = Lil::Resources().GetModel(m_base_model_key)) R3D_DrawModelEx(*m, GetPosition(), GetRotation(), GetScale());
 }

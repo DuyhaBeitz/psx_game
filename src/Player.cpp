@@ -35,9 +35,13 @@ void Player::SimulationUpdate(float delta_time) {
     m_camera_pitch -= GetMouseDelta().y * sensetivity;
     m_camera_pitch = Clamp(m_camera_pitch, -M_PI/2 * 0.9f, M_PI/2 * 0.9f);
     
-    m_camera.position = GetPosition() - (GetLookingVector()*3.0f);
     m_camera.target = GetPosition();
-
+    float camera_arm = 3.0f;
+    Ray ray = {.position = m_camera.target, .direction = GetLookingVector() * -1.0f};
+    RayCollision res = Lil::World().Raycast(ray);
+    if (res.hit) camera_arm = fmin(camera_arm, res.distance - 0.1f);
+    m_camera.position = GetPosition() - (GetLookingVector()*camera_arm);
+    
     float fwd = float(int(IsKeyDown(KEY_W)) - int(IsKeyDown(KEY_S)));
     float rght = float(int(IsKeyDown(KEY_D)) - int(IsKeyDown(KEY_A)));
 
