@@ -5,7 +5,17 @@
 
 class AnimatedModelComponent;
 
+enum class PlayerPerspective {
+    FIRST_PERSON,
+    THIRD_PERSON
+};
+
 class Player : public Character {
+private:
+    PlayerPerspective m_perspective = PlayerPerspective::FIRST_PERSON;
+
+    void CameraUpdate();
+
 public:
     Player();
     virtual ~Player() = default;

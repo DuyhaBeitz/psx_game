@@ -117,5 +117,7 @@ void DrawGame() {
         BeginMode3D(Game::GetCamera());
             if (debug) Lil::World().DebugDraw();
         EndMode3D();
+
+        Game::GetHUD().Draw();
     EndDrawing();
 }

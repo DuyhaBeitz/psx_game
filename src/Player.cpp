@@ -3,6 +3,26 @@
 #include "Components/AnimatedModelComponent.hpp"
 #include "LilEngine.hpp"
 
+void Player::CameraUpdate() {
+    switch (m_perspective) {
+    case PlayerPerspective::THIRD_PERSON:
+        {
+            m_camera.target = GetPosition();
+            float camera_arm = 3.0f;
+            Ray ray = {.position = m_camera.target, .direction = GetLookingVector() * -1.0f};
+            RayCollision res = Lil::World().Raycast(ray);
+            if (res.hit) camera_arm = fmin(camera_arm, res.distance - 0.1f);
+            m_camera.position = m_camera.target - (GetLookingVector()*camera_arm);
+        }
+        break;
+
+    case PlayerPerspective::FIRST_PERSON:
+        m_camera.position = GetPosition() + Vector3{0, 0.6, 0};
+        m_camera.target = m_camera.position + GetLookingVector();
+        break;
+    }
+}
+
 Player::Player() : Character(1.0f, 0.5f) {
     m_stepper.period = 0.7f;
     m_stepper.step_sound_keys = {
@@ -35,13 +55,8 @@ void Player::SimulationUpdate(float delta_time) {
     m_camera_pitch -= GetMouseDelta().y * sensetivity;
     m_camera_pitch = Clamp(m_camera_pitch, -M_PI/2 * 0.9f, M_PI/2 * 0.9f);
     
-    m_camera.target = GetPosition();
-    float camera_arm = 3.0f;
-    Ray ray = {.position = m_camera.target, .direction = GetLookingVector() * -1.0f};
-    RayCollision res = Lil::World().Raycast(ray);
-    if (res.hit) camera_arm = fmin(camera_arm, res.distance - 0.1f);
-    m_camera.position = GetPosition() - (GetLookingVector()*camera_arm);
-    
+    CameraUpdate();
+
     float fwd = float(int(IsKeyDown(KEY_W)) - int(IsKeyDown(KEY_S)));
     float rght = float(int(IsKeyDown(KEY_D)) - int(IsKeyDown(KEY_A)));
 
@@ -85,6 +100,15 @@ void Player::SimulationUpdate(float delta_time) {
 
     m_animated_model->SetPlaying(true);
     m_animated_model->SetLooping(true);    
+
+    switch (m_perspective) {
+    case PlayerPerspective::THIRD_PERSON:
+        m_animated_model->EnableVisible();
+        break;
+    case PlayerPerspective::FIRST_PERSON:
+        m_animated_model->DisableVisible();
+        break;
+    }
 
     m_stepper.Update(IsOnGround() && Vector2LengthSqr(move) > 0.01, delta_time * (sprinting ? 2.0f : 1.0f));
 }
