@@ -4,6 +4,9 @@
 #include "LilEngine.hpp"
 
 void Player::CameraUpdate() {
+    bool change_perspective = IsKeyPressed(KEY_C);
+    PlayerPerspective next_perspective = m_perspective;
+
     switch (m_perspective) {
     case PlayerPerspective::THIRD_PERSON:
         {
@@ -14,41 +17,33 @@ void Player::CameraUpdate() {
             if (res.hit) camera_arm = fmin(camera_arm, res.distance - 0.1f);
             m_camera.position = m_camera.target - (GetLookingVector()*camera_arm);
         }
+        if (change_perspective) {
+            next_perspective = PlayerPerspective::FIRST_PERSON;
+        }
         break;
 
     case PlayerPerspective::FIRST_PERSON:
         m_camera.position = GetPosition() + Vector3{0, 0.6, 0};
         m_camera.target = m_camera.position + GetLookingVector();
+        if (change_perspective)  {
+            next_perspective = PlayerPerspective::THIRD_PERSON;
+        }
         break;
     }
-}
 
-Player::Player() : Character(1.0f, 0.5f) {
-    m_stepper.period = 0.7f;
-    m_stepper.step_sound_keys = {
-        "Footstep Dirt 1.ogg",
-        "Footstep Dirt 2.ogg",
-        "Footstep Dirt 3.ogg",
-        "Footstep Dirt 4.ogg",
-        "Footstep Dirt 5.ogg"
-    };
+    m_perspective = next_perspective;
 }
 
 void Player::SetupComponents() {
-    m_animated_model = Lil::World().CreateComponent<AnimatedModelComponent>();
-    AttachComponent(m_animated_model);
-    m_animated_model->MarkRequired();
-
-    m_animated_model->SetModel("cop.glb");
-    m_animated_model->Local().translation = Vector3{0.0f, -1.0f, 0.0f};
+    HumanCharacter::SetupComponents();
 }
 
 void Player::LayoutUpdate() {
-    Character::LayoutUpdate();
+    HumanCharacter::LayoutUpdate();
 }
 
 void Player::SimulationUpdate(float delta_time) {
-    Character::SimulationUpdate(delta_time);
+    HumanCharacter::SimulationUpdate(delta_time);
 
     float sensetivity = 0.005;
     m_camera_yaw   += GetMouseDelta().x * sensetivity;
@@ -61,25 +56,13 @@ void Player::SimulationUpdate(float delta_time) {
     float rght = float(int(IsKeyDown(KEY_D)) - int(IsKeyDown(KEY_A)));
 
     bool sprinting = IsKeyDown(KEY_LEFT_SHIFT);
-    float speed = sprinting ? 3.0f : 1.50f;
-    Vector2 move = Vector2Normalize(Vector2Rotate({fwd, rght}, m_camera_yaw)) * speed;  
+    float sprint_coef = 1.5f;
+    const float base_speed = 5.0f;
+    const float speed = sprinting ? base_speed * sprint_coef : base_speed;
+    Vector2 move = Vector2Normalize(Vector2Rotate({fwd, rght}, m_camera_yaw)) * speed;
+    float jump_impulse = 4.5f;
 
-    {
-        Vector3 vel = GetVelocity();
-        float jump_speed = 4.5f;
-        if (IsOnGround()) {
-            if (IsKeyDown(KEY_SPACE)) {
-                vel.y = jump_speed + GetGroundVelocity().y; // or call Jump(jump_speed);
-            }
-            else vel.y = GetGroundVelocity().y;
-        } else {
-            vel.y += -9.81 * delta_time;
-        }
-        vel.x = GetGroundVelocity().x + speed * move.x;
-        vel.z = GetGroundVelocity().z + speed * move.y;
-
-        SetVelocity(vel);
-    }
+    BasicMovement(delta_time, move, IsKeyDown(KEY_SPACE), jump_impulse, speed / base_speed / 3.0f);
 
     bool set_rotation = false;
     if (IsOnGround()) {

@@ -7,7 +7,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE Release)
 option(PLATFORM "platform (Desktop/Web)" Desktop)
 
-add_library(shared STATIC src/Player.cpp src/Game.cpp src/Car.cpp src/Stepper.cpp src/HUD.cpp)
+add_library(shared STATIC
+    src/Player.cpp
+    src/Game.cpp
+    src/Car.cpp
+    src/Stepper.cpp
+    src/HUD.cpp
+    src/HumanCharacter.cpp
+)
 target_include_directories(shared PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(shared PUBLIC lil_engine::lil_engine)
 

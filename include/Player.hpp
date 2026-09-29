@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Character.hpp"
-#include "Stepper.hpp"
+#include "HumanCharacter.hpp"
 
 class AnimatedModelComponent;
 
@@ -10,14 +9,14 @@ enum class PlayerPerspective {
     THIRD_PERSON
 };
 
-class Player : public Character {
+class Player : public HumanCharacter {
 private:
     PlayerPerspective m_perspective = PlayerPerspective::FIRST_PERSON;
 
     void CameraUpdate();
 
 public:
-    Player();
+    Player() = default;
     virtual ~Player() = default;
 
     virtual void SetupComponents() override;
@@ -26,8 +25,6 @@ public:
 
     float m_camera_yaw = 0.0f;
     float m_camera_pitch = 0.0f;
-    AnimatedModelComponent* m_animated_model;
-    Stepper m_stepper;
 
     Vector3 GetLookingVector();
 

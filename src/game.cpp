@@ -59,7 +59,7 @@ void SetupShaders() {
     Vector2 targetRes = { 640.0f, 480.0f };
     R3D_SetScreenShaderUniform(psxDither, "u_target_resolution", &targetRes);
 
-    psxPosterize = R3D_LoadScreenShader("assets/shaders/psx_psxPosterize.glsl");
+    psxPosterize = R3D_LoadScreenShader("assets/shaders/psx_posterize.glsl");
     float levels = 32.0f;
     float gamma = 2.2f;
     R3D_SetScreenShaderUniform(psxPosterize, "u_color_levels", &levels);
