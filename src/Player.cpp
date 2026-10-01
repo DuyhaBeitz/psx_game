@@ -57,7 +57,7 @@ void Player::SimulationUpdate(float delta_time) {
 
     bool sprinting = IsKeyDown(KEY_LEFT_SHIFT);
     float sprint_coef = 1.5f;
-    const float base_speed = 5.0f;
+    const float base_speed = 4.0f;
     const float speed = sprinting ? base_speed * sprint_coef : base_speed;
     Vector2 move = Vector2Normalize(Vector2Rotate({fwd, rght}, m_camera_yaw)) * speed;
     float jump_impulse = 4.5f;

@@ -24,3 +24,18 @@ add_executable(editor src/editor.cpp)
 include(lil_engine_sdk/lil_engine.cmake)
 target_link_libraries(game PRIVATE shared)
 target_link_libraries(editor PRIVATE shared lil_engine::lil_editor)
+
+# add_executable(game
+#     src/Player.cpp
+#     src/Game.cpp
+#     src/Car.cpp
+#     src/Stepper.cpp
+#     src/HUD.cpp
+#     src/HumanCharacter.cpp
+#     src/game.cpp
+# )
+
+# target_include_directories(game PUBLIC ${CMAKE_SOURCE_DIR}/include)
+# target_link_libraries(game PUBLIC lil_engine::lil_engine)
+
+# include(lil_engine_sdk/lil_engine.cmake)

@@ -95,10 +95,14 @@ void InitGame() {
 
     ambient = LoadMusicStream("assets/mixkit-european-forest-ambience-1213.wav");
     PlayMusicStream(ambient);
+
+    Lil::Audio().SetSFXVolume(0.1f);
 }
 
 void UpdateGame() {
+    SetMusicVolume(ambient, Lil::Audio().GetSFXVolume());
     UpdateMusicStream(ambient);
+    
     if (IsKeyPressed(KEY_V)) debug = !debug;
     if (IsKeyPressed(KEY_F11)) ToggleBorderlessWindowed();
     Lil::Engine::Get().Update();
