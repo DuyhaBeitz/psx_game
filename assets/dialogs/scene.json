@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "variables": {
+    "gold": {
+      "type": "int",
+      "default": 0
+    },
+    "met_alice": {
+      "type": "bool",
+      "default": false
+    },
+    "alice_trust": {
+      "type": "int",
+      "default": 0
+    }
+  },
+  "characters": {
+    "alice": {
+      "name": "alice.name"
+    },
+    "bob": {
+      "name": "bob.name"
+    }
+  },
+  "scene": {
+    "id": "party",
+    "entry_stage": "arrival",
+    "stages": {
+      "arrival": {
+        "placements": [
+          {
+            "id": "alice",
+            "character": "alice",
+            "entry": "alice_greet"
+          },
+          {
+            "id": "bob",
+            "character": "bob",
+            "entry": "bob_greet"
+          }
+        ],
+        "graphs": {
+          "alice_greet": {
+            "start": "n1",
+            "nodes": {
+              "n1": {
+                "type": "line",
+                "speaker": "alice",
+                "text": "alice.greet",
+                "next": "n2"
+              },
+              "n2": {
+                "type": "set",
+                "var": "met_alice",
+                "op": "set",
+                "value": true,
+                "next": "n3"
+              },
+              "n3": {
+                "type": "if",
+                "cond": {
+                  "op": "ge",
+                  "kids": [
+                    {
+                      "var": "gold"
+                    },
+                    {
+                      "lit": 10
+                    }
+                  ]
+                },
+                "then": "n4",
+                "else": "n5"
+              },
+              "n4": {
+                "type": "line",
+                "speaker": "alice",
+                "text": "alice.rich",
+                "next": "n6"
+              },
+              "n5": {
+                "type": "line",
+                "speaker": "alice",
+                "text": "alice.poor",
+                "next": "n6"
+              },
+              "n6": {
+                "type": "choice",
+                "choices": [
+                  {
+                    "text": "choice.give",
+                    "next": "n7"
+                  },
+                  {
+                    "text": "choice.secret",
+                    "next": "n8",
+                    "if": {
+                      "op": "and",
+                      "kids": [
+                        {
+                          "var": "met_alice"
+                        },
+                        {
+                          "op": "lt",
+                          "kids": [
+                            {
+                              "var": "alice_trust"
+                            },
+                            {
+                              "lit": 5
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "n7": {
+                "type": "set",
+                "var": "gold",
+                "op": "add",
+                "value": 5,
+                "next": "n9"
+              },
+              "n8": {
+                "type": "set",
+                "var": "alice_trust",
+                "op": "add",
+                "value": 1,
+                "next": "n9"
+              },
+              "n9": {
+                "type": "line",
+                "speaker": "alice",
+                "text": "alice.bye",
+                "next": "n10"
+              },
+              "n10": {
+                "type": "jump",
+                "target": "bob_greet.b1"
+              }
+            }
+          },
+          "bob_greet": {
+            "start": "b1",
+            "nodes": {
+              "b1": {
+                "type": "line",
+                "speaker": "bob",
+                "text": "bob.hey",
+                "next": "b2"
+              },
+              "b2": {
+                "type": "end"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

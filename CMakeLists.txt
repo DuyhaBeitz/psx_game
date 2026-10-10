@@ -14,6 +14,9 @@ add_library(shared STATIC
     src/Stepper.cpp
     src/HUD.cpp
     src/HumanCharacter.cpp
+    src/DialogSystem.cpp
+    src/Interactable.cpp
+    src/NPC.cpp
 )
 target_include_directories(shared PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(shared PUBLIC lil_engine::lil_engine)
@@ -39,3 +42,8 @@ target_link_libraries(editor PRIVATE shared lil_engine::lil_editor)
 # target_link_libraries(game PUBLIC lil_engine::lil_engine)
 
 # include(lil_engine_sdk/lil_engine.cmake)
+
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g -O1")
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")

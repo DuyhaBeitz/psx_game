@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "locale": "en",
+  "strings": {
+    "alice.name": "Alice",
+    "bob.name": "Bob",
+    "alice.greet": "Oh, you came.",
+    "alice.rich": "You look like you've done well.",
+    "alice.poor": "Rough times, huh?",
+    "alice.bye": "Take care.",
+    "choice.give": "Here, take this.",
+    "choice.secret": "Actually, there's something...",
+    "bob.hey": "Hey there."
+  }
+}

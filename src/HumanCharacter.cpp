@@ -15,6 +15,7 @@ HumanCharacter::HumanCharacter() : Character(1.0f, 0.5f) {
 }
 
 void HumanCharacter::SetupComponents() {
+    Character::SetupComponents();
     m_animated_model = Lil::World().CreateComponent<AnimatedModelComponent>();
     AttachComponent(m_animated_model);
     m_animated_model->MarkRequired();

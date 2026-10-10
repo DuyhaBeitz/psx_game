@@ -5,6 +5,7 @@
 #include "Components/AnimatedModelComponent.hpp"
 #include "Components/InstancedModelComponent.hpp"
 
+#include "NPC.hpp"
 #include "Player.hpp"
 #include "Car.hpp"
 #include "Game.hpp"
@@ -86,9 +87,11 @@ void InitGame() {
     Lil::Engine().Get().Init();
 
     Lil::SceneManager().LoadScene("assets/scenes/scene1.json");
+    Game::DialogSystem().LoadScene("assets/dialogs/scene.json", "assets/dialogs/en.json");
 
     player = Lil::World().CreateActor<Player>();
     player->SetPosition(Vector3{0, 10, 0});
+    Game::SetCamera(player->GetCamera());
 
     Lil::World().SetSimulationGoing(true);
     SetupShaders();
@@ -106,8 +109,6 @@ void UpdateGame() {
     if (IsKeyPressed(KEY_V)) debug = !debug;
     if (IsKeyPressed(KEY_F11)) ToggleBorderlessWindowed();
     Lil::Engine::Get().Update();
-
-    Game::SetCamera(player->GetCamera());
 }
 
 void DrawGame() {
@@ -123,5 +124,6 @@ void DrawGame() {
         EndMode3D();
 
         Game::GetHUD().Draw();
+        Game::DialogSystem().Draw();
     EndDrawing();
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include "DialogSystem.hpp"
 #include "HUD.hpp"
 
 namespace Game {
@@ -8,4 +9,6 @@ namespace Game {
     Camera& GetCamera();
 
     HUD& GetHUD();
+
+    DialogSystem& DialogSystem();
 }

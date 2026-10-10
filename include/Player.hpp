@@ -16,7 +16,7 @@ private:
     void CameraUpdate();
 
 public:
-    Player() = default;
+    Player() : HumanCharacter() {};
     virtual ~Player() = default;
 
     virtual void SetupComponents() override;

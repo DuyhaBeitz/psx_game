@@ -5,6 +5,7 @@
 #include "Components/AnimatedModelComponent.hpp"
 #include "Components/InstancedModelComponent.hpp"
 
+#include "NPC.hpp"
 #include "Player.hpp"
 #include "Car.hpp"
 
@@ -12,8 +13,8 @@
 #include <LilEditor/LilEditor.hpp>
 
 int main() {
-    InitWindow(0, 0, "editor");
-    R3D_Init(640, 480);
+    InitWindow(1920, 1080, "editor");
+    R3D_Init(GetScreenWidth(), GetScreenHeight());
     InitAudioDevice();
     SetTraceLogLevel(LOG_ALL);
     DisableCursor();
@@ -30,6 +31,7 @@ int main() {
         EndDrawing();
     }
 
+    Lil::Editor::Get().Close();
     Lil::Resources().Unload();
     CloseAudioDevice();
     CloseWindow();

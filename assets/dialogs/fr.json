@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "locale": "fr",
+  "strings": {
+    "alice.name": "Alice",
+    "bob.name": "Bob",
+    "alice.greet": "Oh, tu es venu.",
+    "alice.rich": "On dirait que tu as réussi.",
+    "alice.poor": "Les temps sont durs, hein ?",
+    "alice.bye": "Prends soin de toi.",
+    "choice.give": "Tiens, prends ça.",
+    "choice.secret": "En fait, il y a quelque chose...",
+    "bob.hey": "Salut toi."
+  }
+}
