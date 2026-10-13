@@ -2,6 +2,7 @@
 #include <raymath.h>
 #include "Components/AnimatedModelComponent.hpp"
 #include "LilEngine.hpp"
+#include "Game.hpp"
 
 void Player::CameraUpdate() {
     bool change_perspective = IsKeyPressed(KEY_C);
@@ -61,8 +62,14 @@ void Player::SimulationUpdate(float delta_time) {
     const float speed = sprinting ? base_speed * sprint_coef : base_speed;
     Vector2 move = Vector2Normalize(Vector2Rotate({fwd, rght}, m_camera_yaw)) * speed;
     float jump_impulse = 4.5f;
+    bool jump = IsKeyDown(KEY_SPACE);
 
-    BasicMovement(delta_time, move, IsKeyDown(KEY_SPACE), jump_impulse, speed / base_speed / 3.0f);
+    if (Game::DialogSystem().IsDialogActive()) {
+        move = Vector2{0.0f, 0.0f};
+        jump = false;
+    }
+
+    BasicMovement(delta_time, move, jump, jump_impulse, speed / base_speed / 3.0f);
 
     bool set_rotation = false;
     if (IsOnGround()) {

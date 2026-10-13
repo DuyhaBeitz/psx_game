@@ -11,4 +11,5 @@ public:
     void LoadScene(std::string scene_filename, std::string localization_filename);
     void Approach(std::string placement_name);
     void Draw();
+    bool IsDialogActive();
 };

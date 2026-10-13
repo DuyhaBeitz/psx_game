@@ -21,6 +21,7 @@ public:
     ModelComponent* m_wheel_models[4] = {nullptr, nullptr, nullptr, nullptr};
 
     virtual void SetupComponents() override;
+    void LayoutUpdate() override;
     virtual void Draw() override;
 };
 LIL_REFLECT(Car, bases<Vehicle>,

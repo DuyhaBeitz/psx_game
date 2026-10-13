@@ -10,7 +10,8 @@ private:
 public:
     HUD() = default;
 
-    void SetCenterHint(std::string center_hint);
+    void AddCenterHint(std::string center_hint);
+    void RemoveCenterHint(std::string center_hint);
 
     void Draw();
 };

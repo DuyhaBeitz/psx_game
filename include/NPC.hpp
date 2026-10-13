@@ -21,6 +21,7 @@ public:
     virtual void LayoutUpdate() override;
     virtual void SimulationUpdate(float delta_time) override;
 
+    virtual bool HoverTreshold(RayCollision res);
     virtual void OnMouseHover(RayCollision res);
     virtual void OnMouseUnhover();
 };

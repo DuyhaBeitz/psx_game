@@ -1,58 +1,129 @@
+
 #include "DialogSystem.hpp"
 #include "dialog.hpp"
-#include <iostream>
 #include <raylib.h>
+#include <algorithm>
+#include <iostream>
 
-dialog::Runtime dlg; 
+dialog::Runtime dlg;
+int selectedChoice = 0;
+
 
 void DialogSystem::DrawBox(std::string content) {
     int w = GetScreenWidth();
     int h = GetScreenHeight();
-    DrawRectangle(0, h/2, w, h/2, Fade(BLACK, 0.3));
 
-    DrawText(content.c_str(), w/2+30, h/2+30, 32, WHITE);
+    int panelY = h * 2 / 3;
+
+    // Transparent dark overlay on the lower third
+    DrawRectangle(0, panelY, w, h - panelY, Fade(BLACK, 0.65f));
+
+    // Center dialogue text horizontally
+    int fontSize = 64;
+    int spacing = 54;
+    int textWidth = MeasureText(content.c_str(), fontSize);
+
+    DrawText(
+        content.c_str(),
+        (w - textWidth) / 2,
+        panelY + 40,
+        fontSize,
+        WHITE
+    );
 }
 
 void DialogSystem::DrawChoicesBox(std::vector<std::string> choices) {
     int w = GetScreenWidth();
     int h = GetScreenHeight();
-    DrawRectangle(0, h/2, w, h/2, Fade(BLACK, 0.3));
 
-    for (size_t i = 0; i < choices.size(); i++) {
-        DrawText(choices[i].c_str(), w/2+30, h/2+30+32*i, 32, WHITE);
+    int panelY = h * 2 / 3;
+
+    DrawRectangle(0, panelY, w, h - panelY, Fade(BLACK, 0.65f));
+
+    int fontSize = 64;
+    int spacing = 54;
+    int totalHeight = (int)choices.size() * spacing;
+    int startY = panelY + ((h - panelY) - totalHeight) / 2;
+
+    for (int i = 0; i < (int)choices.size(); i++)  {
+        std::string text = (i == selectedChoice ? ">  " : "   ") + choices[i];
+
+        int textWidth = MeasureText(text.c_str(), fontSize);
+
+        DrawText(
+            text.c_str(),
+            (w - textWidth) / 2,
+            startY + i * spacing,
+            fontSize,
+            i == selectedChoice ? WHITE : GRAY
+        );
     }
 }
 
+
 void DialogSystem::LoadScene(std::string scene_filename, std::string localization_filename) {
-    std::cout << "Loading dialog scene" << std::endl;
     dlg = dialog::load_files(scene_filename, {localization_filename}, "en");
-    if (!dlg.ok()) {
-        for (auto& e : dlg.errors()) std::cerr << "Loading error\nnode path: " << e.node_path << "\nfield: " << e.field << "\nmessage: " << e.message  << std::endl;
-    }
+
+    selectedChoice = 0;
+
+    if (!dlg.ok()) for (auto& e : dlg.errors()) std::cerr << e.message << std::endl;
 }
 
 void DialogSystem::Approach(std::string placement_name) {
+    selectedChoice = 0;
     dlg.approach(placement_name);
 }
 
 void DialogSystem::Draw() {
     const auto& f = dlg.frame();
+
     switch (f.kind) {
-    case dialog::FrameKind::Line:
+        case dialog::FrameKind::Line:
         {
-        std::string text = TextFormat("%s: %s\n", f.speaker_name.c_str(), f.text.c_str());
-        DrawBox(text);
-        if (IsKeyPressed(KEY_ENTER)) dlg.advance();
+            std::string text = f.speaker_name + "\n\n" + f.text;
+            DrawBox(text);
+
+            if (IsKeyPressed(KEY_ENTER))
+                dlg.advance();
+
+            break;
         }
-        break;
-    case dialog::FrameKind::Choice:
-        DrawChoicesBox(f.choices);
-        dlg.choose(0);
-        break;
-    case dialog::FrameKind::Ended:
-        return;
-    case dialog::FrameKind::Error:
-        std::cerr << f.error << std::endl;
-        return;
+
+        case dialog::FrameKind::Choice:
+        {
+            int count = (int)f.choices.size();
+            if (count == 0) break;
+
+            if (IsKeyPressed(KEY_UP))
+                selectedChoice--;
+
+            if (IsKeyPressed(KEY_DOWN))
+                selectedChoice++;
+
+            selectedChoice = (selectedChoice + count) % count;
+
+            DrawChoicesBox(f.choices);
+
+            if (IsKeyPressed(KEY_ENTER))
+            {
+                dlg.choose(selectedChoice);
+                selectedChoice = 0;
+            }
+
+            break;
+        }
+
+        case dialog::FrameKind::Ended:
+            break;
+
+        case dialog::FrameKind::Error:
+            std::cerr << f.error << std::endl;
+            break;
     }
+}
+
+bool DialogSystem::IsDialogActive() {
+    const auto kind = dlg.frame().kind;
+    return kind == dialog::FrameKind::Line
+        || kind == dialog::FrameKind::Choice;
 }

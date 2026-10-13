@@ -2,14 +2,16 @@
   "version": 1,
   "locale": "en",
   "strings": {
-    "alice.name": "Alice",
-    "bob.name": "Bob",
-    "alice.greet": "Oh, you came.",
-    "alice.rich": "You look like you've done well.",
-    "alice.poor": "Rough times, huh?",
-    "alice.bye": "Take care.",
-    "choice.give": "Here, take this.",
-    "choice.secret": "Actually, there's something...",
-    "bob.hey": "Hey there."
+    "main.n1.text": "Oh, hello! I found a strange key outside my shop. Do you recognize it?”",
+    "Mira.name": "Mira",
+    "main.n2.choice0": "Let me see the key.",
+    "main.n2.choice1": "Can I have it?",
+    "main.n2.choice2": "Where did you find it?",
+    "main.n3.text": "Careful! It feels warm, doesn’t it?",
+    "You.name": "You",
+    "main.n4.text": "Perhaps. What will you give me in return?",
+    "main.n5.text": "Near the old forest. I heard strange noises coming from there.",
+    "main.n2.choice3": "Goodbye",
+    "main.n6.text": "Wait! You might need that key someday…"
   }
 }

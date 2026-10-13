@@ -1,158 +1,76 @@
 {
   "version": 1,
-  "variables": {
-    "gold": {
-      "type": "int",
-      "default": 0
-    },
-    "met_alice": {
-      "type": "bool",
-      "default": false
-    },
-    "alice_trust": {
-      "type": "int",
-      "default": 0
-    }
-  },
+  "variables": {},
   "characters": {
-    "alice": {
-      "name": "alice.name"
+    "Mira": {
+      "name": "Mira.name"
     },
-    "bob": {
-      "name": "bob.name"
+    "You": {
+      "name": "You.name"
     }
   },
   "scene": {
-    "id": "party",
-    "entry_stage": "arrival",
+    "id": "untitled",
+    "entry_stage": "start",
     "stages": {
-      "arrival": {
+      "start": {
         "placements": [
           {
-            "id": "alice",
-            "character": "alice",
-            "entry": "alice_greet"
-          },
-          {
-            "id": "bob",
-            "character": "bob",
-            "entry": "bob_greet"
+            "id": "Mira",
+            "character": "Mira",
+            "entry": "main"
           }
         ],
         "graphs": {
-          "alice_greet": {
+          "main": {
             "start": "n1",
             "nodes": {
               "n1": {
                 "type": "line",
-                "speaker": "alice",
-                "text": "alice.greet",
+                "speaker": "Mira",
+                "text": "main.n1.text",
                 "next": "n2"
               },
               "n2": {
-                "type": "set",
-                "var": "met_alice",
-                "op": "set",
-                "value": true,
-                "next": "n3"
-              },
-              "n3": {
-                "type": "if",
-                "cond": {
-                  "op": "ge",
-                  "kids": [
-                    {
-                      "var": "gold"
-                    },
-                    {
-                      "lit": 10
-                    }
-                  ]
-                },
-                "then": "n4",
-                "else": "n5"
-              },
-              "n4": {
-                "type": "line",
-                "speaker": "alice",
-                "text": "alice.rich",
-                "next": "n6"
-              },
-              "n5": {
-                "type": "line",
-                "speaker": "alice",
-                "text": "alice.poor",
-                "next": "n6"
-              },
-              "n6": {
                 "type": "choice",
                 "choices": [
                   {
-                    "text": "choice.give",
-                    "next": "n7"
+                    "text": "main.n2.choice0",
+                    "next": "n3"
                   },
                   {
-                    "text": "choice.secret",
-                    "next": "n8",
-                    "if": {
-                      "op": "and",
-                      "kids": [
-                        {
-                          "var": "met_alice"
-                        },
-                        {
-                          "op": "lt",
-                          "kids": [
-                            {
-                              "var": "alice_trust"
-                            },
-                            {
-                              "lit": 5
-                            }
-                          ]
-                        }
-                      ]
-                    }
+                    "text": "main.n2.choice1",
+                    "next": "n4"
+                  },
+                  {
+                    "text": "main.n2.choice2",
+                    "next": "n5"
+                  },
+                  {
+                    "text": "main.n2.choice3",
+                    "next": "n6"
                   }
                 ]
               },
-              "n7": {
-                "type": "set",
-                "var": "gold",
-                "op": "add",
-                "value": 5,
-                "next": "n9"
-              },
-              "n8": {
-                "type": "set",
-                "var": "alice_trust",
-                "op": "add",
-                "value": 1,
-                "next": "n9"
-              },
-              "n9": {
+              "n3": {
                 "type": "line",
-                "speaker": "alice",
-                "text": "alice.bye",
-                "next": "n10"
+                "speaker": "Mira",
+                "text": "main.n3.text"
               },
-              "n10": {
-                "type": "jump",
-                "target": "bob_greet.b1"
-              }
-            }
-          },
-          "bob_greet": {
-            "start": "b1",
-            "nodes": {
-              "b1": {
+              "n4": {
                 "type": "line",
-                "speaker": "bob",
-                "text": "bob.hey",
-                "next": "b2"
+                "speaker": "Mira",
+                "text": "main.n4.text"
               },
-              "b2": {
-                "type": "end"
+              "n5": {
+                "type": "line",
+                "speaker": "Mira",
+                "text": "main.n5.text"
+              },
+              "n6": {
+                "type": "line",
+                "speaker": "Mira",
+                "text": "main.n6.text"
               }
             }
           }

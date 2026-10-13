@@ -28,12 +28,6 @@ void Car::SetupComponents() {
     light2->Local().rotation = QuaternionFromAxisAngle(Vector3{1, 0, 0}, -M_PI/2.0f);
     light2->m_lumen = 15.0f;
 
-    ModelComponent* m_base_model = Lil::World().CreateComponent<ModelComponent>();
-    AttachComponent(m_base_model);
-    m_base_model->MarkRequired();
-    m_base_model->SetModel(m_base_model_key);
-
-
     m_base_model = Lil::World().CreateComponent<ModelComponent>();
     AttachComponent(m_base_model);
     m_base_model->MarkRequired();
@@ -43,6 +37,14 @@ void Car::SetupComponents() {
         m_wheel_models[i] = Lil::World().CreateComponent<ModelComponent>();
         AttachComponent(m_wheel_models[i]);
         m_wheel_models[i]->MarkRequired();
+        m_wheel_models[i]->SetModel(m_wheel_model_key);
+    }
+}
+
+void Car::LayoutUpdate() {
+    Vehicle::LayoutUpdate();
+    m_base_model->SetModel(m_base_model_key);
+    for (int i = 0; i < 4; i++) {
         m_wheel_models[i]->SetModel(m_wheel_model_key);
     }
 }

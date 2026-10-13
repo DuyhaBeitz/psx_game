@@ -47,27 +47,33 @@ int main() {
 
 void SetupShaders() {
     psxSnap = R3D_LoadSurfaceShader("assets/shaders/psx_snap.glsl");
-    Vector2 snapRes = {320.0f/2, 240.0f/2};
+    Vector2 snapRes = {320.0f, 240.0f};
     R3D_SetSurfaceShaderUniform(psxSnap, "u_snap_resolution", &snapRes);
 
-    for (auto& [key, model] : Lil::Resources().Models()) {
-        for (int i = 0; i < model.materialCount; i++) {
-            model.materials[i].shader = psxSnap;
-        }
-    }
+    // for (auto& [key, model] : Lil::Resources().Models()) {
+    //     if (key.starts_with("Gen_Heightmap_")) {
+    //         continue;
+    //     }
+    //     for (int i = 0; i < model.materialCount; i++) {
+    //         model.materials[i].shader = psxSnap;
+    //     }
+    // }
 
     psxDither = R3D_LoadScreenShader("assets/shaders/psx_dither.glsl");
-    Vector2 targetRes = { 640.0f, 480.0f };
+    Vector2 targetRes = { 640.0f/2, 480.0f/2 };
     R3D_SetScreenShaderUniform(psxDither, "u_target_resolution", &targetRes);
 
     psxPosterize = R3D_LoadScreenShader("assets/shaders/psx_posterize.glsl");
-    float levels = 32.0f;
+    float levels = 16.0f;
     float gamma = 2.2f;
     R3D_SetScreenShaderUniform(psxPosterize, "u_color_levels", &levels);
     R3D_SetScreenShaderUniform(psxPosterize, "u_gamma", &gamma);
 
     R3D_ScreenShader* final_chain[] = { psxPosterize, psxDither };
     R3D_SetScreenShaderChain(R3D_SCREEN_SHADER_STAGE_FINAL, final_chain, 2);
+
+    // R3D_ScreenShader* final_chain[] = { psxDither };
+    // R3D_SetScreenShaderChain(R3D_SCREEN_SHADER_STAGE_FINAL, final_chain, 1);
 }
 
 void UnloadShaders() {
@@ -92,6 +98,16 @@ void InitGame() {
     player = Lil::World().CreateActor<Player>();
     player->SetPosition(Vector3{0, 10, 0});
     Game::SetCamera(player->GetCamera());
+
+    VehicleConfig vehicle_config{};
+    vehicle_config.wheel_radius = 0.37f;
+    vehicle_config.wheel_width = 0.2f;
+    vehicle_config.half_vehicle_length = 3.0f * 0.75;
+    vehicle_config.half_vehicle_width = 0.7f;
+    vehicle_config.half_vehicle_height = 0.03;
+
+    Car* car = Lil::World().CreateActor<Car>("police_car.glb", "police_car_wheel.glb", vehicle_config);
+    car->SetPosition(Vector3{-5.76, 6, -5.77});
 
     Lil::World().SetSimulationGoing(true);
     SetupShaders();

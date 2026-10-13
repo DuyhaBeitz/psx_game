@@ -12,6 +12,8 @@ public:
     Interactable() = default;
     virtual ~Interactable() = default;
 
+    // decide which hits to accept
+    virtual bool HoverTreshold(RayCollision res) = 0;
     virtual void OnMouseHover(RayCollision res) = 0;
     virtual void OnMouseUnhover() = 0;
 
