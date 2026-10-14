@@ -89,6 +89,7 @@ void InitGame() {
     SetTraceLogLevel(LOG_ALL);
     DisableCursor();
     SetWindowState(FLAG_WINDOW_RESIZABLE);
+    SetTargetFPS(60);
 
     Lil::Engine().Get().Init();
 
@@ -128,7 +129,7 @@ void UpdateGame() {
     }
     if (IsKeyPressed(KEY_V)) debug = !debug;
     if (IsKeyPressed(KEY_F11)) ToggleBorderlessWindowed();
-    Lil::Engine::Get().Update();
+    Lil::Engine::Get().Update(1.0f/60.f);
 }
 
 void DrawGame() {

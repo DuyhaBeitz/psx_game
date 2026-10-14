@@ -19,13 +19,14 @@ int main() {
     SetTraceLogLevel(LOG_ALL);
     DisableCursor();
     SetWindowState(FLAG_WINDOW_RESIZABLE);
+    SetTargetFPS(60.0f);
 
     Lil::Engine().Get().Init();
 
     Lil::Editor::Get().Init();
 
     while (!WindowShouldClose()) {
-        Lil::Editor::Get().Update();
+        Lil::Editor::Get().Update(1.0f/60.f);
         BeginDrawing();
         Lil::Editor::Get().Draw();
         EndDrawing();
