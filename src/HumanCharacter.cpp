@@ -3,7 +3,7 @@
 #include "Components/AnimatedModelComponent.hpp"
 #include "LilEngine.hpp"
 
-HumanCharacter::HumanCharacter() : Character(1.0f, 0.5f) {
+HumanCharacter::HumanCharacter() : Character(1.5f, 0.25f) {
     m_stepper.period = 0.7f;
     m_stepper.step_sound_keys = {
         "Footstep Dirt 1.ogg",

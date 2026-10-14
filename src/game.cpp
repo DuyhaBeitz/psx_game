@@ -60,7 +60,7 @@ void SetupShaders() {
     // }
 
     psxDither = R3D_LoadScreenShader("assets/shaders/psx_dither.glsl");
-    Vector2 targetRes = { 640.0f/2, 480.0f/2 };
+    Vector2 targetRes = { 640.0f, 480.0f };
     R3D_SetScreenShaderUniform(psxDither, "u_target_resolution", &targetRes);
 
     psxPosterize = R3D_LoadScreenShader("assets/shaders/psx_posterize.glsl");
