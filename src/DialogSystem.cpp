@@ -4,12 +4,13 @@
 #include <raylib.h>
 #include <algorithm>
 #include <iostream>
+#include "AdvancedText.hpp"
 
 dialog::Runtime dlg;
 int selectedChoice = 0;
+AnimatedText anim_text{};
 
-
-void DialogSystem::DrawBox(std::string content) {
+void DialogSystem::DrawBox(std::string name, std::string content) {
     int w = GetScreenWidth();
     int h = GetScreenHeight();
 
@@ -22,11 +23,20 @@ void DialogSystem::DrawBox(std::string content) {
     int fontSize = 64;
     int spacing = 54;
     int textWidth = MeasureText(content.c_str(), fontSize);
+    int start = w * 0.1;
+
+    DrawText(
+        name.c_str(),
+        start,
+        panelY + 10,
+        fontSize,
+        GRAY
+    );
 
     DrawText(
         content.c_str(),
-        (w - textWidth) / 2,
-        panelY + 40,
+        start+30,
+        panelY + 120,
         fontSize,
         WHITE
     );
@@ -80,11 +90,21 @@ void DialogSystem::Draw() {
     switch (f.kind) {
         case dialog::FrameKind::Line:
         {
-            std::string text = f.speaker_name + "\n\n" + f.text;
-            DrawBox(text);
+            if (anim_text.text != f.text) {
+                anim_text.frame_counter = 0;
+                anim_text.text = f.text;
+                anim_text.on_new_symbol = [](int index, char c){
+                    LilSound* sound = Lil::Resources().GetSound("UIClick_BLEEOOP_Baby_Click.ogg");
+                    if (sound) sound->Play();
+                };
+            }
+            anim_text.Update();
+            DrawBox(f.speaker_name, anim_text.GetCurrentText());
 
-            if (IsKeyPressed(KEY_ENTER))
-                dlg.advance();
+            if (IsKeyPressed(KEY_ENTER)) {
+                if (anim_text.IsDone()) dlg.advance();
+                else anim_text.Complete();
+            }
 
             break;
         }

@@ -3,7 +3,7 @@
 #include <vector>
 
 class DialogSystem {
-    void DrawBox(std::string content);
+    void DrawBox(std::string name, std::string content);
     void DrawChoicesBox(std::vector<std::string> choices);
 
 public:

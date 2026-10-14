@@ -122,6 +122,10 @@ void UpdateGame() {
     SetMusicVolume(ambient, Lil::Audio().GetSFXVolume());
     UpdateMusicStream(ambient);
     
+    if (IsKeyPressed(KEY_P)) {
+        if (IsCursorHidden()) EnableCursor();
+        else DisableCursor();
+    }
     if (IsKeyPressed(KEY_V)) debug = !debug;
     if (IsKeyPressed(KEY_F11)) ToggleBorderlessWindowed();
     Lil::Engine::Get().Update();
