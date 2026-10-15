@@ -12,6 +12,9 @@
 #include <LilEngine/LilEngine.hpp>
 #include <LilEditor/LilEditor.hpp>
 
+constexpr int target_fps = 120;
+constexpr float dt = 1.0f / float(target_fps);
+
 int main() {
     InitWindow(1920, 1080, "editor");
     R3D_Init(GetScreenWidth(), GetScreenHeight());
@@ -26,7 +29,7 @@ int main() {
     Lil::Editor::Get().Init();
 
     while (!WindowShouldClose()) {
-        Lil::Editor::Get().Update(1.0f/60.f);
+        Lil::Editor::Get().UpdateFixedAccumulative(dt);
         BeginDrawing();
         Lil::Editor::Get().Draw();
         EndDrawing();

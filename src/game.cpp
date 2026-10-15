@@ -12,6 +12,9 @@
 
 #include <LilEngine/LilEngine.hpp>
 
+constexpr int target_fps = 120;
+constexpr float dt = 1.0f / float(target_fps);
+
 Player* player = nullptr;
 
 R3D_SurfaceShader* psxSnap = nullptr;
@@ -89,7 +92,7 @@ void InitGame() {
     SetTraceLogLevel(LOG_ALL);
     DisableCursor();
     SetWindowState(FLAG_WINDOW_RESIZABLE);
-    SetTargetFPS(60);
+    SetTargetFPS(target_fps);
 
     Lil::Engine().Get().Init();
 
@@ -129,7 +132,8 @@ void UpdateGame() {
     }
     if (IsKeyPressed(KEY_V)) debug = !debug;
     if (IsKeyPressed(KEY_F11)) ToggleBorderlessWindowed();
-    Lil::Engine::Get().Update(1.0f/60.f);
+
+    Lil::Engine::Get().UpdateFixedAccumulative(dt);
 }
 
 void DrawGame() {
