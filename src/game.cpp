@@ -133,7 +133,7 @@ void UpdateGame() {
     if (IsKeyPressed(KEY_V)) debug = !debug;
     if (IsKeyPressed(KEY_F11)) ToggleBorderlessWindowed();
 
-    Lil::Engine::Get().UpdateFixedAccumulative(dt);
+    Lil::Engine::Get().Update(GetFrameTime(), dt);
 }
 
 void DrawGame() {
