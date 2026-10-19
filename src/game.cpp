@@ -65,10 +65,7 @@ void SetupShaders() {
     R3D_SetScreenShaderUniform(psxDither, "u_target_resolution", &targetRes);
 
     psxPosterize = R3D_LoadScreenShader("assets/shaders/psx_posterize.glsl");
-    float levels = 16.0f;
-    float gamma = 2.2f;
-    R3D_SetScreenShaderUniform(psxPosterize, "u_color_levels", &levels);
-    R3D_SetScreenShaderUniform(psxPosterize, "u_gamma", &gamma);
+    //R3D_SetScreenShaderUniform(psxPosterize, "u_gamma", &gamma);
 
     R3D_ScreenShader* final_chain[] = { psxPosterize, psxDither };
     R3D_SetScreenShaderChain(R3D_SCREEN_SHADER_STAGE_FINAL, final_chain, 2);
