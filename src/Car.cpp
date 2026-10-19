@@ -7,6 +7,8 @@
 #include "LilEngine.hpp"
 
 void Car::SetupComponents() {
+    Vehicle::SetupComponents();
+
     LightComponent* light1 = Lil::World().CreateComponent<LightComponent>();
     AttachComponent(light1);
     light1->MarkRequired();
