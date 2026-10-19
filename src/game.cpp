@@ -7,15 +7,13 @@
 
 #include "NPC.hpp"
 #include "Player.hpp"
-#include "Car.hpp"
+#include "DrivableCar.hpp"
 #include "Game.hpp"
 
 #include <LilEngine/LilEngine.hpp>
 
 constexpr int target_fps = 120;
 constexpr float dt = 1.0f / float(target_fps);
-
-Player* player = nullptr;
 
 R3D_SurfaceShader* psxSnap = nullptr;
 R3D_ScreenShader* psxDither = nullptr;
@@ -99,8 +97,8 @@ void InitGame() {
     Lil::SceneManager().LoadScene("assets/scenes/scene1.json");
     Game::DialogSystem().LoadScene("assets/dialogs/scene.json", "assets/dialogs/en.json");
 
-    player = Lil::World().CreateActor<Player>();
-    player->SetPosition(Vector3{0, 10, 0});
+    Player* player = Game::CreatePlayer();
+    player->SetPosition(Vector3{0, 6, 0});
     Game::SetCamera(player->GetCamera());
 
     // VehicleConfig vehicle_config{};

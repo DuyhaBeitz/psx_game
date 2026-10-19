@@ -4,6 +4,8 @@
 #include "DialogSystem.hpp"
 #include "HUD.hpp"
 
+class Player;
+
 namespace Game {
     void SetCamera(Camera& camera);
     Camera& GetCamera();
@@ -11,4 +13,9 @@ namespace Game {
     HUD& GetHUD();
 
     DialogSystem& DialogSystem();
+
+    Player* CreatePlayer();
+    void DestroyPlayer();
+    void SetPlayer(Player* pl);
+    Player* GetPlayer();
 }

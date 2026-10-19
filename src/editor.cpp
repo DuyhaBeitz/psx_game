@@ -7,7 +7,7 @@
 
 #include "NPC.hpp"
 #include "Player.hpp"
-#include "Car.hpp"
+#include "DrivableCar.hpp"
 
 #include <LilEngine/LilEngine.hpp>
 #include <LilEditor/LilEditor.hpp>

@@ -1,4 +1,6 @@
 #include "Game.hpp"
+#include "Player.hpp"
+#include "LilEngine.hpp"
 #include <stdexcept>
 
 namespace Game {
@@ -12,6 +14,7 @@ namespace Game {
     };
     HUD hud;
     ::DialogSystem dialog_system;
+    Player* player = nullptr;
     
     void SetCamera(Camera &camera) {current_camera = &camera;}    
     Camera& GetCamera() {
@@ -26,5 +29,28 @@ namespace Game {
 
     ::DialogSystem &DialogSystem() {
         return dialog_system;
+    }
+
+    Player* CreatePlayer() {
+        if (player) {
+            DestroyPlayer();
+        }
+        player = Lil::World().CreateActor<Player>();
+        return player;
+    }
+
+    void DestroyPlayer() {
+        if (player) {
+            Lil::World().DestroyActor(player);
+        }   
+        player = nullptr;     
+    }
+
+    void SetPlayer(Player* pl) {
+        player = pl;
+    }
+
+    Player *GetPlayer() {
+        return player;
     }
 }

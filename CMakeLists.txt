@@ -18,6 +18,7 @@ add_library(shared STATIC
     src/Interactable.cpp
     src/NPC.cpp
     src/AdvancedText.cpp
+    src/DrivableCar.cpp
 )
 target_include_directories(shared PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(shared PUBLIC lil_engine::lil_engine)
