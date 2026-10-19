@@ -103,15 +103,15 @@ void InitGame() {
     player->SetPosition(Vector3{0, 10, 0});
     Game::SetCamera(player->GetCamera());
 
-    VehicleConfig vehicle_config{};
-    vehicle_config.wheel_radius = 0.37f;
-    vehicle_config.wheel_width = 0.2f;
-    vehicle_config.half_vehicle_length = 3.0f * 0.75;
-    vehicle_config.half_vehicle_width = 0.7f;
-    vehicle_config.half_vehicle_height = 0.03;
+    // VehicleConfig vehicle_config{};
+    // vehicle_config.wheel_radius = 0.37f;
+    // vehicle_config.wheel_width = 0.2f;
+    // vehicle_config.half_vehicle_length = 3.0f * 0.75;
+    // vehicle_config.half_vehicle_width = 0.7f;
+    // vehicle_config.half_vehicle_height = 0.03;
 
-    Car* car = Lil::World().CreateActor<Car>("police_car.glb", "police_car_wheel.glb", vehicle_config);
-    car->SetPosition(Vector3{-5.76, 6, -5.77});
+    // Car* car = Lil::World().CreateActor<Car>("police_car.glb", "police_car_wheel.glb", vehicle_config);
+    // car->SetPosition(Vector3{-5.76, 6, -5.77});
 
     Lil::World().SetSimulationGoing(true);
     SetupShaders();
@@ -150,5 +150,6 @@ void DrawGame() {
 
         Game::GetHUD().Draw();
         Game::DialogSystem().Draw();
+        DrawFPS(100, 100);
     EndDrawing();
 }

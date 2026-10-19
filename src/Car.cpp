@@ -6,11 +6,6 @@
 #include "Car.hpp"
 #include "LilEngine.hpp"
 
-Car::Car(std::string base_model_key, std::string wheel_model_key, const VehicleConfig& vehicle_config) 
-: Vehicle(vehicle_config), m_base_model_key(base_model_key), m_wheel_model_key(wheel_model_key)
-{
-}
-
 void Car::SetupComponents() {
     LightComponent* light1 = Lil::World().CreateComponent<LightComponent>();
     AttachComponent(light1);
@@ -29,30 +24,26 @@ void Car::SetupComponents() {
     light2->m_lumen = 15.0f;
 
     m_base_model = Lil::World().CreateComponent<ModelComponent>();
-    AttachComponent(m_base_model);
+    AttachComponent(m_base_model.get());
     m_base_model->MarkRequired();
-    m_base_model->SetModel(m_base_model_key);
 
     for (int i = 0; i < 4; i++) {
         m_wheel_models[i] = Lil::World().CreateComponent<ModelComponent>();
-        AttachComponent(m_wheel_models[i]);
+        AttachComponent(m_wheel_models[i].get());
         m_wheel_models[i]->MarkRequired();
-        m_wheel_models[i]->SetModel(m_wheel_model_key);
     }
 }
 
 void Car::LayoutUpdate() {
     Vehicle::LayoutUpdate();
+    
     m_base_model->SetModel(m_base_model_key);
     for (int i = 0; i < 4; i++) {
         m_wheel_models[i]->SetModel(m_wheel_model_key);
+        m_wheel_models[i]->m_local_transform = GetLocalTransform(GetTransform(), GetWheelTransforms()[i]);
     }
 }
 
 void Car::Draw() {
     Vehicle::Draw();
-    
-    for (int i = 0; i < 4; i++) {
-        m_wheel_models[i]->m_local_transform = GetLocalTransform(GetTransform(), GetWheelTransforms()[i]);
-    }
 }
