@@ -95,7 +95,7 @@ void InitGame() {
     Game::DialogSystem().LoadScene("assets/dialogs/scene.json", "assets/dialogs/en.json");
 
     Player* player = Game::CreatePlayer();
-    player->SetPosition(Vector3{0, 6, 0});
+    player->SetPosition(Vector3{-1, 10, 86});
     Game::SetCamera(player->GetCamera());
 
     // VehicleConfig vehicle_config{};

@@ -48,8 +48,8 @@ void DrivableCar::SimulationUpdate(float delta_time) {
             for (int i = 0; i < 4; i++) {
                 
                 if (state.grounded[i] && state.speed > 2.0f) {
-                    float lon = remap01(state.lon_slid[i], 0.15f, 0.7f);
-                    float lat = remap01(state.lat_slid[i], 0.12f, 0.5f);
+                    float lon = remap01(state.lon_slid[i], 0.2f, 0.9f);
+                    float lat = remap01(state.lat_slid[i], 0.2f, 0.9f);
                     target += std::max(lon, lat);
                 }
             }
