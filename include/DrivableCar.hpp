@@ -7,6 +7,7 @@ class DrivableCar : public Car, public Interactable {
 protected:
     bool m_controlled = false;
     void CameraUpdate();
+    float m_skid_smoothed;
 
 public:
     LIL_SERIALIZABLE()
