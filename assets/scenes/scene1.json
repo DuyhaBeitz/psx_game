@@ -1,29 +1,159 @@
 {
     "value0": {
-        "texture_keys": [
-            "Normal.png",
-            "heightmap.png",
-            "height.png",
-            "Ground085_1K-PNG_Color.png",
-            "Ground085_1K-PNG_NormalGL.png",
-            "Color.png",
-            "night.jpg"
-        ],
         "sound_keys": [
-            "car-door-close.wav",
-            "UIClick_BLEEOOP_Baby_Click.ogg",
-            "Footstep Dirt 5.ogg",
-            "Footstep Dirt 4.ogg",
-            "Vehicle_Car_Engine_1000_RPM_Rear_Exterior_Loop_Mono.wav",
-            "UIClick_BLEEOOP_Keyboard_Snap.ogg",
-            "Footstep Dirt 3.ogg",
-            "Footstep Dirt 2.ogg",
+            "Footstep Dirt 1.ogg",
             "tires_squal_loop.wav",
-            "Footstep Dirt 1.ogg"
+            "Footstep Dirt 2.ogg",
+            "Footstep Dirt 3.ogg",
+            "UIClick_BLEEOOP_Keyboard_Snap.ogg",
+            "Vehicle_Car_Engine_1000_RPM_Rear_Exterior_Loop_Mono.wav",
+            "Footstep Dirt 4.ogg",
+            "Footstep Dirt 5.ogg",
+            "UIClick_BLEEOOP_Baby_Click.ogg",
+            "car-door-close.wav"
+        ],
+        "m_texture_settings": [
+            {
+                "key": "Gen_1_tree1.glb",
+                "value": {
+                    "pixel_format": 7,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "Gen_0_tree1.glb",
+                "value": {
+                    "pixel_format": 4,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "Gen_0_police_car_wheel.glb",
+                "value": {
+                    "pixel_format": 7,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "Gen_0_grass1.glb",
+                "value": {
+                    "pixel_format": 7,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "Gen_0_cop.glb",
+                "value": {
+                    "pixel_format": 7,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "Gen_0_police_car.glb",
+                "value": {
+                    "pixel_format": 7,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "night.jpg",
+                "value": {
+                    "pixel_format": 4,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "heightmap.png",
+                "value": {
+                    "pixel_format": 4,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "height.png",
+                "value": {
+                    "pixel_format": 1,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "Gen_1_police_car.glb",
+                "value": {
+                    "pixel_format": 7,
+                    "filter": 0,
+                    "wrap": 1
+                }
+            },
+            {
+                "key": "Ground085_1K-PNG_NormalGL.png",
+                "value": {
+                    "pixel_format": 4,
+                    "filter": 0,
+                    "wrap": 0
+                }
+            },
+            {
+                "key": "Ground085_1K-PNG_Color.png",
+                "value": {
+                    "pixel_format": 4,
+                    "filter": 0,
+                    "wrap": 0
+                }
+            }
         ],
         "m_model_settings": [
             {
-                "key": "tree1.glb",
+                "key": "Gen_Heightmap_From_height.png",
+                "value": {
+                    "material_settings": [
+                        {
+                            "uvScale": {
+                                "x": 6.0,
+                                "y": 6.0
+                            },
+                            "uvOffset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "albedo": {
+                                "texture_key": "Ground085_1K-PNG_Color.png",
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255,
+                                    "a": 255
+                                }
+                            },
+                            "normal": {
+                                "texture_key": "Ground085_1K-PNG_NormalGL.png",
+                                "scale": 1.0
+                            },
+                            "emission": {
+                                "texture_key": "None",
+                                "energy": 0.0
+                            },
+                            "orm": {
+                                "texture_key": "None",
+                                "occlusion": 1.0,
+                                "roughness": 1.0,
+                                "metalness": 0.0,
+                                "specular": 0.5
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "cop.glb",
                 "value": {
                     "material_settings": [
                         {
@@ -36,7 +166,7 @@
                                 "y": 0.0
                             },
                             "albedo": {
-                                "texture_key": "Gen_0_tree1.glb",
+                                "texture_key": "Gen_0_cop.glb",
                                 "color": {
                                     "r": 255,
                                     "g": 255,
@@ -59,7 +189,14 @@
                                 "metalness": 0.0,
                                 "specular": 0.5
                             }
-                        },
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "police_car.glb",
+                "value": {
+                    "material_settings": [
                         {
                             "uvScale": {
                                 "x": 1.0,
@@ -70,7 +207,89 @@
                                 "y": 0.0
                             },
                             "albedo": {
-                                "texture_key": "Gen_1_tree1.glb",
+                                "texture_key": "Gen_0_police_car.glb",
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255,
+                                    "a": 255
+                                }
+                            },
+                            "normal": {
+                                "texture_key": "None",
+                                "scale": 1.0
+                            },
+                            "emission": {
+                                "texture_key": "Gen_1_police_car.glb",
+                                "energy": 1.0
+                            },
+                            "orm": {
+                                "texture_key": "None",
+                                "occlusion": 1.0,
+                                "roughness": 1.0,
+                                "metalness": 0.0,
+                                "specular": 0.5
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "police_car_wheel.glb",
+                "value": {
+                    "material_settings": [
+                        {
+                            "uvScale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "uvOffset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "albedo": {
+                                "texture_key": "Gen_0_police_car_wheel.glb",
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255,
+                                    "a": 255
+                                }
+                            },
+                            "normal": {
+                                "texture_key": "None",
+                                "scale": 1.0
+                            },
+                            "emission": {
+                                "texture_key": "None",
+                                "energy": 0.0
+                            },
+                            "orm": {
+                                "texture_key": "None",
+                                "occlusion": 1.0,
+                                "roughness": 0.8945907354354858,
+                                "metalness": 0.0,
+                                "specular": 0.5
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "grass1.glb",
+                "value": {
+                    "material_settings": [
+                        {
+                            "uvScale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "uvOffset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "albedo": {
+                                "texture_key": "Gen_0_grass1.glb",
                                 "color": {
                                     "r": 255,
                                     "g": 255,
@@ -139,7 +358,7 @@
                 }
             },
             {
-                "key": "grass1.glb",
+                "key": "tree1.glb",
                 "value": {
                     "material_settings": [
                         {
@@ -152,7 +371,7 @@
                                 "y": 0.0
                             },
                             "albedo": {
-                                "texture_key": "Gen_0_grass1.glb",
+                                "texture_key": "Gen_0_tree1.glb",
                                 "color": {
                                     "r": 255,
                                     "g": 255,
@@ -175,14 +394,7 @@
                                 "metalness": 0.0,
                                 "specular": 0.5
                             }
-                        }
-                    ]
-                }
-            },
-            {
-                "key": "police_car_wheel.glb",
-                "value": {
-                    "material_settings": [
+                        },
                         {
                             "uvScale": {
                                 "x": 1.0,
@@ -193,7 +405,7 @@
                                 "y": 0.0
                             },
                             "albedo": {
-                                "texture_key": "Gen_0_police_car_wheel.glb",
+                                "texture_key": "Gen_1_tree1.glb",
                                 "color": {
                                     "r": 255,
                                     "g": 255,
@@ -203,129 +415,6 @@
                             },
                             "normal": {
                                 "texture_key": "None",
-                                "scale": 1.0
-                            },
-                            "emission": {
-                                "texture_key": "None",
-                                "energy": 0.0
-                            },
-                            "orm": {
-                                "texture_key": "None",
-                                "occlusion": 1.0,
-                                "roughness": 0.8945907354354858,
-                                "metalness": 0.0,
-                                "specular": 0.5
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "key": "police_car.glb",
-                "value": {
-                    "material_settings": [
-                        {
-                            "uvScale": {
-                                "x": 1.0,
-                                "y": 1.0
-                            },
-                            "uvOffset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "albedo": {
-                                "texture_key": "Gen_0_police_car.glb",
-                                "color": {
-                                    "r": 255,
-                                    "g": 255,
-                                    "b": 255,
-                                    "a": 255
-                                }
-                            },
-                            "normal": {
-                                "texture_key": "None",
-                                "scale": 1.0
-                            },
-                            "emission": {
-                                "texture_key": "Gen_1_police_car.glb",
-                                "energy": 1.0
-                            },
-                            "orm": {
-                                "texture_key": "None",
-                                "occlusion": 1.0,
-                                "roughness": 1.0,
-                                "metalness": 0.0,
-                                "specular": 0.5
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "key": "cop.glb",
-                "value": {
-                    "material_settings": [
-                        {
-                            "uvScale": {
-                                "x": 1.0,
-                                "y": 1.0
-                            },
-                            "uvOffset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "albedo": {
-                                "texture_key": "Gen_0_cop.glb",
-                                "color": {
-                                    "r": 255,
-                                    "g": 255,
-                                    "b": 255,
-                                    "a": 255
-                                }
-                            },
-                            "normal": {
-                                "texture_key": "None",
-                                "scale": 1.0
-                            },
-                            "emission": {
-                                "texture_key": "None",
-                                "energy": 0.0
-                            },
-                            "orm": {
-                                "texture_key": "None",
-                                "occlusion": 1.0,
-                                "roughness": 1.0,
-                                "metalness": 0.0,
-                                "specular": 0.5
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "key": "Gen_Heightmap_From_height.png",
-                "value": {
-                    "material_settings": [
-                        {
-                            "uvScale": {
-                                "x": 6.0,
-                                "y": 6.0
-                            },
-                            "uvOffset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "albedo": {
-                                "texture_key": "Ground085_1K-PNG_Color.png",
-                                "color": {
-                                    "r": 255,
-                                    "g": 255,
-                                    "b": 255,
-                                    "a": 255
-                                }
-                            },
-                            "normal": {
-                                "texture_key": "Ground085_1K-PNG_NormalGL.png",
                                 "scale": 1.0
                             },
                             "emission": {
@@ -491,267 +580,10 @@
         "m_components": [
             {
                 "key": {
-                    "value0": "537d4640-ca21-45fe-9896-9beb6c9619f4"
-                },
-                "value": {
-                    "polymorphic_id": 2147483649,
-                    "polymorphic_name": "ModelComponent",
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "537d4640-ca21-45fe-9896-9beb6c9619f4"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -5.4507832527160648,
-                                                "y": 5.3698577880859379,
-                                                "z": -7.922420024871826
-                                            },
-                                            "rotation": {
-                                                "x": -0.000004939563496009214,
-                                                "y": 0.000004817315584659809,
-                                                "z": 0.7071501016616821,
-                                                "w": 0.7070635557174683
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.6999998688697815,
-                                        "y": -0.379494845867157,
-                                        "z": -1.5099998712539673
-                                    },
-                                    "rotation": {
-                                        "x": 4.048973778481013e-7,
-                                        "y": -4.0489749153493906e-7,
-                                        "z": 0.7071068286895752,
-                                        "w": 0.7071068286895752
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car_wheel.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "bf6699c7-da9b-4917-a5c1-07c8b791e03f"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "bf6699c7-da9b-4917-a5c1-07c8b791e03f"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -2.4562745094299318,
-                                                "y": 9.142134666442871,
-                                                "z": 80.34970092773438
-                                            },
-                                            "rotation": {
-                                                "x": 0.000008003618859220296,
-                                                "y": -0.6429232954978943,
-                                                "z": 0.00003460310836089775,
-                                                "w": 0.7659327983856201
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "rotation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 1.0
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "299523e2-c649-44e2-8577-b25d2ab36137"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "299523e2-c649-44e2-8577-b25d2ab36137"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -5.450783729553223,
-                                                "y": 5.369843006134033,
-                                                "z": -4.9024200439453129
-                                            },
-                                            "rotation": {
-                                                "x": -0.00000562885088584153,
-                                                "y": 0.000005506518846232211,
-                                                "z": 0.7071501016616821,
-                                                "w": 0.7070635557174683
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.6999998688697815,
-                                        "y": -0.37955474853515627,
-                                        "z": 1.5100001096725464
-                                    },
-                                    "rotation": {
-                                        "x": -2.843482889147708e-7,
-                                        "y": 2.843480615410954e-7,
-                                        "z": 0.7071068286895752,
-                                        "w": 0.7071068286895752
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car_wheel.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "93d10965-e874-45a4-9ca5-839a94fb4278"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "93d10965-e874-45a4-9ca5-839a94fb4278"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -6.150829792022705,
-                                                "y": 5.749289512634277,
-                                                "z": -6.412425994873047
-                                            },
-                                            "rotation": {
-                                                "x": -0.000007471766366506927,
-                                                "y": -8.647727867128197e-8,
-                                                "z": 0.00006118667079135776,
-                                                "w": 1.0
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "rotation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 1.0
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
                     "value0": "b04e9b61-cfc3-4185-a2f3-8eb9f4735728"
                 },
                 "value": {
-                    "polymorphic_id": 2147483650,
+                    "polymorphic_id": 2147483649,
                     "polymorphic_name": "LightComponent",
                     "ptr_wrapper": {
                         "valid": 1,
@@ -825,10 +657,11 @@
             },
             {
                 "key": {
-                    "value0": "c21f60c3-1282-4a6a-9cff-66e9cc31f2ed"
+                    "value0": "93d10965-e874-45a4-9ca5-839a94fb4278"
                 },
                 "value": {
-                    "polymorphic_id": 1,
+                    "polymorphic_id": 2147483650,
+                    "polymorphic_name": "ModelComponent",
                     "ptr_wrapper": {
                         "valid": 1,
                         "data": {
@@ -836,26 +669,26 @@
                                 "value0": {
                                     "value0": {
                                         "value0": {
-                                            "value0": "c21f60c3-1282-4a6a-9cff-66e9cc31f2ed"
+                                            "value0": "93d10965-e874-45a4-9ca5-839a94fb4278"
                                         }
                                     },
                                     "value1": {
                                         "value0": {
                                             "translation": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.0
+                                                "x": -6.150829792022705,
+                                                "y": 5.749289512634277,
+                                                "z": -6.412425994873047
                                             },
                                             "rotation": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.0,
+                                                "x": -0.000007471766366506927,
+                                                "y": -8.647727867128197e-8,
+                                                "z": 0.00006118667079135776,
                                                 "w": 1.0
                                             },
                                             "scale": {
-                                                "x": 256.0,
-                                                "y": 20.0,
-                                                "z": 256.0
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
                                             }
                                         }
                                     },
@@ -882,18 +715,17 @@
                                 },
                                 "m_is_required": true
                             },
-                            "m_model_key": "Gen_Heightmap_From_height.png"
+                            "m_model_key": "police_car.glb"
                         }
                     }
                 }
             },
             {
                 "key": {
-                    "value0": "0b7e8482-a84b-43f1-83da-320f9ea9d5b7"
+                    "value0": "299523e2-c649-44e2-8577-b25d2ab36137"
                 },
                 "value": {
-                    "polymorphic_id": 2147483651,
-                    "polymorphic_name": "ColliderComponent",
+                    "polymorphic_id": 2,
                     "ptr_wrapper": {
                         "valid": 1,
                         "data": {
@@ -901,121 +733,19 @@
                                 "value0": {
                                     "value0": {
                                         "value0": {
-                                            "value0": "0b7e8482-a84b-43f1-83da-320f9ea9d5b7"
+                                            "value0": "299523e2-c649-44e2-8577-b25d2ab36137"
                                         }
                                     },
                                     "value1": {
                                         "value0": {
                                             "translation": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.0
+                                                "x": -5.450783729553223,
+                                                "y": 5.369843006134033,
+                                                "z": -4.9024200439453129
                                             },
                                             "rotation": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.0,
-                                                "w": 1.0
-                                            },
-                                            "scale": {
-                                                "x": 256.0,
-                                                "y": 20.0,
-                                                "z": 256.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "rotation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 1.0
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_shapes": [
-                                {
-                                    "m_type": 2,
-                                    "m_local_position": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "m_local_rotation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 1.0
-                                    },
-                                    "m_radius": 1.0,
-                                    "m_half_extends": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    },
-                                    "m_heightmap_texture_key": "height.png",
-                                    "m_map_size": {
-                                        "x": 256.0,
-                                        "y": 20.0,
-                                        "z": 256.0
-                                    }
-                                }
-                            ],
-                            "m_type": 0,
-                            "m_linear_velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "m_angular_velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "fb3ed3bf-9e4d-4bc5-9e79-21a5e60dfc06"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "fb3ed3bf-9e4d-4bc5-9e79-21a5e60dfc06"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -6.850783348083496,
-                                                "y": 5.369905948638916,
-                                                "z": -4.902420520782471
-                                            },
-                                            "rotation": {
-                                                "x": -0.0000056605895224493,
-                                                "y": 0.000005538253390113823,
+                                                "x": -0.00000562885088584153,
+                                                "y": 0.000005506518846232211,
                                                 "z": 0.7071501016616821,
                                                 "w": 0.7070635557174683
                                             },
@@ -1031,13 +761,13 @@
                                 },
                                 "m_local_transform": {
                                     "translation": {
-                                        "x": -0.6999997496604919,
-                                        "y": -0.3793204724788666,
-                                        "z": 1.5099998712539673
+                                        "x": 0.6999998688697815,
+                                        "y": -0.37955474853515627,
+                                        "z": 1.5100001096725464
                                     },
                                     "rotation": {
-                                        "x": -3.1608453809894856e-7,
-                                        "y": 3.160844244121108e-7,
+                                        "x": -2.843482889147708e-7,
+                                        "y": 2.843480615410954e-7,
                                         "z": 0.7071068286895752,
                                         "w": 0.7071068286895752
                                     },
@@ -1056,7 +786,7 @@
             },
             {
                 "key": {
-                    "value0": "e634b2f3-0e2b-4857-89bd-ed219779338f"
+                    "value0": "bf6699c7-da9b-4917-a5c1-07c8b791e03f"
                 },
                 "value": {
                     "polymorphic_id": 2,
@@ -1067,21 +797,21 @@
                                 "value0": {
                                     "value0": {
                                         "value0": {
-                                            "value0": "e634b2f3-0e2b-4857-89bd-ed219779338f"
+                                            "value0": "bf6699c7-da9b-4917-a5c1-07c8b791e03f"
                                         }
                                     },
                                     "value1": {
                                         "value0": {
                                             "translation": {
-                                                "x": -5.335309982299805,
-                                                "y": 9.341938018798829,
-                                                "z": 79.88822174072266
+                                                "x": -2.456265926361084,
+                                                "y": 9.142060279846192,
+                                                "z": 80.34969329833985
                                             },
                                             "rotation": {
-                                                "x": -0.5415906310081482,
-                                                "y": -0.45463991165161135,
-                                                "z": -0.45459097623825076,
-                                                "w": 0.5416019558906555
+                                                "x": 0.000017225571355083959,
+                                                "y": -0.6429222226142883,
+                                                "z": -0.0000183449883479625,
+                                                "w": 0.7659315466880798
                                             },
                                             "scale": {
                                                 "x": 1.0,
@@ -1095,14 +825,78 @@
                                 },
                                 "m_local_transform": {
                                     "translation": {
-                                        "x": -0.9534276723861694,
-                                        "y": 0.20000000298023225,
-                                        "z": 2.7554755210876467
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
                                     },
                                     "rotation": {
-                                        "x": -0.7071068286895752,
+                                        "x": 0.0,
                                         "y": 0.0,
                                         "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "police_car.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "537d4640-ca21-45fe-9896-9beb6c9619f4"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "537d4640-ca21-45fe-9896-9beb6c9619f4"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -5.4507832527160648,
+                                                "y": 5.3698577880859379,
+                                                "z": -7.922420024871826
+                                            },
+                                            "rotation": {
+                                                "x": -0.000004939563496009214,
+                                                "y": 0.000004817315584659809,
+                                                "z": 0.7071501016616821,
+                                                "w": 0.7070635557174683
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.6999998688697815,
+                                        "y": -0.379494845867157,
+                                        "z": -1.5099998712539673
+                                    },
+                                    "rotation": {
+                                        "x": 4.048973778481013e-7,
+                                        "y": -4.0489749153493906e-7,
+                                        "z": 0.7071068286895752,
                                         "w": 0.7071068286895752
                                     },
                                     "scale": {
@@ -1113,19 +907,396 @@
                                 },
                                 "m_is_required": true
                             },
-                            "m_enabled": true,
-                            "m_lumen": 15.0,
-                            "m_color": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 255
+                            "m_model_key": "police_car_wheel.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "9506e4e6-161f-47cf-a652-4e5fc9883804"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "9506e4e6-161f-47cf-a652-4e5fc9883804"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -6.850783348083496,
+                                                "y": 5.369870185852051,
+                                                "z": -7.922420501708984
+                                            },
+                                            "rotation": {
+                                                "x": -0.0000049395571295463018,
+                                                "y": 0.000004817309672944248,
+                                                "z": 0.7071501016616821,
+                                                "w": 0.7070635557174683
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": -0.7000002264976502,
+                                        "y": -0.37931111454963686,
+                                        "z": -1.5100001096725464
+                                    },
+                                    "rotation": {
+                                        "x": 4.049037443110137e-7,
+                                        "y": -4.0490340325050058e-7,
+                                        "z": 0.7071068286895752,
+                                        "w": 0.7071068286895752
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
                             },
-                            "m_type": 1,
-                            "m_cast_shadows": true,
-                            "m_range": 40.0,
-                            "m_shadow_softness": 1.0,
-                            "m_depth_bias": 0.0010000000474974514
+                            "m_model_key": "police_car_wheel.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "75c18418-d250-4bc3-adac-26567e139bf9"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "75c18418-d250-4bc3-adac-26567e139bf9"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -4.064732551574707,
+                                                "y": 8.615091323852539,
+                                                "z": 79.92194366455078
+                                            },
+                                            "rotation": {
+                                                "x": -0.45460253953933718,
+                                                "y": -0.4546268582344055,
+                                                "z": 0.5415823459625244,
+                                                "w": 0.5416082739830017
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": -0.7000012993812561,
+                                        "y": -0.5269998908042908,
+                                        "z": 1.5099997520446778
+                                    },
+                                    "rotation": {
+                                        "x": -4.690258137429737e-8,
+                                        "y": -8.085783775868549e-8,
+                                        "z": 0.7071068286895752,
+                                        "w": 0.7071067094802856
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "police_car_wheel.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "4e98b20a-54a2-4f74-a301-804a161d0cb1"
+                },
+                "value": {
+                    "polymorphic_id": 2147483651,
+                    "polymorphic_name": "AnimatedModelComponent",
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "4e98b20a-54a2-4f74-a301-804a161d0cb1"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 84.6551513671875,
+                                                "y": 8.09009075164795,
+                                                "z": -33.10505294799805
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.8368733525276184,
+                                                "z": 0.0,
+                                                "w": 0.5473965406417847
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": -1.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "cop.glb",
+                            "m_anim_idx": 1,
+                            "m_playing": true,
+                            "m_looping": true,
+                            "m_speed": 1.0
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "e685faa9-5a7e-4f9e-9a41-160527aeb3c1"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "e685faa9-5a7e-4f9e-9a41-160527aeb3c1"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -1.0904285907745362,
+                                                "y": 8.615099906921387,
+                                                "z": 79.39857482910156
+                                            },
+                                            "rotation": {
+                                                "x": -0.45460253953933718,
+                                                "y": -0.4546268582344055,
+                                                "z": 0.5415823459625244,
+                                                "w": 0.5416082739830017
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": -0.6999977827072144,
+                                        "y": -0.5269997119903565,
+                                        "z": -1.5099996328353882
+                                    },
+                                    "rotation": {
+                                        "x": -4.690258137429737e-8,
+                                        "y": -8.085783775868549e-8,
+                                        "z": 0.7071068286895752,
+                                        "w": 0.7071067094802856
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "police_car_wheel.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "f51fa716-6373-4ddb-8840-3b143a72628f"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "f51fa716-6373-4ddb-8840-3b143a72628f"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -3.8221096992492677,
+                                                "y": 8.615020751953125,
+                                                "z": 81.3007583618164
+                                            },
+                                            "rotation": {
+                                                "x": -0.45460253953933718,
+                                                "y": -0.4546268582344055,
+                                                "z": 0.5415823459625244,
+                                                "w": 0.5416082739830017
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.699997067451477,
+                                        "y": -0.5270000696182251,
+                                        "z": 1.5099996328353882
+                                    },
+                                    "rotation": {
+                                        "x": -4.690258137429737e-8,
+                                        "y": -8.085783775868549e-8,
+                                        "z": 0.7071068286895752,
+                                        "w": 0.7071067094802856
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "police_car_wheel.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "b1852983-f940-498f-93dd-12b6656ca036"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "b1852983-f940-498f-93dd-12b6656ca036"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -0.8478057384490967,
+                                                "y": 8.615029335021973,
+                                                "z": 80.77738952636719
+                                            },
+                                            "rotation": {
+                                                "x": -0.45460253953933718,
+                                                "y": -0.4546268582344055,
+                                                "z": 0.5415823459625244,
+                                                "w": 0.5416082739830017
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.700000524520874,
+                                        "y": -0.5269998908042908,
+                                        "z": -1.5099997520446778
+                                    },
+                                    "rotation": {
+                                        "x": -4.690258137429737e-8,
+                                        "y": -8.085783775868549e-8,
+                                        "z": 0.7071068286895752,
+                                        "w": 0.7071067094802856
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "police_car_wheel.glb"
                         }
                     }
                 }
@@ -110554,7 +110725,7 @@
             },
             {
                 "key": {
-                    "value0": "b1852983-f940-498f-93dd-12b6656ca036"
+                    "value0": "e634b2f3-0e2b-4857-89bd-ed219779338f"
                 },
                 "value": {
                     "polymorphic_id": 1,
@@ -110565,21 +110736,21 @@
                                 "value0": {
                                     "value0": {
                                         "value0": {
-                                            "value0": "b1852983-f940-498f-93dd-12b6656ca036"
+                                            "value0": "e634b2f3-0e2b-4857-89bd-ed219779338f"
                                         }
                                     },
                                     "value1": {
                                         "value0": {
                                             "translation": {
-                                                "x": -0.8477779626846314,
-                                                "y": 8.615250587463379,
-                                                "z": 80.7774429321289
+                                                "x": -5.335277557373047,
+                                                "y": 9.342100143432618,
+                                                "z": 79.88822937011719
                                             },
                                             "rotation": {
-                                                "x": -0.4546089768409729,
-                                                "y": -0.4546203017234802,
-                                                "z": 0.5416197776794434,
-                                                "w": 0.5415708422660828
+                                                "x": -0.541583240032196,
+                                                "y": -0.4546017348766327,
+                                                "z": -0.45462766289711,
+                                                "w": 0.5416076183319092
                                             },
                                             "scale": {
                                                 "x": 1.0,
@@ -110593,614 +110764,9 @@
                                 },
                                 "m_local_transform": {
                                     "translation": {
-                                        "x": 0.7000007033348084,
-                                        "y": -0.5269978642463684,
-                                        "z": -1.5099942684173585
-                                    },
-                                    "rotation": {
-                                        "x": -4.613641735318197e-8,
-                                        "y": -7.518527134209308e-9,
-                                        "z": 0.7071055173873901,
-                                        "w": 0.7071055769920349
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car_wheel.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "f51fa716-6373-4ddb-8840-3b143a72628f"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "f51fa716-6373-4ddb-8840-3b143a72628f"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -3.8220815658569338,
-                                                "y": 8.615078926086426,
-                                                "z": 81.30081176757813
-                                            },
-                                            "rotation": {
-                                                "x": -0.4546089768409729,
-                                                "y": -0.4546203017234802,
-                                                "z": 0.5416197776794434,
-                                                "w": 0.5415708422660828
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.6999971270561218,
-                                        "y": -0.5269981622695923,
-                                        "z": 1.5099947452545167
-                                    },
-                                    "rotation": {
-                                        "x": -4.613641735318197e-8,
-                                        "y": -7.518527134209308e-9,
-                                        "z": 0.7071055173873901,
-                                        "w": 0.7071055769920349
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car_wheel.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "e685faa9-5a7e-4f9e-9a41-160527aeb3c1"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "e685faa9-5a7e-4f9e-9a41-160527aeb3c1"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -1.0904006958007813,
-                                                "y": 8.615190505981446,
-                                                "z": 79.39862060546875
-                                            },
-                                            "rotation": {
-                                                "x": -0.4546089768409729,
-                                                "y": -0.4546203017234802,
-                                                "z": 0.5416197776794434,
-                                                "w": 0.5415708422660828
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": -0.700000524520874,
-                                        "y": -0.5269982218742371,
-                                        "z": -1.509995460510254
-                                    },
-                                    "rotation": {
-                                        "x": -4.613641735318197e-8,
-                                        "y": -7.518527134209308e-9,
-                                        "z": 0.7071055173873901,
-                                        "w": 0.7071055769920349
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car_wheel.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "9506e4e6-161f-47cf-a652-4e5fc9883804"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "9506e4e6-161f-47cf-a652-4e5fc9883804"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -6.850783348083496,
-                                                "y": 5.369870185852051,
-                                                "z": -7.922420501708984
-                                            },
-                                            "rotation": {
-                                                "x": -0.0000049395571295463018,
-                                                "y": 0.000004817309672944248,
-                                                "z": 0.7071501016616821,
-                                                "w": 0.7070635557174683
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": -0.7000002264976502,
-                                        "y": -0.37931111454963686,
-                                        "z": -1.5100001096725464
-                                    },
-                                    "rotation": {
-                                        "x": 4.049037443110137e-7,
-                                        "y": -4.0490340325050058e-7,
-                                        "z": 0.7071068286895752,
-                                        "w": 0.7071068286895752
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car_wheel.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "75c18418-d250-4bc3-adac-26567e139bf9"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "75c18418-d250-4bc3-adac-26567e139bf9"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -4.064704418182373,
-                                                "y": 8.615018844604493,
-                                                "z": 79.9219970703125
-                                            },
-                                            "rotation": {
-                                                "x": -0.4546089768409729,
-                                                "y": -0.4546203017234802,
-                                                "z": 0.5416197776794434,
-                                                "w": 0.5415708422660828
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": -0.6999965310096741,
-                                        "y": -0.5269984602928162,
-                                        "z": 1.5099949836730958
-                                    },
-                                    "rotation": {
-                                        "x": -4.613641735318197e-8,
-                                        "y": -7.518527134209308e-9,
-                                        "z": 0.7071055173873901,
-                                        "w": 0.7071055769920349
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "police_car_wheel.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "4e98b20a-54a2-4f74-a301-804a161d0cb1"
-                },
-                "value": {
-                    "polymorphic_id": 2147483653,
-                    "polymorphic_name": "AnimatedModelComponent",
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "4e98b20a-54a2-4f74-a301-804a161d0cb1"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": 84.6551513671875,
-                                                "y": 8.09009075164795,
-                                                "z": -33.10505294799805
-                                            },
-                                            "rotation": {
-                                                "x": 0.0,
-                                                "y": 0.8368733525276184,
-                                                "z": 0.0,
-                                                "w": 0.5473965406417847
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.0,
-                                        "y": -1.0,
-                                        "z": 0.0
-                                    },
-                                    "rotation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 1.0
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "cop.glb",
-                            "m_anim_idx": 1,
-                            "m_playing": true,
-                            "m_looping": true,
-                            "m_speed": 1.0
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "14a540a8-2868-4bf7-b0a9-3de1d829c861"
-                },
-                "value": {
-                    "polymorphic_id": 1,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "14a540a8-2868-4bf7-b0a9-3de1d829c861"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": 84.6551513671875,
-                                                "y": 8.09009075164795,
-                                                "z": -33.10505294799805
-                                            },
-                                            "rotation": {
-                                                "x": 0.0,
-                                                "y": 0.8368733525276184,
-                                                "z": 0.0,
-                                                "w": 0.5473965406417847
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": false,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.0,
-                                        "y": -1.0,
-                                        "z": 0.0
-                                    },
-                                    "rotation": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 1.0
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_model_key": "cop.glb"
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "ce489547-b07c-43c6-aa50-0d9e88696c96"
-                },
-                "value": {
-                    "polymorphic_id": 2,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "ce489547-b07c-43c6-aa50-0d9e88696c96"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -7.050854682922363,
-                                                "y": 5.949215412139893,
-                                                "z": -4.012429237365723
-                                            },
-                                            "rotation": {
-                                                "x": -0.7071121335029602,
-                                                "y": -0.00004332666139816865,
-                                                "z": 0.00004320436710258946,
-                                                "w": 0.7071015238761902
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": -0.8999999761581421,
+                                        "x": -0.9534276723861694,
                                         "y": 0.20000000298023225,
-                                        "z": 2.4000000953674318
-                                    },
-                                    "rotation": {
-                                        "x": -0.7071068286895752,
-                                        "y": -0.0,
-                                        "z": -0.0,
-                                        "w": 0.7071068286895752
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_enabled": true,
-                            "m_lumen": 15.0,
-                            "m_color": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 255
-                            },
-                            "m_type": 1,
-                            "m_cast_shadows": true,
-                            "m_range": 10.0,
-                            "m_shadow_softness": 1.0,
-                            "m_depth_bias": 0.0010000000474974514
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "50f47253-f285-46d8-a07c-bce60d989c6e"
-                },
-                "value": {
-                    "polymorphic_id": 2,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "50f47253-f285-46d8-a07c-bce60d989c6e"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -5.2508544921875,
-                                                "y": 5.949435710906982,
-                                                "z": -4.0124287605285648
-                                            },
-                                            "rotation": {
-                                                "x": -0.7071121335029602,
-                                                "y": -0.00004332666139816865,
-                                                "z": 0.00004320436710258946,
-                                                "w": 0.7071015238761902
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.8999999761581421,
-                                        "y": 0.20000000298023225,
-                                        "z": 2.4000000953674318
-                                    },
-                                    "rotation": {
-                                        "x": -0.7071068286895752,
-                                        "y": -0.0,
-                                        "z": -0.0,
-                                        "w": 0.7071068286895752
-                                    },
-                                    "scale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    }
-                                },
-                                "m_is_required": true
-                            },
-                            "m_enabled": true,
-                            "m_lumen": 15.0,
-                            "m_color": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 255
-                            },
-                            "m_type": 1,
-                            "m_cast_shadows": true,
-                            "m_range": 10.0,
-                            "m_shadow_softness": 1.0,
-                            "m_depth_bias": 0.0010000000474974514
-                        }
-                    }
-                }
-            },
-            {
-                "key": {
-                    "value0": "f5c57b7e-bb3a-46e5-add7-f1d59cd796b1"
-                },
-                "value": {
-                    "polymorphic_id": 2,
-                    "ptr_wrapper": {
-                        "valid": 1,
-                        "data": {
-                            "value0": {
-                                "value0": {
-                                    "value0": {
-                                        "value0": {
-                                            "value0": "f5c57b7e-bb3a-46e5-add7-f1d59cd796b1"
-                                        }
-                                    },
-                                    "value1": {
-                                        "value0": {
-                                            "translation": {
-                                                "x": -5.054035186767578,
-                                                "y": 9.342015266418457,
-                                                "z": 81.72516632080078
-                                            },
-                                            "rotation": {
-                                                "x": -0.5415906310081482,
-                                                "y": -0.45463991165161135,
-                                                "z": -0.45459097623825076,
-                                                "w": 0.5416019558906555
-                                            },
-                                            "scale": {
-                                                "x": 1.0,
-                                                "y": 1.0,
-                                                "z": 1.0
-                                            }
-                                        }
-                                    },
-                                    "m_visible": true,
-                                    "m_raycast_active": true
-                                },
-                                "m_local_transform": {
-                                    "translation": {
-                                        "x": 0.9044612646102905,
-                                        "y": 0.20000000298023225,
-                                        "z": 2.7968034744262697
+                                        "z": 2.7554755210876467
                                     },
                                     "rotation": {
                                         "x": -0.7071068286895752,
@@ -111229,6 +110795,237 @@
                             "m_range": 40.0,
                             "m_shadow_softness": 1.0,
                             "m_depth_bias": 0.0010000000474974514
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "fb3ed3bf-9e4d-4bc5-9e79-21a5e60dfc06"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "fb3ed3bf-9e4d-4bc5-9e79-21a5e60dfc06"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -6.850783348083496,
+                                                "y": 5.369905948638916,
+                                                "z": -4.902420520782471
+                                            },
+                                            "rotation": {
+                                                "x": -0.0000056605895224493,
+                                                "y": 0.000005538253390113823,
+                                                "z": 0.7071501016616821,
+                                                "w": 0.7070635557174683
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": -0.6999997496604919,
+                                        "y": -0.3793204724788666,
+                                        "z": 1.5099998712539673
+                                    },
+                                    "rotation": {
+                                        "x": -3.1608453809894856e-7,
+                                        "y": 3.160844244121108e-7,
+                                        "z": 0.7071068286895752,
+                                        "w": 0.7071068286895752
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "police_car_wheel.glb"
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "0b7e8482-a84b-43f1-83da-320f9ea9d5b7"
+                },
+                "value": {
+                    "polymorphic_id": 2147483653,
+                    "polymorphic_name": "ColliderComponent",
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "0b7e8482-a84b-43f1-83da-320f9ea9d5b7"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 256.0,
+                                                "y": 20.0,
+                                                "z": 256.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_shapes": [
+                                {
+                                    "m_type": 2,
+                                    "m_local_position": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "m_local_rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "m_radius": 1.0,
+                                    "m_half_extends": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "m_heightmap_texture_key": "height.png",
+                                    "m_map_size": {
+                                        "x": 256.0,
+                                        "y": 20.0,
+                                        "z": 256.0
+                                    }
+                                }
+                            ],
+                            "m_type": 0,
+                            "m_linear_velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "m_angular_velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "c21f60c3-1282-4a6a-9cff-66e9cc31f2ed"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "c21f60c3-1282-4a6a-9cff-66e9cc31f2ed"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 1.0
+                                            },
+                                            "scale": {
+                                                "x": 256.0,
+                                                "y": 20.0,
+                                                "z": 256.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "Gen_Heightmap_From_height.png"
                         }
                     }
                 }
@@ -169365,16 +169162,308 @@
                         }
                     }
                 }
+            },
+            {
+                "key": {
+                    "value0": "f5c57b7e-bb3a-46e5-add7-f1d59cd796b1"
+                },
+                "value": {
+                    "polymorphic_id": 1,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "f5c57b7e-bb3a-46e5-add7-f1d59cd796b1"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -5.054004192352295,
+                                                "y": 9.34200668334961,
+                                                "z": 81.72517395019531
+                                            },
+                                            "rotation": {
+                                                "x": -0.541583240032196,
+                                                "y": -0.4546017348766327,
+                                                "z": -0.45462766289711,
+                                                "w": 0.5416076183319092
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.9044612646102905,
+                                        "y": 0.20000000298023225,
+                                        "z": 2.7968034744262697
+                                    },
+                                    "rotation": {
+                                        "x": -0.7071068286895752,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.7071068286895752
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_enabled": true,
+                            "m_lumen": 15.0,
+                            "m_color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 255
+                            },
+                            "m_type": 1,
+                            "m_cast_shadows": true,
+                            "m_range": 40.0,
+                            "m_shadow_softness": 1.0,
+                            "m_depth_bias": 0.0010000000474974514
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "50f47253-f285-46d8-a07c-bce60d989c6e"
+                },
+                "value": {
+                    "polymorphic_id": 1,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "50f47253-f285-46d8-a07c-bce60d989c6e"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -5.2508544921875,
+                                                "y": 5.949435710906982,
+                                                "z": -4.0124287605285648
+                                            },
+                                            "rotation": {
+                                                "x": -0.7071121335029602,
+                                                "y": -0.00004332666139816865,
+                                                "z": 0.00004320436710258946,
+                                                "w": 0.7071015238761902
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.8999999761581421,
+                                        "y": 0.20000000298023225,
+                                        "z": 2.4000000953674318
+                                    },
+                                    "rotation": {
+                                        "x": -0.7071068286895752,
+                                        "y": -0.0,
+                                        "z": -0.0,
+                                        "w": 0.7071068286895752
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_enabled": true,
+                            "m_lumen": 15.0,
+                            "m_color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 255
+                            },
+                            "m_type": 1,
+                            "m_cast_shadows": true,
+                            "m_range": 10.0,
+                            "m_shadow_softness": 1.0,
+                            "m_depth_bias": 0.0010000000474974514
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "ce489547-b07c-43c6-aa50-0d9e88696c96"
+                },
+                "value": {
+                    "polymorphic_id": 1,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "ce489547-b07c-43c6-aa50-0d9e88696c96"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": -7.050854682922363,
+                                                "y": 5.949215412139893,
+                                                "z": -4.012429237365723
+                                            },
+                                            "rotation": {
+                                                "x": -0.7071121335029602,
+                                                "y": -0.00004332666139816865,
+                                                "z": 0.00004320436710258946,
+                                                "w": 0.7071015238761902
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": true,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": -0.8999999761581421,
+                                        "y": 0.20000000298023225,
+                                        "z": 2.4000000953674318
+                                    },
+                                    "rotation": {
+                                        "x": -0.7071068286895752,
+                                        "y": -0.0,
+                                        "z": -0.0,
+                                        "w": 0.7071068286895752
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_enabled": true,
+                            "m_lumen": 15.0,
+                            "m_color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 255
+                            },
+                            "m_type": 1,
+                            "m_cast_shadows": true,
+                            "m_range": 10.0,
+                            "m_shadow_softness": 1.0,
+                            "m_depth_bias": 0.0010000000474974514
+                        }
+                    }
+                }
+            },
+            {
+                "key": {
+                    "value0": "14a540a8-2868-4bf7-b0a9-3de1d829c861"
+                },
+                "value": {
+                    "polymorphic_id": 2,
+                    "ptr_wrapper": {
+                        "valid": 1,
+                        "data": {
+                            "value0": {
+                                "value0": {
+                                    "value0": {
+                                        "value0": {
+                                            "value0": "14a540a8-2868-4bf7-b0a9-3de1d829c861"
+                                        }
+                                    },
+                                    "value1": {
+                                        "value0": {
+                                            "translation": {
+                                                "x": 84.6551513671875,
+                                                "y": 8.09009075164795,
+                                                "z": -33.10505294799805
+                                            },
+                                            "rotation": {
+                                                "x": 0.0,
+                                                "y": 0.8368733525276184,
+                                                "z": 0.0,
+                                                "w": 0.5473965406417847
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0,
+                                                "z": 1.0
+                                            }
+                                        }
+                                    },
+                                    "m_visible": false,
+                                    "m_raycast_active": true
+                                },
+                                "m_local_transform": {
+                                    "translation": {
+                                        "x": 0.0,
+                                        "y": -1.0,
+                                        "z": 0.0
+                                    },
+                                    "rotation": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                },
+                                "m_is_required": true
+                            },
+                            "m_model_key": "cop.glb"
+                        }
+                    }
+                }
             }
         ],
         "m_actors": [
             {
                 "key": {
-                    "value0": "13faeb28-850e-4d26-9b7e-dd9b1b5a5403"
+                    "value0": "3d3f0893-2cb6-433b-a566-e9ba4fa6a7c1"
                 },
                 "value": {
                     "polymorphic_id": 2147483654,
-                    "polymorphic_name": "DrivableCar",
+                    "polymorphic_name": "NPC",
                     "ptr_wrapper": {
                         "valid": 1,
                         "data": {
@@ -169383,45 +169472,30 @@
                                     "value0": {
                                         "component_ids": [
                                             {
-                                                "value0": "f5c57b7e-bb3a-46e5-add7-f1d59cd796b1"
+                                                "value0": "4e98b20a-54a2-4f74-a301-804a161d0cb1"
                                             },
                                             {
-                                                "value0": "e634b2f3-0e2b-4857-89bd-ed219779338f"
-                                            },
-                                            {
-                                                "value0": "bf6699c7-da9b-4917-a5c1-07c8b791e03f"
-                                            },
-                                            {
-                                                "value0": "f51fa716-6373-4ddb-8840-3b143a72628f"
-                                            },
-                                            {
-                                                "value0": "75c18418-d250-4bc3-adac-26567e139bf9"
-                                            },
-                                            {
-                                                "value0": "b1852983-f940-498f-93dd-12b6656ca036"
-                                            },
-                                            {
-                                                "value0": "e685faa9-5a7e-4f9e-9a41-160527aeb3c1"
+                                                "value0": "14a540a8-2868-4bf7-b0a9-3de1d829c861"
                                             }
                                         ],
                                         "value0": {
                                             "value0": {
                                                 "value0": {
-                                                    "value0": "13faeb28-850e-4d26-9b7e-dd9b1b5a5403"
+                                                    "value0": "3d3f0893-2cb6-433b-a566-e9ba4fa6a7c1"
                                                 }
                                             },
                                             "value1": {
                                                 "value0": {
                                                     "translation": {
-                                                        "x": -2.4562745094299318,
-                                                        "y": 9.142134666442871,
-                                                        "z": 80.34970092773438
+                                                        "x": 84.6551513671875,
+                                                        "y": 9.09009075164795,
+                                                        "z": -33.10505294799805
                                                     },
                                                     "rotation": {
-                                                        "x": 0.000008003618859220296,
-                                                        "y": -0.6429232954978943,
-                                                        "z": 0.00003460310836089775,
-                                                        "w": 0.7659327983856201
+                                                        "x": 0.0,
+                                                        "y": 0.8368733525276184,
+                                                        "z": 0.0,
+                                                        "w": 0.5473965406417847
                                                     },
                                                     "scale": {
                                                         "x": 1.0,
@@ -169434,56 +169508,11 @@
                                             "m_raycast_active": true
                                         }
                                     },
-                                    "m_vehicle_config": {
-                                        "wheel_radius": 0.3700000047683716,
-                                        "wheel_width": 0.20000000298023225,
-                                        "half_vehicle_length": 2.25,
-                                        "half_vehicle_width": 0.699999988079071,
-                                        "half_vehicle_height": 0.029999999329447748,
-                                        "mass": 2000.0,
-                                        "InitialRollAngle": 0.0,
-                                        "MaxRollAngle": 1.0471975803375245,
-                                        "MaxSteeringAngle": 0.5235987901687622,
-                                        "FourWheelDrive": false,
-                                        "AntiRollbar": true,
-                                        "LimitedSlipDifferentials": true,
-                                        "OverrideGravity": false,
-                                        "MaxEngineTorque": 500.0,
-                                        "ClutchStrength": 10.0,
-                                        "FrontCasterAngle": 0.0,
-                                        "FrontKingPinAngle": 0.0,
-                                        "FrontCamber": 0.0,
-                                        "FrontToe": 0.0,
-                                        "FrontSuspensionForwardAngle": 0.0,
-                                        "FrontSuspensionSidewaysAngle": 0.0,
-                                        "FrontSuspensionMinLength": 0.30000001192092898,
-                                        "FrontSuspensionMaxLength": 0.5,
-                                        "FrontSuspensionFrequency": 1.5,
-                                        "FrontSuspensionDamping": 0.5,
-                                        "RearSuspensionForwardAngle": 0.0,
-                                        "RearSuspensionSidewaysAngle": 0.0,
-                                        "RearCasterAngle": 0.0,
-                                        "RearKingPinAngle": 0.0,
-                                        "RearCamber": 0.0,
-                                        "RearToe": 0.0,
-                                        "RearSuspensionMinLength": 0.30000001192092898,
-                                        "RearSuspensionMaxLength": 0.5,
-                                        "RearSuspensionFrequency": 1.5,
-                                        "RearSuspensionDamping": 0.5
-                                    },
-                                    "mForward": 0.0,
-                                    "mRight": 0.0,
-                                    "mBrake": 0.0,
-                                    "mHandBrake": 0.0
-                                },
-                                "m_base_model_key": "police_car.glb",
-                                "m_wheel_model_key": "police_car_wheel.glb",
-                                "m_base_model": "bf6699c7-da9b-4917-a5c1-07c8b791e03f",
-                                "m_wheel_models[i]": "f51fa716-6373-4ddb-8840-3b143a72628f",
-                                "m_wheel_models[i]": "75c18418-d250-4bc3-adac-26567e139bf9",
-                                "m_wheel_models[i]": "b1852983-f940-498f-93dd-12b6656ca036",
-                                "m_wheel_models[i]": "e685faa9-5a7e-4f9e-9a41-160527aeb3c1"
-                            }
+                                    "m_height": 1.5,
+                                    "m_radius": 0.25
+                                }
+                            },
+                            "m_placement_name": "Mira"
                         }
                     }
                 }
@@ -169555,11 +169584,11 @@
             },
             {
                 "key": {
-                    "value0": "3d3f0893-2cb6-433b-a566-e9ba4fa6a7c1"
+                    "value0": "13faeb28-850e-4d26-9b7e-dd9b1b5a5403"
                 },
                 "value": {
                     "polymorphic_id": 2147483656,
-                    "polymorphic_name": "NPC",
+                    "polymorphic_name": "DrivableCar",
                     "ptr_wrapper": {
                         "valid": 1,
                         "data": {
@@ -169568,30 +169597,45 @@
                                     "value0": {
                                         "component_ids": [
                                             {
-                                                "value0": "4e98b20a-54a2-4f74-a301-804a161d0cb1"
+                                                "value0": "f5c57b7e-bb3a-46e5-add7-f1d59cd796b1"
                                             },
                                             {
-                                                "value0": "14a540a8-2868-4bf7-b0a9-3de1d829c861"
+                                                "value0": "e634b2f3-0e2b-4857-89bd-ed219779338f"
+                                            },
+                                            {
+                                                "value0": "bf6699c7-da9b-4917-a5c1-07c8b791e03f"
+                                            },
+                                            {
+                                                "value0": "f51fa716-6373-4ddb-8840-3b143a72628f"
+                                            },
+                                            {
+                                                "value0": "75c18418-d250-4bc3-adac-26567e139bf9"
+                                            },
+                                            {
+                                                "value0": "b1852983-f940-498f-93dd-12b6656ca036"
+                                            },
+                                            {
+                                                "value0": "e685faa9-5a7e-4f9e-9a41-160527aeb3c1"
                                             }
                                         ],
                                         "value0": {
                                             "value0": {
                                                 "value0": {
-                                                    "value0": "3d3f0893-2cb6-433b-a566-e9ba4fa6a7c1"
+                                                    "value0": "13faeb28-850e-4d26-9b7e-dd9b1b5a5403"
                                                 }
                                             },
                                             "value1": {
                                                 "value0": {
                                                     "translation": {
-                                                        "x": 84.6551513671875,
-                                                        "y": 9.09009075164795,
-                                                        "z": -33.10505294799805
+                                                        "x": -2.456265926361084,
+                                                        "y": 9.142060279846192,
+                                                        "z": 80.34969329833985
                                                     },
                                                     "rotation": {
-                                                        "x": 0.0,
-                                                        "y": 0.8368733525276184,
-                                                        "z": 0.0,
-                                                        "w": 0.5473965406417847
+                                                        "x": 0.000017225571355083959,
+                                                        "y": -0.6429222226142883,
+                                                        "z": -0.0000183449883479625,
+                                                        "w": 0.7659315466880798
                                                     },
                                                     "scale": {
                                                         "x": 1.0,
@@ -169604,11 +169648,56 @@
                                             "m_raycast_active": true
                                         }
                                     },
-                                    "m_height": 1.5,
-                                    "m_radius": 0.25
-                                }
-                            },
-                            "m_placement_name": "Mira"
+                                    "m_vehicle_config": {
+                                        "wheel_radius": 0.3700000047683716,
+                                        "wheel_width": 0.20000000298023225,
+                                        "half_vehicle_length": 2.25,
+                                        "half_vehicle_width": 0.699999988079071,
+                                        "half_vehicle_height": 0.029999999329447748,
+                                        "mass": 2000.0,
+                                        "InitialRollAngle": 0.0,
+                                        "MaxRollAngle": 1.0471975803375245,
+                                        "MaxSteeringAngle": 0.5235987901687622,
+                                        "FourWheelDrive": false,
+                                        "AntiRollbar": true,
+                                        "LimitedSlipDifferentials": true,
+                                        "OverrideGravity": false,
+                                        "MaxEngineTorque": 500.0,
+                                        "ClutchStrength": 10.0,
+                                        "FrontCasterAngle": 0.0,
+                                        "FrontKingPinAngle": 0.0,
+                                        "FrontCamber": 0.0,
+                                        "FrontToe": 0.0,
+                                        "FrontSuspensionForwardAngle": 0.0,
+                                        "FrontSuspensionSidewaysAngle": 0.0,
+                                        "FrontSuspensionMinLength": 0.30000001192092898,
+                                        "FrontSuspensionMaxLength": 0.5,
+                                        "FrontSuspensionFrequency": 1.5,
+                                        "FrontSuspensionDamping": 0.5,
+                                        "RearSuspensionForwardAngle": 0.0,
+                                        "RearSuspensionSidewaysAngle": 0.0,
+                                        "RearCasterAngle": 0.0,
+                                        "RearKingPinAngle": 0.0,
+                                        "RearCamber": 0.0,
+                                        "RearToe": 0.0,
+                                        "RearSuspensionMinLength": 0.30000001192092898,
+                                        "RearSuspensionMaxLength": 0.5,
+                                        "RearSuspensionFrequency": 1.5,
+                                        "RearSuspensionDamping": 0.5
+                                    },
+                                    "mForward": 0.0,
+                                    "mRight": 0.0,
+                                    "mBrake": 0.0,
+                                    "mHandBrake": 0.0
+                                },
+                                "m_base_model_key": "police_car.glb",
+                                "m_wheel_model_key": "police_car_wheel.glb",
+                                "m_base_model": "bf6699c7-da9b-4917-a5c1-07c8b791e03f",
+                                "m_wheel_models[i]": "f51fa716-6373-4ddb-8840-3b143a72628f",
+                                "m_wheel_models[i]": "75c18418-d250-4bc3-adac-26567e139bf9",
+                                "m_wheel_models[i]": "b1852983-f940-498f-93dd-12b6656ca036",
+                                "m_wheel_models[i]": "e685faa9-5a7e-4f9e-9a41-160527aeb3c1"
+                            }
                         }
                     }
                 }
