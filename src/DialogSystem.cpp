@@ -94,7 +94,7 @@ void DialogSystem::Draw() {
                 anim_text.frame_counter = 0;
                 anim_text.text = f.text;
                 anim_text.on_new_symbol = [](int index, char c){
-                    LilSound* sound = Lil::Resources().GetSound("UIClick_BLEEOOP_Baby_Click.ogg");
+                    Lil::Assets::SoundData* sound = Lil::Assets::GetSoundData("UIClick_BLEEOOP_Baby_Click.ogg");
                     if (sound) sound->Play();
                 };
             }

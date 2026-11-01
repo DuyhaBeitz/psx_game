@@ -3,6 +3,7 @@
 #include "Vehicle.hpp"
 #include "ReflAttributes.hpp"
 #include "ComponentRef.hpp"
+#include "Assets.hpp"
 
 class ModelComponent;
 
@@ -13,8 +14,8 @@ public:
     Car() = default;
     virtual ~Car() = default;
 
-    std::string m_base_model_key = "None";
-    std::string m_wheel_model_key = "None";
+    Lil::Assets::Model m_base_model_key;
+    Lil::Assets::Model m_wheel_model_key;
 
     ComponentRef<ModelComponent> m_base_model;
     ComponentRef<ModelComponent> m_wheel_models[4];
@@ -46,8 +47,8 @@ public:
     }
 };
 LIL_REFLECT(Car, bases<Vehicle>,
-    field(m_base_model_key, ModelKeyAttribute{}),
-    field(m_wheel_model_key, ModelKeyAttribute{})
+    field(m_base_model_key),
+    field(m_wheel_model_key)
 )
 LIL_SER_REGISTER_POLYMORPHIC(Car)
 LIL_DISAMBIGUATE_LOAD_SAVE(Car)

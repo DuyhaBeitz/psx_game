@@ -12,13 +12,14 @@
 #include <LilEngine/LilEngine.hpp>
 #include <LilEditor/LilEditor.hpp>
 
+#define LIL3D_IMPLEMENTATION
+#include "lil3d/lil3d.h"
+
 constexpr int target_fps = 120;
 constexpr float dt = 1.0f / float(target_fps);
 
 int main() {
-    InitWindow(1920, 1080, "editor");
-    R3D_Init(GetScreenWidth(), GetScreenHeight());
-    InitAudioDevice();
+    Lil::Render::InitWindow(1920, 1080, "editor");
     SetTraceLogLevel(LOG_ALL);
     DisableCursor();
     SetWindowState(FLAG_WINDOW_RESIZABLE);
@@ -35,7 +36,8 @@ int main() {
     }
 
     Lil::Editor::Get().Close();
-    Lil::Resources().Unload();
+    Lil::World().Clear();
+    Lil::Assets::Unload();
     CloseAudioDevice();
     CloseWindow();
 

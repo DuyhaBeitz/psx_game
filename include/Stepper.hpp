@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <vector>
+#include "Assets.hpp"
 
 struct Stepper {
     float period;

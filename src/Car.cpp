@@ -12,7 +12,7 @@ void Car::SetupComponents() {
     LightComponent* light1 = Lil::World().CreateComponent<LightComponent>();
     AttachComponent(light1);
     light1->MarkRequired();
-    light1->m_type = int(R3D_LIGHT_SPOT);
+    light1->m_type = int(Lil::Render::LightType::Spot);
     light1->Local().translation = Vector3{m_vehicle_config.half_vehicle_width, m_vehicle_config.half_vehicle_height, m_vehicle_config.half_vehicle_length + 0.4f};
     light1->Local().rotation = QuaternionFromAxisAngle(Vector3{1, 0, 0}, -M_PI/2.0f);
     light1->m_lumen = 15.0f;
@@ -20,7 +20,7 @@ void Car::SetupComponents() {
     LightComponent* light2 = Lil::World().CreateComponent<LightComponent>();
     AttachComponent(light2);
     light2->MarkRequired();
-    light2->m_type = int(R3D_LIGHT_SPOT);
+    light2->m_type = int(Lil::Render::LightType::Spot);
     light2->Local().translation = Vector3{-m_vehicle_config.half_vehicle_width, m_vehicle_config.half_vehicle_height, m_vehicle_config.half_vehicle_length + 0.4f};
     light2->Local().rotation = QuaternionFromAxisAngle(Vector3{1, 0, 0}, -M_PI/2.0f);
     light2->m_lumen = 15.0f;

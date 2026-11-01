@@ -33,7 +33,7 @@ void DrivableCar::SimulationUpdate(float delta_time) {
         size_t id_hash = std::hash<uuids::uuid>{}(GetID());
         size_t alias_index = id_hash % ALIASES_PER_SOUND;
 
-        Lil::Resources().GetSound("Vehicle_Car_Engine_1000_RPM_Rear_Exterior_Loop_Mono.wav")->PlayContinuous3D(
+        Lil::Assets::GetSoundData("Vehicle_Car_Engine_1000_RPM_Rear_Exterior_Loop_Mono.wav")->PlayContinuous3D(
             alias_index,
             Game::GetCamera(), GetPosition(), 1000,
             1.0f, pitch
@@ -59,7 +59,7 @@ void DrivableCar::SimulationUpdate(float delta_time) {
             m_skid_smoothed += (target - m_skid_smoothed) * (1.0f - std::exp(-delta_time * rate));
             float vol = m_skid_smoothed*m_skid_smoothed;
             if (vol > 0.005f) {
-                Lil::Resources().GetSound("tires_squal_loop.wav")->PlayContinuous3D(
+                Lil::Assets::GetSoundData("tires_squal_loop.wav")->PlayContinuous3D(
                     (id_hash + 1) % ALIASES_PER_SOUND,
                     Game::GetCamera(), GetPosition(), 1000, vol);
             }
@@ -85,7 +85,7 @@ void DrivableCar::SimulationUpdate(float delta_time) {
             player->SetPosition(GetPosition() + Vector3{0, 2, 0});
             Game::SetCamera(player->GetCamera());
             m_controlled = false;
-            Lil::Resources().GetSound("car-door-close.wav")->Play3D(Game::GetCamera(), GetPosition(), 1000);
+            Lil::Assets::GetSoundData("car-door-close.wav")->Play3D(Game::GetCamera(), GetPosition(), 1000);
         }
     }
     else {
@@ -98,7 +98,7 @@ void DrivableCar::SimulationUpdate(float delta_time) {
                 Game::DestroyPlayer();
                 m_controlled = true;
                 Game::GetHUD().RemoveCenterHint("F - drive");
-                Lil::Resources().GetSound("car-door-close.wav")->Play3D(Game::GetCamera(), GetPosition(), 1000);
+                Lil::Assets::GetSoundData("car-door-close.wav")->Play3D(Game::GetCamera(), GetPosition(), 1000);
             }
         }
         else {

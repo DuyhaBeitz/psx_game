@@ -4,11 +4,11 @@
             "m_brush_settings": [
                 {
                     "key": {
-                        "value0": "3acbd204-f59b-45ba-aaf9-402c2483d54a"
+                        "value0": "3eaa145d-0745-48e5-b4d9-173fe89b13e5"
                     },
                     "value": {
-                        "radius": 3.886216402053833,
-                        "min_distance": 2.0,
+                        "radius": 9.672664642333985,
+                        "min_distance": 1.0,
                         "iterations": 1,
                         "min_size": 0.699999988079071,
                         "max_size": 1.0,
@@ -20,29 +20,7 @@
                         },
                         "cell_size": 5.0,
                         "value0": {
-                            "value0": "3acbd204-f59b-45ba-aaf9-402c2483d54a"
-                        }
-                    }
-                },
-                {
-                    "key": {
-                        "value0": "85dab521-1884-4187-9619-02060a80a547"
-                    },
-                    "value": {
-                        "radius": 3.9717609882354738,
-                        "min_distance": 0.699999988079071,
-                        "iterations": 3,
-                        "min_size": 0.10000000149011612,
-                        "max_size": 0.20000000298023225,
-                        "slope_coeff": 1.0,
-                        "offset": {
-                            "x": 0.0,
-                            "y": -0.05000000074505806,
-                            "z": 0.0
-                        },
-                        "cell_size": 5.0,
-                        "value0": {
-                            "value0": "85dab521-1884-4187-9619-02060a80a547"
+                            "value0": "3eaa145d-0745-48e5-b4d9-173fe89b13e5"
                         }
                     }
                 }
