@@ -15,6 +15,10 @@
 #define LIL3D_IMPLEMENTATION
 #include "lil3d/lil3d.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 constexpr int target_fps = 120;
 constexpr float dt = 1.0f / float(target_fps);
 
@@ -31,14 +35,20 @@ void UnloadShaders();
 void InitGame();
 void UpdateGame();
 void DrawGame();
+void UpdateDrawFrame();
 
 int main() {
     InitGame();
 
+	#ifdef __EMSCRIPTEN__
+	emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
+	#else
+
     while (!WindowShouldClose()) {
-        UpdateGame();
-        DrawGame();
+        UpdateDrawFrame();
     }
+
+    #endif
     
     UnloadMusicStream(ambient);
     UnloadShaders();
@@ -151,4 +161,9 @@ void DrawGame() {
         Game::DialogSystem().Draw();
         DrawFPS(100, 100);
     EndDrawing();
+}
+
+void UpdateDrawFrame() {
+    UpdateGame();
+    DrawGame();
 }

@@ -48,4 +48,9 @@ target_link_libraries(editor PRIVATE shared lil_engine::lil_editor)
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g -O1")
 # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+
+if (PLATFORM STREQUAL "Web")
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/web.cmake)
+endif()

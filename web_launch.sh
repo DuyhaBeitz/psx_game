@@ -1,0 +1,1 @@
+emrun --no_browser web-build/index.html

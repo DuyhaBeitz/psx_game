@@ -21,9 +21,9 @@ public:
     virtual void LayoutUpdate() override;
     virtual void SimulationUpdate(float delta_time) override;
 
-    virtual bool HoverTreshold(RayCollision res);
-    virtual void OnMouseHover(RayCollision res);
-    virtual void OnMouseUnhover();
+    virtual bool HoverTreshold(RayCollision res) override;
+    virtual void OnMouseHover(RayCollision res) override;
+    virtual void OnMouseUnhover() override;
 };
 LIL_REFLECT(NPC, (bases<HumanCharacter>),
     field(m_placement_name)

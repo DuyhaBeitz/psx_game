@@ -18,9 +18,9 @@ public:
 
     virtual void SimulationUpdate(float delta_time) override;
 
-    virtual bool HoverTreshold(RayCollision res);
-    virtual void OnMouseHover(RayCollision res);
-    virtual void OnMouseUnhover();
+    virtual bool HoverTreshold(RayCollision res) override;
+    virtual void OnMouseHover(RayCollision res) override;
+    virtual void OnMouseUnhover() override;
 
     float m_camera_yaw = 0.0f;
     float m_camera_pitch = 0.0f;
