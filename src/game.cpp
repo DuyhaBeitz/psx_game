@@ -136,10 +136,17 @@ void UpdateGame() {
     
     if (IsKeyPressed(KEY_P)) {
         if (IsCursorHidden()) EnableCursor();
-        else DisableCursor();
+        else {
+            DisableCursor();
+            SetMousePosition(GetScreenWidth()/2, GetScreenHeight()/2);
+        }
     }
+
     if (IsKeyPressed(KEY_V)) debug = !debug;
+
+    #ifndef __EMSCRIPTEN__
     if (IsKeyPressed(KEY_F11)) ToggleBorderlessWindowed();
+    #endif
 
     Lil::Engine::Get().Update(GetFrameTime(), dt);
 }

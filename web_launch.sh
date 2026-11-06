@@ -1,1 +1,1 @@
-emrun --no_browser web-build/index.html
+emrun web-build/index.html --browser chromium
