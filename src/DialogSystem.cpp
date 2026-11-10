@@ -20,7 +20,7 @@ void DialogSystem::DrawBox(std::string name, std::string content) {
     DrawRectangle(0, panelY, w, h - panelY, Fade(BLACK, 0.65f));
 
     // Center dialogue text horizontally
-    int fontSize = 64;
+    int fontSize = GetScreenWidth() / 60;
     int spacing = 54;
     int textWidth = MeasureText(content.c_str(), fontSize);
     int start = w * 0.1;
@@ -50,7 +50,7 @@ void DialogSystem::DrawChoicesBox(std::vector<std::string> choices) {
 
     DrawRectangle(0, panelY, w, h - panelY, Fade(BLACK, 0.65f));
 
-    int fontSize = 64;
+    int fontSize = GetScreenWidth() / 60;
     int spacing = 54;
     int totalHeight = (int)choices.size() * spacing;
     int startY = panelY + ((h - panelY) - totalHeight) / 2;

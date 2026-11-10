@@ -7,7 +7,7 @@
                         "value0": "3eaa145d-0745-48e5-b4d9-173fe89b13e5"
                     },
                     "value": {
-                        "radius": 9.672664642333985,
+                        "radius": 4.898138046264648,
                         "min_distance": 1.0,
                         "iterations": 1,
                         "min_size": 0.699999988079071,
@@ -21,6 +21,28 @@
                         "cell_size": 5.0,
                         "value0": {
                             "value0": "3eaa145d-0745-48e5-b4d9-173fe89b13e5"
+                        }
+                    }
+                },
+                {
+                    "key": {
+                        "value0": "2cd171e9-714e-452f-9bac-8c10faf84cca"
+                    },
+                    "value": {
+                        "radius": 5.0,
+                        "min_distance": 1.5,
+                        "iterations": 1,
+                        "min_size": 0.10000000149011612,
+                        "max_size": 0.20000000298023225,
+                        "slope_coeff": 1.0,
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "cell_size": 5.0,
+                        "value0": {
+                            "value0": "2cd171e9-714e-452f-9bac-8c10faf84cca"
                         }
                     }
                 }
