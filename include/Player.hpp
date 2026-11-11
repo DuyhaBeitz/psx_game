@@ -1,6 +1,7 @@
 #pragma once
 
 #include "HumanCharacter.hpp"
+#include "Input.hpp"
 
 class AnimatedModelComponent;
 
@@ -12,6 +13,10 @@ enum class PlayerPerspective {
 class Player : public HumanCharacter {
 private:
     PlayerPerspective m_perspective = PlayerPerspective::FIRST_PERSON;
+
+    Lil::Input::Vector2Action m_walk_action = "walk";
+    Lil::Input::Vector2Action m_look_action = "look";
+    Lil::Input::BoolAction    m_jump_action = "jump";
 
     void CameraUpdate();
 

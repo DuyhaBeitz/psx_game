@@ -66,21 +66,21 @@ void DrivableCar::SimulationUpdate(float delta_time) {
         }
 
         float sensetivity = 0.005;
-        m_camera_yaw   += GetMouseDelta().x * sensetivity;
-        m_camera_pitch -= GetMouseDelta().y * sensetivity;
+        m_camera_yaw   += m_look_action.X();
+        m_camera_pitch -= m_look_action.Y();
         m_camera_pitch = Clamp(m_camera_pitch, -M_PI/2 * 0.9f, M_PI/2 * 0.9f);
         CameraUpdate();
 
-        float target = IsKeyDown(KEY_D) - IsKeyDown(KEY_A);
+        float target = m_steer_action.Value();
         float rate = (target == 0.0f || target * m_steer < 0.0f) ? 4.0f : 2.0f;
         m_steer = MoveToward(m_steer, target, rate * delta_time);
 
         mPreviousForward = mForward;
-        mForward = IsKeyDown(KEY_W) - IsKeyDown(KEY_S);
+        mForward = m_drive_action.Value();
         mRight = m_steer;
-        mBrake = IsKeyDown(KEY_SPACE);
+        mBrake = m_break_action.IsDown();
 
-        if (IsKeyPressed(KEY_F)) {
+        if (m_interact_action.IsPressed()) {
             Player* player = Game::CreatePlayer();
             player->SetPosition(GetPosition() + Vector3{0, 2, 0});
             Game::SetCamera(player->GetCamera());
@@ -93,7 +93,7 @@ void DrivableCar::SimulationUpdate(float delta_time) {
 
         if (IsHovered()) {
             Game::GetHUD().AddCenterHint("F - drive");
-            if (IsKeyPressed(KEY_F)) {
+            if (m_interact_action.IsPressed()) {
                 Game::SetCamera(GetCamera());
                 Game::DestroyPlayer();
                 m_controlled = true;

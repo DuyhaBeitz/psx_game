@@ -2,12 +2,19 @@
 
 #include "Car.hpp"
 #include "Interactable.hpp"
+#include "Input.hpp"
 
 class DrivableCar : public Car, public Interactable {
 protected:
     bool m_controlled = false;
     void CameraUpdate();
     float m_skid_smoothed;
+
+    Lil::Input::Vector2Action m_look_action = "look";
+    Lil::Input::FloatAction m_drive_action = "car_drive";
+    Lil::Input::FloatAction m_steer_action = "car_steer";
+    Lil::Input::BoolAction  m_break_action = "car_break";
+    Lil::Input::BoolAction  m_interact_action = "interact";
 
 public:
     LIL_SERIALIZABLE()

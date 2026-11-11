@@ -48,22 +48,23 @@ void Player::SimulationUpdate(float delta_time) {
     HumanCharacter::SimulationUpdate(delta_time);
 
     float sensetivity = 0.005;
-    m_camera_yaw   += GetMouseDelta().x * sensetivity;
-    m_camera_pitch -= GetMouseDelta().y * sensetivity;
+    m_camera_yaw   += m_look_action.X();
+    m_camera_pitch -= m_look_action.Y();
     m_camera_pitch = Clamp(m_camera_pitch, -M_PI/2 * 0.9f, M_PI/2 * 0.9f);
     
     CameraUpdate();
-
-    float fwd = float(int(IsKeyDown(KEY_W)) - int(IsKeyDown(KEY_S)));
-    float rght = float(int(IsKeyDown(KEY_D)) - int(IsKeyDown(KEY_A)));
 
     bool sprinting = IsKeyDown(KEY_LEFT_SHIFT);
     float sprint_coef = 1.5f;
     const float base_speed = 4.0f;
     const float speed = sprinting ? base_speed * sprint_coef : base_speed;
+
+    float fwd = m_walk_action.Y();
+    float rght = m_walk_action.X();    
     Vector2 move = Vector2Normalize(Vector2Rotate({fwd, rght}, m_camera_yaw)) * speed;
+
     float jump_impulse = 4.5f;
-    bool jump = IsKeyDown(KEY_SPACE);
+    bool jump = m_jump_action.IsDown();
 
     if (Game::DialogSystem().IsDialogActive()) {
         move = Vector2{0.0f, 0.0f};

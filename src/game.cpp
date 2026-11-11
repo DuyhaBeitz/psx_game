@@ -12,9 +12,6 @@
 
 #include <LilEngine/LilEngine.hpp>
 
-#define LIL3D_IMPLEMENTATION
-#include "lil3d/lil3d.h"
-
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
 #endif
@@ -33,6 +30,7 @@ void SetupShaders();
 void UnloadShaders();
 
 void InitGame();
+void SetupInputs();
 void UpdateGame();
 void DrawGame();
 void UpdateDrawFrame();
@@ -128,6 +126,38 @@ void InitGame() {
     PlayMusicStream(ambient);
 
     Lil::Audio().SetSFXVolume(0.1f);
+
+    SetupInputs();
+}
+
+void SetupInputs() {
+    Lil::Input::Vector2Action w("walk");
+    Lil::Input::RegisterVector2Action(w);
+    w.BindKeys(KEY_W, KEY_S, KEY_A, KEY_D);
+
+    Lil::Input::Vector2Action l("look");
+    Lil::Input::RegisterVector2Action(l);
+    l.BindMouseDelta(0.005f);
+
+    Lil::Input::BoolAction j("jump");
+    Lil::Input::RegisterBoolAction(j);
+    j.BindKey(KEY_SPACE);
+
+    Lil::Input::FloatAction d("car_drive");
+    Lil::Input::RegisterFloatAction(d);
+    d.BindKeyPair(KEY_S, KEY_W);
+
+    Lil::Input::FloatAction s("car_steer");
+    Lil::Input::RegisterFloatAction(s);
+    s.BindKeyPair(KEY_A, KEY_D);
+
+    Lil::Input::BoolAction b("car_break");
+    Lil::Input::RegisterBoolAction(b);
+    b.BindKey(KEY_SPACE);
+
+    Lil::Input::BoolAction i("interact");
+    Lil::Input::RegisterBoolAction(i);
+    i.BindKey(KEY_F);
 }
 
 void UpdateGame() {
