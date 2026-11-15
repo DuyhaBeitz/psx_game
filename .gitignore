@@ -1,3 +1,13 @@
 build/
 web-build/
+android-build*/
 lil_engine_sdk/
+lil_config.ini
+
+android/.gradle/
+android/build/
+android/app/build/
+android/app/.cxx/
+android/**/.externalNativeBuild/
+android/local.properties
+android/captures/

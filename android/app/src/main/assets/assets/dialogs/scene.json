@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "variables": {},
+  "characters": {
+    "Mira": {
+      "name": "Mira.name"
+    },
+    "You": {
+      "name": "You.name"
+    }
+  },
+  "scene": {
+    "id": "untitled",
+    "entry_stage": "start",
+    "stages": {
+      "start": {
+        "placements": [
+          {
+            "id": "Mira",
+            "character": "Mira",
+            "entry": "main"
+          }
+        ],
+        "graphs": {
+          "main": {
+            "start": "n1",
+            "nodes": {
+              "n1": {
+                "type": "line",
+                "speaker": "Mira",
+                "text": "main.n1.text",
+                "next": "n2"
+              },
+              "n2": {
+                "type": "choice",
+                "choices": [
+                  {
+                    "text": "main.n2.choice0",
+                    "next": "n3"
+                  },
+                  {
+                    "text": "main.n2.choice1",
+                    "next": "n4"
+                  },
+                  {
+                    "text": "main.n2.choice2",
+                    "next": "n5"
+                  },
+                  {
+                    "text": "main.n2.choice3",
+                    "next": "n6"
+                  }
+                ]
+              },
+              "n3": {
+                "type": "line",
+                "speaker": "Mira",
+                "text": "main.n3.text"
+              },
+              "n4": {
+                "type": "line",
+                "speaker": "Mira",
+                "text": "main.n4.text"
+              },
+              "n5": {
+                "type": "line",
+                "speaker": "Mira",
+                "text": "main.n5.text"
+              },
+              "n6": {
+                "type": "line",
+                "speaker": "Mira",
+                "text": "main.n6.text"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

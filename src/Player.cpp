@@ -15,7 +15,8 @@ void Player::CameraUpdate() {
             float camera_arm = 3.0f;
             Ray ray = {.position = m_camera.target, .direction = GetLookingVector() * -1.0f};
             RayCollision res{0};
-            Actor* actor = Lil::World().Raycast(ray, &res, {GetID()});
+            std::set<uuids::uuid> ignore_ids = {GetID()};
+            Actor* actor = Lil::World().Raycast(ray, &res, &ignore_ids);
             if (res.hit) camera_arm = fmin(camera_arm, res.distance - 0.1f);
             m_camera.position = m_camera.target - (GetLookingVector()*camera_arm);
         }

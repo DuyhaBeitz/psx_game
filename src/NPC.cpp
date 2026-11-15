@@ -22,7 +22,7 @@ void NPC::LayoutUpdate() {
 void NPC::SimulationUpdate(float delta_time) {
     HumanCharacter::SimulationUpdate(delta_time);
     
-    CheckInteractable(this, this);
+    //CheckInteractable(this, this);
 
     if (IsHovered()) {
         Game::GetHUD().AddCenterHint("F - talk");

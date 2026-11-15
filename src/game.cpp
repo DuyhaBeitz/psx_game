@@ -9,8 +9,10 @@
 #include "Player.hpp"
 #include "DrivableCar.hpp"
 #include "Game.hpp"
+#include "rlgl.h"
 
 #include <LilEngine/LilEngine.hpp>
+#include "lil3d/lil3d.h"
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
@@ -18,6 +20,9 @@
 
 constexpr int target_fps = 120;
 constexpr float dt = 1.0f / float(target_fps);
+RenderTexture2D render_texture;
+int RENDER_W = 640;
+int RENDER_H = 360;
 
 // R3D_SurfaceShader* psxSnap = nullptr;
 // R3D_ScreenShader* psxDither = nullptr;
@@ -93,17 +98,28 @@ void UnloadShaders() {
 }
 
 void InitGame() {
-    Lil::Render::InitWindow(1920, 1080, "game");
-    Lil::Render::SetResolution(640, 480);
+    LIL3D_SetHint(LIL3D_HINT_SHADOW_MAP_SIZE, 256);
+    LIL3D_SetHint(LIL3D_HINT_OMNI_SHADOW_MAP_SIZE, 128);
+    rlSetClipPlanes(0.1, 100.0);
+
+    SetConfigFlags(FLAG_VSYNC_HINT);
+    Lil::Render::InitWindow(0, 0, "game");
+    float aspect = float(GetScreenWidth()) / float(GetScreenHeight());
+    RENDER_H = RENDER_W / aspect;
+    Lil::Render::SetResolution(RENDER_W, RENDER_H);
+    render_texture = LoadRenderTexture(RENDER_W, RENDER_H);
     SetTraceLogLevel(LOG_ALL);
     DisableCursor();
     SetWindowState(FLAG_WINDOW_RESIZABLE);
-    SetTargetFPS(target_fps);
+    SetTargetFPS(0);
 
     Lil::Engine().Get().Init();
-
     Lil::SceneManager().LoadScene("assets/scenes/scene1.json");
-    Game::DialogSystem().LoadScene("assets/dialogs/scene.json", "assets/dialogs/en.json");
+
+    Game::DialogSystem().LoadScene(
+        "assets/dialogs/scene.json",
+        "assets/dialogs/en.json"
+    );
 
     Player* player = Game::CreatePlayer();
     player->SetPosition(Vector3{70, 19, 80});
@@ -181,22 +197,48 @@ void UpdateGame() {
     Lil::Engine::Get().Update(GetFrameTime(), dt);
 }
 
+static void DrawTextureProFitted(Texture2D texture, Rectangle target, Color tint) {
+    Rectangle source = { 0.0f, 0.0f, (float)texture.width, -(float)texture.height };
+
+    float scaleX = target.width / (float)texture.width;
+    float scaleY = target.height / (float)texture.height;
+
+    float scale = (scaleX < scaleY) ? scaleX : scaleY;
+
+    float scaledWidth = texture.width * scale;
+    float scaledHeight = texture.height * scale;
+
+    Rectangle dest = {
+        target.x + (target.width - scaledWidth) * 0.5f,
+        target.y + (target.height - scaledHeight) * 0.5f,
+        scaledWidth,
+        scaledHeight
+    };
+
+    Vector2 origin = { 0.0f, 0.0f };
+    DrawTexturePro(texture, source, dest, origin, 0.0f, tint);
+}
+
 void DrawGame() {
+    Lil::Render::BeginView(Game::GetCamera(), {0, 0, float(render_texture.texture.width), float(render_texture.texture.height)}, &render_texture);
+    Lil::Render::BeginScene();
+        Lil::World().Draw();
+    Lil::Render::EndScene();
+
+    Lil::Render::BeginOverlay();
+        if (debug) Lil::World().DebugDraw();
+    Lil::Render::EndOverlay();
+
+    Game::GetHUD().Draw();
+    Game::DialogSystem().Draw();
+
     BeginDrawing();
-        ClearBackground(RAYBLACK);
         
-        Lil::Render::BeginView(Game::GetCamera(), {0, 0, 0, 0}, nullptr);
-        Lil::Render::BeginScene();
-            Lil::World().Draw();
-        Lil::Render::EndScene();
+    ClearBackground(RAYBLACK);
+    DrawTextureProFitted(render_texture.texture, {0, 0, float(GetScreenWidth()), float(GetScreenHeight())}, WHITE);
+    DrawFPS(100, 100);
+    //LIL3D_DrawStats(10, 140);
 
-        Lil::Render::BeginOverlay();
-            if (debug) Lil::World().DebugDraw();
-        Lil::Render::EndOverlay();
-
-        Game::GetHUD().Draw();
-        Game::DialogSystem().Draw();
-        DrawFPS(100, 100);
     EndDrawing();
 }
 
