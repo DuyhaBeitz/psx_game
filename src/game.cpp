@@ -4,6 +4,7 @@
 #include "Components/LightComponent.hpp"
 #include "Components/AnimatedModelComponent.hpp"
 #include "Components/InstancedModelComponent.hpp"
+#include "utils/FileHelper.hpp"
 
 #include "NPC.hpp"
 #include "Player.hpp"
@@ -21,8 +22,6 @@
 constexpr int target_fps = 120;
 constexpr float dt = 1.0f / float(target_fps);
 RenderTexture2D render_texture;
-int RENDER_W = 640;
-int RENDER_H = 360;
 
 // R3D_SurfaceShader* psxSnap = nullptr;
 // R3D_ScreenShader* psxDither = nullptr;
@@ -30,9 +29,6 @@ int RENDER_H = 360;
 
 Music ambient;
 bool debug = false;
-
-void SetupShaders();
-void UnloadShaders();
 
 void InitGame();
 void SetupInputs();
@@ -54,7 +50,6 @@ int main() {
     #endif
     
     UnloadMusicStream(ambient);
-    UnloadShaders();
     Lil::World().Clear();
     Lil::Assets::Unload();
     CloseAudioDevice();
@@ -63,49 +58,20 @@ int main() {
     return 0;
 }
 
-void SetupShaders() {
-    // psxSnap = R3D_LoadSurfaceShader("assets/shaders/psx_snap.glsl");
-    // Vector2 snapRes = {320.0f, 240.0f};
-    // R3D_SetSurfaceShaderUniform(psxSnap, "u_snap_resolution", &snapRes);
-
-    // for (auto& [key, model] : Lil::Resources().Models()) {
-    //     if (key.starts_with("Gen_Heightmap_")) {
-    //         continue;
-    //     }
-    //     for (int i = 0; i < model.materialCount; i++) {
-    //         model.materials[i].shader = psxSnap;
-    //     }
-    // }
-
-    // psxDither = R3D_LoadScreenShader("assets/shaders/psx_dither.glsl");
-    // Vector2 targetRes = { 640.0f, 480.0f };
-    // R3D_SetScreenShaderUniform(psxDither, "u_target_resolution", &targetRes);
-
-    // psxPosterize = R3D_LoadScreenShader("assets/shaders/psx_posterize.glsl");
-    // //R3D_SetScreenShaderUniform(psxPosterize, "u_gamma", &gamma);
-
-    // R3D_ScreenShader* final_chain[] = { psxPosterize, psxDither };
-    // R3D_SetScreenShaderChain(R3D_SCREEN_SHADER_STAGE_FINAL, final_chain, 2);
-
-    // R3D_ScreenShader* final_chain[] = { psxDither };
-    // R3D_SetScreenShaderChain(R3D_SCREEN_SHADER_STAGE_FINAL, final_chain, 1);
-}
-
-void UnloadShaders() {
-    // R3D_UnloadScreenShader(psxPosterize);
-    // R3D_UnloadScreenShader(psxDither);
-    // R3D_UnloadSurfaceShader(psxSnap);
-}
-
 void InitGame() {
-    LIL3D_SetHint(LIL3D_HINT_SHADOW_MAP_SIZE, 256);
-    LIL3D_SetHint(LIL3D_HINT_OMNI_SHADOW_MAP_SIZE, 128);
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    LIL3D_SetHint(LIL3D_HINT_SHADOW_MAP_SIZE, 128);
+    LIL3D_SetHint(LIL3D_HINT_OMNI_SHADOW_MAP_SIZE, 64);
+    LIL3D_SetHint(LIL3D_HINT_SHADOW_FILTER, 1);
     rlSetClipPlanes(0.1, 100.0);
+    #endif    
 
-    SetConfigFlags(FLAG_VSYNC_HINT);
+    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     Lil::Render::InitWindow(0, 0, "game");
-    float aspect = float(GetScreenWidth()) / float(GetScreenHeight());
-    RENDER_H = RENDER_W / aspect;
+    
+    float render_scale = 0.5;
+    int RENDER_W = GetScreenWidth() * render_scale;
+    int RENDER_H = GetScreenHeight() * render_scale;
     Lil::Render::SetResolution(RENDER_W, RENDER_H);
     render_texture = LoadRenderTexture(RENDER_W, RENDER_H);
     SetTraceLogLevel(LOG_ALL);
@@ -114,6 +80,7 @@ void InitGame() {
     SetTargetFPS(0);
 
     Lil::Engine().Get().Init();
+    Game::Init();
     Lil::SceneManager().LoadScene("assets/scenes/scene1.json");
 
     Game::DialogSystem().LoadScene(
@@ -149,31 +116,69 @@ void InitGame() {
 void SetupInputs() {
     Lil::Input::Vector2Action w("walk");
     Lil::Input::RegisterVector2Action(w);
+    
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    w.BindScreenJoystick(Vector2{0.15f, 0.7f}, 0.3f, 0.15f);
+    #else
     w.BindKeys(KEY_W, KEY_S, KEY_A, KEY_D);
+    #endif
 
     Lil::Input::Vector2Action l("look");
-    Lil::Input::RegisterVector2Action(l);
+    Lil::Input::RegisterVector2Action(l, "look");
+    
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    l.BindScreenRectangleDelta(Rectangle{0.5f, 0.0f, 0.5f, 1.0f}, 0.005f).Negate(Lil::Input::Axes::Y);
+    #else
     l.BindMouseDelta(0.005f);
+    #endif
 
     Lil::Input::BoolAction j("jump");
     Lil::Input::RegisterBoolAction(j);
+    
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    j.BindScreenButton(Vector2{0.8, 0.5}, 0.1, "Jump", GetFontDefault());
+    #else
     j.BindKey(KEY_SPACE);
+    #endif
+    
 
     Lil::Input::FloatAction d("car_drive");
-    Lil::Input::RegisterFloatAction(d);
+    Lil::Input::RegisterFloatAction(d, "car");
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    d.BindScreenAxis(Vector2{0.9f, 0.4f}, 0.6, 0.1, Lil::Input::ScreenAxis::Vertical, true).Deadzone(0.2, 1.0f);;
+    #else
     d.BindKeyPair(KEY_S, KEY_W);
+    #endif
 
     Lil::Input::FloatAction s("car_steer");
-    Lil::Input::RegisterFloatAction(s);
+    Lil::Input::RegisterFloatAction(s, "car");
+
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    s.BindScreenAxis(Vector2{0.2f, 0.7f}, 0.6, 0.1, Lil::Input::ScreenAxis::Horizontal, false).Deadzone(0.2, 1.0f);
+    #else
     s.BindKeyPair(KEY_A, KEY_D);
+    #endif    
 
     Lil::Input::BoolAction b("car_break");
-    Lil::Input::RegisterBoolAction(b);
+    Lil::Input::RegisterBoolAction(b, "car");
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    b.BindScreenButton(Vector2{0.8, 0.5}, 0.1, "break", GetFontDefault());
+    #else
     b.BindKey(KEY_SPACE);
+    #endif    
 
     Lil::Input::BoolAction i("interact");
-    Lil::Input::RegisterBoolAction(i);
+    Lil::Input::RegisterBoolAction(i, "interact");
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    i.BindScreenButton(Vector2{0.7, 0.2}, 0.1, "interact", GetFontDefault());
+    #else
     i.BindKey(KEY_F);
+    #endif
+
+    Lil::Input::SetContextEnabled("Default", true);
+    Lil::Input::SetContextEnabled("look", true);
+    Lil::Input::SetContextEnabled("car", false);
+    Lil::Input::SetContextEnabled("interact", false);
 }
 
 void UpdateGame() {
@@ -229,15 +234,14 @@ void DrawGame() {
         if (debug) Lil::World().DebugDraw();
     Lil::Render::EndOverlay();
 
-    Game::GetHUD().Draw();
-    Game::DialogSystem().Draw();
-
     BeginDrawing();
         
     ClearBackground(RAYBLACK);
     DrawTextureProFitted(render_texture.texture, {0, 0, float(GetScreenWidth()), float(GetScreenHeight())}, WHITE);
+    Game::GetHUD().Draw();
+    Game::DialogSystem().Draw();
     DrawFPS(100, 100);
-    //LIL3D_DrawStats(10, 140);
+    Lil::Input::Draw();
 
     EndDrawing();
 }

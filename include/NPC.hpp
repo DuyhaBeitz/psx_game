@@ -4,10 +4,13 @@
 #include "Interactable.hpp"
 #include "Reflection.hpp"
 #include "Serialization.hpp"
+#include "Input.hpp"
 
 class AnimatedModelComponent;
 
 class NPC : public HumanCharacter, public Interactable {
+private:
+    Lil::Input::BoolAction  m_interact_action = "interact";
 public:
     LIL_REFLECTABLE()
     LIL_SERIALIZABLE()

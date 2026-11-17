@@ -7,6 +7,8 @@
 class Player;
 
 namespace Game {
+    void Init();
+
     void SetCamera(Camera& camera);
     Camera& GetCamera();
 

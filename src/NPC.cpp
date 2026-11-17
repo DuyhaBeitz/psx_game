@@ -22,11 +22,11 @@ void NPC::LayoutUpdate() {
 void NPC::SimulationUpdate(float delta_time) {
     HumanCharacter::SimulationUpdate(delta_time);
     
-    //CheckInteractable(this, this);
+    CheckInteractable(this, this);
 
     if (IsHovered()) {
         Game::GetHUD().AddCenterHint("F - talk");
-        if (IsKeyPressed(KEY_F)) Game::DialogSystem().Approach(m_placement_name);
+        if (m_interact_action.IsPressed()) Game::DialogSystem().Approach(m_placement_name);
     }
     else {
         Game::GetHUD().RemoveCenterHint("F - talk");
@@ -34,5 +34,5 @@ void NPC::SimulationUpdate(float delta_time) {
 }
 
 bool NPC::HoverTreshold(RayCollision res) { return (res.distance < 3.0f); }
-void NPC::OnMouseHover(RayCollision res) {}
-void NPC::OnMouseUnhover() {}
+void NPC::OnMouseHover(RayCollision res) {Lil::Input::SetContextEnabled("interact", true);}
+void NPC::OnMouseUnhover() {Lil::Input::SetContextEnabled("interact", false);}

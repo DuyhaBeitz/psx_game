@@ -7,6 +7,8 @@ class DialogSystem {
     void DrawChoicesBox(std::vector<std::string> choices);
 
 public:
+    void Init();
+
     DialogSystem() = default;
     void LoadScene(std::string scene_filename, std::string localization_filename);
     void Approach(std::string placement_name);

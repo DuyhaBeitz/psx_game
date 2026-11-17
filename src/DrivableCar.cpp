@@ -81,23 +81,28 @@ void DrivableCar::SimulationUpdate(float delta_time) {
         mRight = m_steer;
         mBrake = m_break_action.IsDown();
 
+        // Exit car
         if (m_interact_action.IsPressed()) {
+            Lil::Input::SetContextEnabled("Default", true);
+            Lil::Input::SetContextEnabled("car", false);
+
             Player* player = Game::CreatePlayer();
-            player->SetPosition(GetPosition() + Vector3{0, 2, 0});
+            player->SetPosition(GetPosition() + Vector3{0, 4, 0});
             Game::SetCamera(player->GetCamera());
             m_controlled = false;
             Lil::Assets::GetSoundData("car-door-close.wav")->Play3D(Game::GetCamera(), GetPosition(), 1000);
         }
     }
     else {
-        {
-        //CheckInteractable(this, this);
-        }
-
+        CheckInteractable(this, this);
 
         if (IsHovered()) {
             Game::GetHUD().AddCenterHint("F - drive");
+
+            // Enter car
             if (m_interact_action.IsPressed()) {
+                Lil::Input::SetContextEnabled("Default", false);
+                Lil::Input::SetContextEnabled("car", true);
                 Game::SetCamera(GetCamera());
                 Game::DestroyPlayer();
                 m_controlled = true;
@@ -112,8 +117,8 @@ void DrivableCar::SimulationUpdate(float delta_time) {
 }
 
 bool DrivableCar::HoverTreshold(RayCollision res) { return (res.distance < 3.0f); }
-void DrivableCar::OnMouseHover(RayCollision res) {}
-void DrivableCar::OnMouseUnhover() {}
+void DrivableCar::OnMouseHover(RayCollision res) {Lil::Input::SetContextEnabled("interact", true);}
+void DrivableCar::OnMouseUnhover() {Lil::Input::SetContextEnabled("interact", false);}
 
 
 Vector3 DrivableCar::GetLookingVector() {

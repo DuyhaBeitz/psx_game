@@ -62,7 +62,7 @@ void Player::SimulationUpdate(float delta_time) {
 
     float fwd = m_walk_action.Y();
     float rght = m_walk_action.X();    
-    Vector2 move = Vector2Normalize(Vector2Rotate({fwd, rght}, m_camera_yaw)) * speed;
+    Vector2 move = Vector2Rotate({fwd, rght}, m_camera_yaw) * speed;
 
     float jump_impulse = 4.5f;
     bool jump = m_jump_action.IsDown();

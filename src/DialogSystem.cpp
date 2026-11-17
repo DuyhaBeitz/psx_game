@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include "AdvancedText.hpp"
+#include "utils/FileHelper.hpp"
 
 dialog::Runtime dlg;
 int selectedChoice = 0;
@@ -70,9 +71,12 @@ void DialogSystem::DrawChoicesBox(std::vector<std::string> choices) {
     }
 }
 
+void DialogSystem::Init() {
+    dlg.SetLoadFunc(ReadFile);
+}
 
 void DialogSystem::LoadScene(std::string scene_filename, std::string localization_filename) {
-    dlg = dialog::load_files(scene_filename, {localization_filename}, "en");
+    dlg.load_scene_files(scene_filename, {localization_filename}, "en");
 
     selectedChoice = 0;
 

@@ -15,8 +15,12 @@ namespace Game {
     HUD hud;
     ::DialogSystem dialog_system;
     Player* player = nullptr;
-    
-    void SetCamera(Camera &camera) {current_camera = &camera;}    
+
+    void Init() {
+        dialog_system.Init();
+    }
+
+    void SetCamera(Camera &camera) { current_camera = &camera; }
     Camera& GetCamera() {
         if (!current_camera) return fallback_camera;
         return *current_camera;

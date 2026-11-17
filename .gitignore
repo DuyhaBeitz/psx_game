@@ -4,6 +4,7 @@ android-build*/
 lil_engine_sdk/
 lil_config.ini
 
+android/app/src/main/assets/assets
 android/.gradle/
 android/build/
 android/app/build/
