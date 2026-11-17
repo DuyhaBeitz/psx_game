@@ -91,6 +91,16 @@ void DialogSystem::Approach(std::string placement_name) {
 void DialogSystem::Draw() {
     const auto& f = dlg.frame();
 
+    bool was_active = false;
+    if (IsDialogActive()) {
+        Lil::Input::SetContextEnabled("dialog", true);
+        Lil::Input::SetContextEnabled("Default", false);
+        Lil::Input::SetContextEnabled("look", false);
+        Lil::Input::SetContextEnabled("interact", false);
+        was_active = true;
+    }
+    const auto old_f = f;
+
     switch (f.kind) {
         case dialog::FrameKind::Line:
         {
@@ -105,7 +115,7 @@ void DialogSystem::Draw() {
             anim_text.Update();
             DrawBox(f.speaker_name, anim_text.GetCurrentText());
 
-            if (IsKeyPressed(KEY_ENTER)) {
+            if (dialog_right.IsPressed()) {
                 if (anim_text.IsDone()) dlg.advance();
                 else anim_text.Complete();
             }
@@ -128,8 +138,7 @@ void DialogSystem::Draw() {
 
             DrawChoicesBox(f.choices);
 
-            if (IsKeyPressed(KEY_ENTER))
-            {
+            if (dialog_right.IsPressed()) {
                 dlg.choose(selectedChoice);
                 selectedChoice = 0;
             }
@@ -143,6 +152,13 @@ void DialogSystem::Draw() {
         case dialog::FrameKind::Error:
             std::cerr << f.error << std::endl;
             break;
+    }
+
+    // exited dialog
+    if (was_active && ! IsDialogActive()) {
+        Lil::Input::SetContextEnabled("dialog", false);
+        Lil::Input::SetContextEnabled("Default", true);
+        Lil::Input::SetContextEnabled("look", true);
     }
 }
 

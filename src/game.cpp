@@ -6,6 +6,7 @@
 #include "Components/InstancedModelComponent.hpp"
 #include "utils/FileHelper.hpp"
 
+#include "Assets.hpp"
 #include "NPC.hpp"
 #include "Player.hpp"
 #include "DrivableCar.hpp"
@@ -22,10 +23,6 @@
 constexpr int target_fps = 120;
 constexpr float dt = 1.0f / float(target_fps);
 RenderTexture2D render_texture;
-
-// R3D_SurfaceShader* psxSnap = nullptr;
-// R3D_ScreenShader* psxDither = nullptr;
-// R3D_ScreenShader* psxPosterize = nullptr;
 
 Music ambient;
 bool debug = false;
@@ -103,7 +100,6 @@ void InitGame() {
     // car->SetPosition(Vector3{-5.76, 6, -5.77});
 
     Lil::World().SetSimulationGoing(true);
-    SetupShaders();
 
     ambient = LoadMusicStream("assets/mixkit-european-forest-ambience-1213.wav");
     PlayMusicStream(ambient);
@@ -114,71 +110,102 @@ void InitGame() {
 }
 
 void SetupInputs() {
-    Lil::Input::Vector2Action w("walk");
-    Lil::Input::RegisterVector2Action(w);
+    Lil::Input::Vector2Action walk("walk");
+    Lil::Input::RegisterVector2Action(walk);
+    Lil::Input::Vector2Action look("look");
+    Lil::Input::RegisterVector2Action(look, "look");
+    Lil::Input::BoolAction jump("jump");
+    Lil::Input::RegisterBoolAction(jump);
+  
+
+    Lil::Input::FloatAction drive("car_drive");
+    Lil::Input::RegisterFloatAction(drive, "car");
+    Lil::Input::FloatAction steer("car_steer");
+    Lil::Input::RegisterFloatAction(steer, "car");
+    Lil::Input::BoolAction car_break("car_break");
+    Lil::Input::RegisterBoolAction(car_break, "car");
+
+    Lil::Input::BoolAction interact("interact");
+    Lil::Input::RegisterBoolAction(interact, "interact");
+
+    Lil::Input::BoolAction dialog_right("dialog_right");
+    Lil::Input::RegisterBoolAction(dialog_right, "dialog");
+
+
+    // Binding
+    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
+    // Relative positions for screen inputs
+    float knob_radius = 0.12f;
+    float button_radius = knob_radius;
+    float joystick_radius = 0.25f;
+    float axis_length = 0.5f;
+
+
+    // main placings
+    float main_l = 0.12f;
+    float main_r = 1.0f - main_l;
+    float main_h = 0.75f;
+    Vector2 left_main  = Vector2{main_l, main_h};
+    Vector2 right_main = Vector2{main_r, main_h};
+
+
+    // secondary placements
+    float sec_l = 0.12f;
+    float sec_r = 1.0f - sec_l;
+    float sec_h = 0.5f;
+    Vector2 left_sec  = Vector2{sec_l, sec_h};
+    Vector2 right_sec = Vector2{sec_r, sec_h};
+
+
+    // third placements
+    float third_l = 0.12;
+    float third_r = 1.0f - third_l;
+    float third_h = 0.25f;
+    Vector2 left_third  = Vector2{third_l, third_h};
+    Vector2 right_third = Vector2{third_r, third_h};
+
+    Font* buttons_font = Lil::Assets::GetFontData("JetBrainsMono-Medium.ttf");
+    if (!buttons_font) {
+        TraceLog(LOG_ERROR, "buttons_font is null");
+    }
+
+    // move
+    walk.BindScreenJoystick(left_main, joystick_radius, knob_radius);
+    look.BindScreenRectangleDelta(Rectangle{0.5f, 0.0f, 0.5f, 1.0f}, 0.005f).Negate(Lil::Input::Axes::Y);
+    jump.BindScreenButton(right_main, button_radius, "Jump", *buttons_font);
+
+    // car
+    drive.BindScreenAxis(Vector2{0.85, 0.4}, axis_length, knob_radius, Lil::Input::ScreenAxis::Vertical, true).Deadzone(0.2, 1.0f);;
+    steer.BindScreenAxis(left_main, axis_length, knob_radius, Lil::Input::ScreenAxis::Horizontal, false).Deadzone(0.2, 1.0f);
+    car_break.BindScreenButton(right_sec, button_radius, "car_break", *buttons_font);
     
-    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
-    w.BindScreenJoystick(Vector2{0.15f, 0.7f}, 0.3f, 0.15f);
-    #else
-    w.BindKeys(KEY_W, KEY_S, KEY_A, KEY_D);
-    #endif
+    interact.BindScreenButton(left_third, button_radius, "interact", *buttons_font);
 
-    Lil::Input::Vector2Action l("look");
-    Lil::Input::RegisterVector2Action(l, "look");
+    // dialog
+    dialog_right.BindScreenButton(right_sec, button_radius, ">", *buttons_font);
+
+    #else
+    // move
+    walk.BindKeys(KEY_W, KEY_S, KEY_A, KEY_D);
+    look.BindMouseDelta(0.005f);
+    jump.BindKey(KEY_SPACE);
     
-    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
-    l.BindScreenRectangleDelta(Rectangle{0.5f, 0.0f, 0.5f, 1.0f}, 0.005f).Negate(Lil::Input::Axes::Y);
-    #else
-    l.BindMouseDelta(0.005f);
-    #endif
-
-    Lil::Input::BoolAction j("jump");
-    Lil::Input::RegisterBoolAction(j);
+    // car
+    drive.BindKeyPair(KEY_S, KEY_W);
+    steer.BindKeyPair(KEY_A, KEY_D);
+    car_break.BindKey(KEY_SPACE);
     
-    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
-    j.BindScreenButton(Vector2{0.8, 0.5}, 0.1, "Jump", GetFontDefault());
-    #else
-    j.BindKey(KEY_SPACE);
-    #endif
-    
+    interact.BindKey(KEY_F);
 
-    Lil::Input::FloatAction d("car_drive");
-    Lil::Input::RegisterFloatAction(d, "car");
-    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
-    d.BindScreenAxis(Vector2{0.9f, 0.4f}, 0.6, 0.1, Lil::Input::ScreenAxis::Vertical, true).Deadzone(0.2, 1.0f);;
-    #else
-    d.BindKeyPair(KEY_S, KEY_W);
-    #endif
-
-    Lil::Input::FloatAction s("car_steer");
-    Lil::Input::RegisterFloatAction(s, "car");
-
-    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
-    s.BindScreenAxis(Vector2{0.2f, 0.7f}, 0.6, 0.1, Lil::Input::ScreenAxis::Horizontal, false).Deadzone(0.2, 1.0f);
-    #else
-    s.BindKeyPair(KEY_A, KEY_D);
-    #endif    
-
-    Lil::Input::BoolAction b("car_break");
-    Lil::Input::RegisterBoolAction(b, "car");
-    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
-    b.BindScreenButton(Vector2{0.8, 0.5}, 0.1, "break", GetFontDefault());
-    #else
-    b.BindKey(KEY_SPACE);
-    #endif    
-
-    Lil::Input::BoolAction i("interact");
-    Lil::Input::RegisterBoolAction(i, "interact");
-    #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
-    i.BindScreenButton(Vector2{0.7, 0.2}, 0.1, "interact", GetFontDefault());
-    #else
-    i.BindKey(KEY_F);
+    // dialog
+    dialog_right.BindKey(KEY_ENTER);
     #endif
 
     Lil::Input::SetContextEnabled("Default", true);
     Lil::Input::SetContextEnabled("look", true);
     Lil::Input::SetContextEnabled("car", false);
     Lil::Input::SetContextEnabled("interact", false);
+    Lil::Input::SetContextEnabled("dialog", false);
 }
 
 void UpdateGame() {

@@ -26,7 +26,9 @@ void NPC::SimulationUpdate(float delta_time) {
 
     if (IsHovered()) {
         Game::GetHUD().AddCenterHint("F - talk");
-        if (m_interact_action.IsPressed()) Game::DialogSystem().Approach(m_placement_name);
+        if (m_interact_action.IsPressed()) {
+            Game::DialogSystem().Approach(m_placement_name);
+        }
     }
     else {
         Game::GetHUD().RemoveCenterHint("F - talk");

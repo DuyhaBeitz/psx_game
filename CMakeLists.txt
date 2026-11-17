@@ -61,7 +61,7 @@ endif()
 # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 
 if (PLATFORM STREQUAL "Web")
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/web.cmake)
