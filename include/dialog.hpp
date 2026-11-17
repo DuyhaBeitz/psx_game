@@ -8,9 +8,29 @@
 //    within the same stage.
 //  - Structured errors: LoadError{node_path, field, message} instead of
 //    strings. to_string() preserves the old format for CLI use.
+//
+// Logging (diagnostic only, no API or behaviour change). Output goes to:
+//  - Android:    logcat via __android_log_print, tag "dialog" (needs -llog;
+//                define DIALOG_LOG_NO_ANDROID to use stderr instead, which
+//                Android discards).
+//  - Web:        browser console via emscripten_log (Emscripten builds).
+//  - Desktop:    stderr (Windows/macOS/Linux/iOS). GUI-subsystem Windows apps
+//                have no stderr: use DIALOG_LOG_SINK (e.g. OutputDebugString).
+// Knobs (define before including this header):
+//  - DIALOG_LOG_LEVEL: 0=error 1=warn 2=info 3=debug/trace, -1=off.
+//                Default 3 when NDEBUG is not defined, otherwise 2.
+//  - DIALOG_LOG_TAG:   Android logcat tag (default "dialog").
+//  - DIALOG_LOG_SINK(level_int, std::string): route logs anywhere, all platforms.
+//  - DIALOG_NO_EXCEPTIONS: force-disable the try/catch based diagnostics.
+//                Auto-detected from the compiler, so -fno-exceptions builds
+//                (common on Android/Web) compile fine.
 
 #pragma once
+#include <cerrno>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <exception>
 #include <fstream>
 #include <functional>
 #include <limits>
@@ -19,6 +39,36 @@
 #include <unordered_map>
 #include <vector>
 #include "nlohmann/json.hpp"
+
+// ---- platform detection (logging + diagnostics only)
+#if defined(__EMSCRIPTEN__)
+#  define DIALOG_PLATFORM_NAME "web"
+#elif defined(__ANDROID__)
+#  define DIALOG_PLATFORM_NAME "android"
+#elif defined(_WIN32)
+#  define DIALOG_PLATFORM_NAME "windows"
+#elif defined(__APPLE__)
+#  define DIALOG_PLATFORM_NAME "apple"
+#elif defined(__linux__)
+#  define DIALOG_PLATFORM_NAME "linux"
+#else
+#  define DIALOG_PLATFORM_NAME "unknown"
+#endif
+
+#if !defined(DIALOG_LOG_SINK)
+#  if defined(__EMSCRIPTEN__)
+#    include <emscripten/emscripten.h>
+#  elif defined(__ANDROID__) && !defined(DIALOG_LOG_NO_ANDROID)
+#    include <android/log.h>
+#  endif
+#endif
+
+// try/catch is a compile error under -fno-exceptions; only use it when the
+// compiler says exceptions are on.
+#if !defined(DIALOG_NO_EXCEPTIONS) && \
+    (defined(__cpp_exceptions) || defined(__EXCEPTIONS) || defined(_CPPUNWIND))
+#  define DIALOG_HAS_EXCEPTIONS 1
+#endif
 
 namespace dialog {
 
@@ -53,6 +103,107 @@ inline std::string to_string(const LoadError& e) {
 
 namespace detail {
 
+// ------------------------------------------------------------- logging
+
+#ifndef DIALOG_LOG_TAG
+#define DIALOG_LOG_TAG "dialog"
+#endif
+#ifndef DIALOG_LOG_LEVEL
+#  ifdef NDEBUG
+#    define DIALOG_LOG_LEVEL 2
+#  else
+#    define DIALOG_LOG_LEVEL 3
+#  endif
+#endif
+
+enum class Log { Error = 0, Warn = 1, Info = 2, Debug = 3 };
+
+inline void log_write(Log lvl, const std::string& msg) {
+#if defined(DIALOG_LOG_SINK)
+    DIALOG_LOG_SINK(static_cast<int>(lvl), msg);
+#elif defined(__EMSCRIPTEN__)
+    const int flags = EM_LOG_CONSOLE
+                    | (lvl == Log::Error ? EM_LOG_ERROR
+                     : lvl == Log::Warn  ? EM_LOG_WARN
+                     : lvl == Log::Info  ? EM_LOG_INFO
+                                         : EM_LOG_DEBUG);
+    emscripten_log(flags, "[dialog] %s", msg.c_str());
+#elif defined(__ANDROID__) && !defined(DIALOG_LOG_NO_ANDROID)
+    const int prio = lvl == Log::Error ? ANDROID_LOG_ERROR
+                   : lvl == Log::Warn  ? ANDROID_LOG_WARN
+                   : lvl == Log::Info  ? ANDROID_LOG_INFO
+                                       : ANDROID_LOG_DEBUG;
+    __android_log_print(prio, DIALOG_LOG_TAG, "%s", msg.c_str());
+#else
+    const char* tag = lvl == Log::Error ? "E" : lvl == Log::Warn ? "W"
+                    : lvl == Log::Info  ? "I" : "D";
+    std::fprintf(stderr, "[dialog][%s] %s\n", tag, msg.c_str());
+    std::fflush(stderr);
+#endif
+}
+
+// Usage: DIALOG_LOG(Warn, "x=" << x);   (stream-style, evaluated lazily)
+#define DIALOG_LOG(lvl, expr)                                                   \
+    do {                                                                        \
+        if (static_cast<int>(::dialog::detail::Log::lvl) <= DIALOG_LOG_LEVEL) { \
+            std::ostringstream dialog_log_os_;                                  \
+            dialog_log_os_ << expr;                                             \
+            ::dialog::detail::log_write(::dialog::detail::Log::lvl,             \
+                                        dialog_log_os_.str());                  \
+        }                                                                       \
+    } while (0)
+
+#if defined(__ANDROID__)
+#  define DIALOG_FILE_HINT \
+     "Android: files inside the APK/assets are NOT reachable via std::ifstream - " \
+     "read them with AAssetManager (or copy to internal storage) and call load_scene()"
+#elif defined(__EMSCRIPTEN__)
+#  define DIALOG_FILE_HINT \
+     "Web: the file must exist in Emscripten's virtual FS - use --preload-file / " \
+     "--embed-file, or fetch() it and call load_scene() with the text"
+#elif defined(_WIN32)
+#  define DIALOG_FILE_HINT \
+     "Windows: check the working directory; narrow paths use the ANSI code page, " \
+     "so non-ASCII paths may fail"
+#else
+#  define DIALOG_FILE_HINT "check the path and the process working directory"
+#endif
+
+inline const char* kind_name(FrameKind k) {
+    switch (k) {
+        case FrameKind::Line:   return "Line";
+        case FrameKind::Choice: return "Choice";
+        case FrameKind::Ended:  return "Ended";
+        case FrameKind::Error:  return "Error";
+    }
+    return "?";
+}
+
+// Pushes a warning to the caller's vector AND logs it.
+inline void warn(std::vector<std::string>& w, std::string msg) {
+    DIALOG_LOG(Warn, msg);
+    w.push_back(std::move(msg));
+}
+
+// Why did nlohmann refuse this input? Re-parses with exceptions to get the
+// message (includes byte offset). Without exceptions we can only say so.
+inline std::string json_parse_failure_reason(const std::string& text) {
+    if (text.empty())
+        return "input is EMPTY (file missing/unreadable - see the 'cannot open' "
+               "log; platform=" DIALOG_PLATFORM_NAME ")";
+#ifdef DIALOG_HAS_EXCEPTIONS
+    try { (void)nlohmann::json::parse(text); }
+    catch (const std::exception& ex) { return ex.what(); }
+    return "unknown";
+#else
+    return "unknown (exceptions disabled in this build, no detail available)";
+#endif
+}
+
+inline std::string clip(const std::string& s, size_t n = 48) {
+    return s.size() <= n ? s : s.substr(0, n) + "...";
+}
+
 using NodeId = uint32_t;
 using ExprId = uint32_t;
 constexpr NodeId kInvalid = std::numeric_limits<NodeId>::max();
@@ -62,10 +213,24 @@ enum class VarType { Bool, Int };
 enum class SetOp   { Assign, Add, Sub, Not };
 enum class NodeType { Line, Choice, If, Set, Jump, End };
 
+inline const char* node_type_name(NodeType t) {
+    switch (t) {
+        case NodeType::Line:   return "Line";
+        case NodeType::Choice: return "Choice";
+        case NodeType::If:     return "If";
+        case NodeType::Set:    return "Set";
+        case NodeType::Jump:   return "Jump";
+        case NodeType::End:    return "End";
+    }
+    return "?";
+}
+
 inline void err(std::vector<LoadError>& e, std::string path,
                 std::string field, std::string msg)
 {
-    e.push_back({std::move(path), std::move(field), std::move(msg)});
+    LoadError le{std::move(path), std::move(field), std::move(msg)};
+    DIALOG_LOG(Error, "load error: " << to_string(le));
+    e.push_back(std::move(le));
 }
 
 struct Expr {
@@ -148,6 +313,13 @@ struct SceneData {
     std::vector<std::string>                 node_paths;
     std::unordered_map<std::string, NodeId>  path_to_node;
 };
+
+// "stage.graph.node" or a marker for kInvalid / out-of-range ids.
+inline std::string node_label(const SceneData& s, NodeId id) {
+    if (id == kInvalid)           return "<none>";
+    if (id >= s.node_paths.size()) return "<bad id " + std::to_string(id) + ">";
+    return s.node_paths[id];
+}
 
 // ---------------------------------------------------------- expr compiler
 
@@ -312,6 +484,10 @@ inline void compile_graph(SceneData& s, Stage& stage,
         return;
     }
 
+    DIALOG_LOG(Debug, "compile graph '" << stage.id << "." << graph_name << "': "
+                      << jg["nodes"].size() << " node(s), start='"
+                      << jg.value("start", "") << "'");
+
     std::unordered_map<std::string, NodeId> local;
     for (auto it = jg["nodes"].begin(); it != jg["nodes"].end(); ++it) {
         const std::string& lid = it.key();
@@ -357,6 +533,11 @@ inline void compile_graph(SceneData& s, Stage& stage,
             n.text    = resolve(jn.value("text", ""));
             const std::string next = jn.value("next", "");
             if (!next.empty()) n.next = check(next, where, "next");
+            else DIALOG_LOG(Debug, where << ": line has no 'next' -> conversation "
+                                   "ends after it (typo in the key?)");
+            if (n.text.empty())
+                DIALOG_LOG(Warn, where << ": line has EMPTY text "
+                                  "(missing/empty 'text' key?) - UI may show nothing");
         } else if (type == "choice") {
             n.type = NodeType::Choice;
             n.choice_begin = static_cast<uint32_t>(s.choices.size());
@@ -372,6 +553,10 @@ inline void compile_graph(SceneData& s, Stage& stage,
                 }
             }
             n.choice_count = static_cast<uint32_t>(s.choices.size()) - n.choice_begin;
+            if (n.choice_count == 0)
+                DIALOG_LOG(Warn, where << ": choice node has no choices "
+                                  "(missing/invalid 'choices' array) - will yield "
+                                  "Error 'no visible choices' at runtime");
         } else if (type == "if") {
             n.type = NodeType::If;
             if (jn.contains("cond"))
@@ -408,6 +593,9 @@ inline void compile_graph(SceneData& s, Stage& stage,
         err(errors, stage.id + "." + graph_name, "start", "bad ref '" + start + "'");
     else
         stage.graph_entries[graph_name] = start_id;
+    DIALOG_LOG(Debug, "graph '" << stage.id << "." << graph_name << "' start -> "
+                      << (start_id == kInvalid ? "UNRESOLVED (graph has no entry)"
+                                               : s.node_paths[start_id]));
 }
 
 // --------------------------------------------------------- scene compiler
@@ -417,7 +605,12 @@ inline void compile_scene(SceneData& s, const std::string& json,
                           std::vector<LoadError>& errors)
 {
     auto j = nlohmann::json::parse(json, nullptr, false);
-    if (j.is_discarded()) { err(errors, "", "", "scene: invalid JSON"); return; }
+    if (j.is_discarded()) {
+        const std::string why = json_parse_failure_reason(json);
+        DIALOG_LOG(Error, "scene JSON parse failed (" << json.size() << " bytes): " << why);
+        err(errors, "", "", "scene: invalid JSON");
+        return;
+    }
 
     auto resolve = [&](const std::string& key) -> std::string {
         if (key.empty()) return {};
@@ -527,7 +720,12 @@ merge_locales(const std::vector<std::string>& jsons,
 
     for (const auto& jt : jsons) {
         auto jp = nlohmann::json::parse(jt, nullptr, false);
-        if (jp.is_discarded()) { err(errors, "", "", "locale: invalid JSON"); continue; }
+        if (jp.is_discarded()) {
+            const std::string why = json_parse_failure_reason(jt);
+            DIALOG_LOG(Error, "locale JSON parse failed (" << jt.size() << " bytes): " << why);
+            err(errors, "", "", "locale: invalid JSON");
+            continue;
+        }
         Entry e;
         e.locale = jp.value("locale", "");
         if (jp.contains("strings") && jp["strings"].is_object()) {
@@ -543,6 +741,47 @@ merge_locales(const std::vector<std::string>& jsons,
     for (auto& e : entries) if (e.locale != preferred)
         for (auto& [k, v] : e.table) out.emplace(k, v);
     return out;
+}
+
+inline void log_scene_summary(const SceneData& s, const std::vector<LoadError>& errors,
+                              const std::string& current_stage)
+{
+    DIALOG_LOG(Info, "scene '" << s.id << "' loaded: entry_stage='" << s.entry_stage
+                     << "' stages=" << s.stages.size() << " nodes=" << s.nodes.size()
+                     << " choices=" << s.choices.size() << " exprs=" << s.exprs.size()
+                     << " vars=" << s.var_types.size()
+                     << " characters=" << s.characters.size()
+                     << " load_errors=" << errors.size());
+
+    if (s.entry_stage.empty())
+        DIALOG_LOG(Error, "no usable entry_stage -> every approach() will fail with "
+                          "'no active stage'");
+    if (s.stages.empty())
+        DIALOG_LOG(Error, "scene has no stages");
+
+    for (const auto& [sid, st] : s.stages) {
+        DIALOG_LOG(Info, "  stage '" << sid << "': placements=" << st.placements.size()
+                         << " graphs_with_entry=" << st.graph_entries.size());
+        for (const auto& p : st.placements) {
+            auto g = st.graph_entries.find(p.entry);
+            if (g == st.graph_entries.end())
+                DIALOG_LOG(Error, "    placement '" << p.id << "' (character '"
+                                  << p.character << ") -> graph '" << p.entry
+                                  << "' has NO ENTRY -> approach('" << p.id
+                                  << "') will fail");
+            else
+                DIALOG_LOG(Debug, "    placement '" << p.id << "' -> graph '" << p.entry
+                                  << "' start " << node_label(s, g->second));
+        }
+        if (st.placements.empty())
+            DIALOG_LOG(Warn, "  stage '" << sid << "' has no valid placements");
+    }
+
+    if (!errors.empty())
+        DIALOG_LOG(Error, "scene loaded WITH " << errors.size()
+                          << " ERROR(S) - ok() is false; nodes affected by them can "
+                             "dead-end into Ended/Error at runtime. current_stage='"
+                          << current_stage << "'");
 }
 
 } // namespace detail
@@ -564,25 +803,55 @@ public:
         load_scene(scene_json, locale_jsons, preferred_locale);
     }
 
+    // Override how load_scene_files() reads files. The callback receives a
+    // filename and must return the file contents.
+    using LoadFunc = std::function<std::string(const std::string&)>;
+
+    void SetLoadFunc(LoadFunc func) {
+        load_func_ = std::move(func);
+    }
+    
+
     // (Re)initialise from in-memory JSON. Discards any previous scene, errors
     // and playback/variable state. Returns ok().
     bool load_scene(const std::string& scene_json,
                     const std::vector<std::string>& locale_jsons,
                     const std::string& preferred_locale = "")
     {
+        {
+            std::ostringstream sizes;
+            for (const auto& l : locale_jsons) sizes << ' ' << l.size() << 'B';
+            DIALOG_LOG(Info, "load_scene [" DIALOG_PLATFORM_NAME "]: scene=" << scene_json.size()
+                             << "B locales=" << locale_jsons.size() << " [" << sizes.str()
+                             << " ] preferred='" << preferred_locale << "'");
+        }
         scene_ = detail::SceneData{};
         errors_.clear();
         visible_choices_.clear();
         frame_ = Frame{};
 
-        auto strings = detail::merge_locales(locale_jsons, preferred_locale, errors_);
-        detail::compile_scene(scene_, scene_json, strings, errors_);
+#ifdef DIALOG_HAS_EXCEPTIONS
+        try {
+#endif
+            auto strings = detail::merge_locales(locale_jsons, preferred_locale, errors_);
+            detail::compile_scene(scene_, scene_json, strings, errors_);
+#ifdef DIALOG_HAS_EXCEPTIONS
+        } catch (const std::exception& ex) {
+            // Re-thrown: behaviour is unchanged, but a host that swallows
+            // exceptions at a JNI/JS boundary will at least leave a trace.
+            DIALOG_LOG(Error, "load_scene: EXCEPTION during compile: " << ex.what()
+                              << " (scene is half-built, " << errors_.size()
+                              << " load error(s) so far)");
+            throw;
+        }
+#endif
 
         current_stage_ = scene_.entry_stage;
         current_       = detail::kInvalid;
         bools_         = scene_.bool_defaults;
         ints_          = scene_.int_defaults;
         loaded_        = true;
+        detail::log_scene_summary(scene_, errors_, current_stage_);
         return errors_.empty();
     }
 
@@ -592,16 +861,10 @@ public:
                           const std::vector<std::string>& locale_paths,
                           const std::string& preferred_locale = "")
     {
-        auto read = [](const std::string& path) -> std::string {
-            std::ifstream f(path, std::ios::binary);
-            std::ostringstream ss;
-            ss << f.rdbuf();
-            return ss.str();
-        };
         std::vector<std::string> locales;
         locales.reserve(locale_paths.size());
-        for (const auto& p : locale_paths) locales.push_back(read(p));
-        return load_scene(read(scene_path), locales, preferred_locale);
+        for (const auto& p : locale_paths) locales.push_back(load_func_(p));
+        return load_scene(load_func_(scene_path), locales, preferred_locale);
     }
 
     // True once a scene load has been attempted (successfully or not).
@@ -643,6 +906,13 @@ private:
     std::vector<uint32_t>     visible_choices_;
     std::vector<LoadError>    errors_;
     bool                      loaded_ = false;
+
+    LoadFunc load_func_ = [](const std::string& filename) -> std::string {
+        std::ifstream f(filename, std::ios::binary);
+        std::ostringstream ss;
+        ss << f.rdbuf();
+        return ss.str();
+    };
 };
 
 // ----------------------------------------------------------- file helper
@@ -659,10 +929,24 @@ inline Runtime load_files(const std::string& scene_path,
 // ============================================================ implementation
 
 inline void Runtime::approach(const std::string& placement_id) {
+    DIALOG_LOG(Debug, "approach('" << placement_id << "'): stage='" << current_stage_
+                      << "' loaded=" << loaded_ << " load_errors=" << errors_.size()
+                      << " active_node=" << detail::node_label(scene_, current_));
+    if (current_ != detail::kInvalid)
+        DIALOG_LOG(Info, "approach('" << placement_id << "') while a conversation is "
+                         "ACTIVE at " << detail::node_label(scene_, current_)
+                         << " - restarting from the entry node (is the host calling "
+                            "approach() every tick/frame?)");
+
     auto sit = scene_.stages.find(current_stage_);
     if (sit == scene_.stages.end()) {
         frame_ = Frame{}; frame_.kind = FrameKind::Error;
         frame_.error = "no active stage";
+        DIALOG_LOG(Error, "approach('" << placement_id << "') -> Error: no active stage "
+                          "(current_stage='" << current_stage_ << "', loaded=" << loaded_
+                          << ", stages=" << scene_.stages.size() << ", entry_stage='"
+                          << scene_.entry_stage << "', load_errors=" << errors_.size()
+                          << "). Scene probably failed to load - check ok()/errors().");
         return;
     }
     auto& stage = sit->second;
@@ -674,45 +958,91 @@ inline void Runtime::approach(const std::string& placement_id) {
     if (!found) {
         frame_ = Frame{}; frame_.kind = FrameKind::Error;
         frame_.error = "no such placement: " + placement_id;
+        std::string have;
+        for (const auto& p : stage.placements) have += " '" + p.id + "'";
+        DIALOG_LOG(Error, "approach('" << placement_id << "') -> Error: no such placement "
+                          "in stage '" << current_stage_ << "'. Known placements:"
+                          << (have.empty() ? " <none>" : have));
         return;
     }
     auto git = stage.graph_entries.find(found->entry);
     if (git == stage.graph_entries.end()) {
         frame_ = Frame{}; frame_.kind = FrameKind::Error;
         frame_.error = "entry graph not found: " + found->entry;
+        std::string have;
+        for (const auto& g : stage.graph_entries) have += " '" + g.first + "'";
+        DIALOG_LOG(Error, "approach('" << placement_id << "') -> Error: entry graph '"
+                          << found->entry << "' not found in stage '" << current_stage_
+                          << "' (graph missing or its 'start' failed to resolve). "
+                             "Graphs with entry:" << (have.empty() ? " <none>" : have));
         return;
     }
+    DIALOG_LOG(Info, "approach('" << placement_id << "') -> graph '" << found->entry
+                     << "' start " << detail::node_label(scene_, git->second));
     set_node_(git->second);
 }
 
 inline void Runtime::advance() {
-    if (current_ == detail::kInvalid) return;
+    DIALOG_LOG(Debug, "advance() at " << detail::node_label(scene_, current_)
+                      << " (frame=" << detail::kind_name(frame_.kind) << ")");
+    if (current_ == detail::kInvalid) {
+        DIALOG_LOG(Warn, "advance() IGNORED: no active node (frame is "
+                         << detail::kind_name(frame_.kind) << "). Conversation already "
+                            "ended/cancelled/errored, or approach() never succeeded.");
+        return;
+    }
     const auto& n = scene_.nodes[current_];
     if (n.type != detail::NodeType::Line) {
         frame_ = Frame{}; frame_.kind = FrameKind::Error;
         frame_.error = "advance() not on a Line";
+        DIALOG_LOG(Error, "advance() -> Error: current node "
+                          << detail::node_label(scene_, current_) << " is a "
+                          << detail::node_type_name(n.type) << ", not a Line");
         return;
     }
+    if (n.next == detail::kInvalid)
+        DIALOG_LOG(Info, "advance(): " << detail::node_label(scene_, current_)
+                         << " has no 'next' -> conversation ends");
     set_node_(n.next);
 }
 
 inline void Runtime::choose(uint32_t i) {
-    if (current_ == detail::kInvalid) return;
+    DIALOG_LOG(Debug, "choose(" << i << ") at " << detail::node_label(scene_, current_)
+                      << " visible=" << visible_choices_.size());
+    if (current_ == detail::kInvalid) {
+        DIALOG_LOG(Warn, "choose(" << i << ") IGNORED: no active node (frame is "
+                         << detail::kind_name(frame_.kind) << ")");
+        return;
+    }
     const auto& n = scene_.nodes[current_];
     if (n.type != detail::NodeType::Choice) {
         frame_ = Frame{}; frame_.kind = FrameKind::Error;
         frame_.error = "choose() not on a Choice";
+        DIALOG_LOG(Error, "choose(" << i << ") -> Error: current node "
+                          << detail::node_label(scene_, current_) << " is a "
+                          << detail::node_type_name(n.type) << ", not a Choice");
         return;
     }
     if (i >= visible_choices_.size()) {
         frame_ = Frame{}; frame_.kind = FrameKind::Error;
         frame_.error = "choice index out of range";
+        DIALOG_LOG(Error, "choose(" << i << ") -> Error: index out of range, only "
+                          << visible_choices_.size() << " visible choice(s)");
         return;
     }
-    set_node_(scene_.choices[visible_choices_[i]].target);
+    const auto& c = scene_.choices[visible_choices_[i]];
+    DIALOG_LOG(Debug, "choose(" << i << ") '" << detail::clip(c.text) << "' -> "
+                      << detail::node_label(scene_, c.target));
+    if (c.target == detail::kInvalid)
+        DIALOG_LOG(Warn, "choose(" << i << "): target is unresolved (load error) "
+                         "-> conversation will end");
+    set_node_(c.target);
 }
 
 inline void Runtime::cancel() {
+    DIALOG_LOG(Info, "cancel() at " << detail::node_label(scene_, current_)
+                     << " (frame was " << detail::kind_name(frame_.kind)
+                     << ") -> Ended");
     current_ = detail::kInvalid;
     visible_choices_.clear();
     frame_ = Frame{};
@@ -720,13 +1050,45 @@ inline void Runtime::cancel() {
 }
 
 inline bool Runtime::get_bool(const std::string& n) const {
-    auto it = bools_.find(n); return it != bools_.end() ? it->second : false;
+    auto it = bools_.find(n);
+    if (it == bools_.end()) {
+        DIALOG_LOG(Warn, "get_bool('" << n << "'): no such bool variable -> false");
+        return false;
+    }
+    return it->second;
 }
 inline int64_t Runtime::get_int(const std::string& n) const {
-    auto it = ints_.find(n); return it != ints_.end() ? it->second : 0;
+    auto it = ints_.find(n);
+    if (it == ints_.end()) {
+        DIALOG_LOG(Warn, "get_int('" << n << "'): no such int variable -> 0");
+        return 0;
+    }
+    return it->second;
 }
-inline void Runtime::set_bool(const std::string& n, bool v)    { bools_[n] = v; }
-inline void Runtime::set_int (const std::string& n, int64_t v) { ints_[n]  = v; }
+inline void Runtime::set_bool(const std::string& n, bool v) {
+    auto vt = scene_.var_types.find(n);
+    if (vt == scene_.var_types.end())
+        DIALOG_LOG(Warn, "set_bool('" << n << "', " << v << "): variable is NOT "
+                         "declared in the scene - no dialogue condition can see it");
+    else if (vt->second != detail::VarType::Bool)
+        DIALOG_LOG(Warn, "set_bool('" << n << "', " << v << "): variable is declared "
+                         "as INT - dialogue conditions will not see this value");
+    else
+        DIALOG_LOG(Debug, "set_bool('" << n << "', " << v << ")");
+    bools_[n] = v;
+}
+inline void Runtime::set_int(const std::string& n, int64_t v) {
+    auto vt = scene_.var_types.find(n);
+    if (vt == scene_.var_types.end())
+        DIALOG_LOG(Warn, "set_int('" << n << "', " << v << "): variable is NOT "
+                         "declared in the scene - no dialogue condition can see it");
+    else if (vt->second != detail::VarType::Int)
+        DIALOG_LOG(Warn, "set_int('" << n << "', " << v << "): variable is declared "
+                         "as BOOL - dialogue conditions will not see this value");
+    else
+        DIALOG_LOG(Debug, "set_int('" << n << "', " << v << ")");
+    ints_[n] = v;
+}
 
 inline int64_t Runtime::eval_int_(detail::ExprId id) const {
     const auto& e = scene_.exprs[id];
@@ -757,6 +1119,10 @@ inline bool Runtime::eval_cmp_(detail::Expr::Kind op, detail::ExprId l, detail::
 
 inline bool Runtime::eval_expr_(detail::ExprId id) const {
     using K = detail::Expr::Kind;
+    if (id >= scene_.exprs.size())
+        DIALOG_LOG(Error, "eval_expr_: expr id " << id << " out of range ("
+                          << scene_.exprs.size() << " exprs) - a condition failed to "
+                             "compile (see load errors); undefined behaviour follows");
     const auto& e = scene_.exprs[id];
     switch (e.kind) {
         case K::LitBool: return e.bval;
@@ -780,7 +1146,11 @@ inline bool Runtime::eval_expr_(detail::ExprId id) const {
 inline void Runtime::apply_set_(const detail::Node& n) {
     using S = detail::SetOp;
     auto vt = scene_.var_types.find(n.set_var);
-    if (vt == scene_.var_types.end()) return;
+    if (vt == scene_.var_types.end()) {
+        DIALOG_LOG(Warn, "apply_set_: Set node has unknown/empty variable '"
+                         << n.set_var << "' (load error) - skipped");
+        return;
+    }
 
     if (vt->second == detail::VarType::Bool) {
         switch (n.set_op) {
@@ -802,9 +1172,41 @@ inline void Runtime::set_node_(detail::NodeId id) { current_ = id; run_(); }
 
 inline void Runtime::run_() {
     using NT = detail::NodeType;
+    uint32_t           steps = 0;
+    detail::NodeId     prev  = detail::kInvalid;   // node that handed us current_
+    const char*        via   = "";                 // which field it used
     for (;;) {
+        if (++steps == 10000)
+            DIALOG_LOG(Error, "run_: 10000 silent steps without reaching a "
+                              "Line/Choice/End - probable cycle of If/Set/Jump nodes "
+                              "near " << detail::node_label(scene_, current_));
+
         if (current_ == detail::kInvalid) {
-            frame_ = Frame{}; frame_.kind = FrameKind::Ended; return;
+            frame_ = Frame{}; frame_.kind = FrameKind::Ended;
+            if (prev == detail::kInvalid) {
+                DIALOG_LOG(Debug, "run_: -> Ended (entered with no node)");
+            } else {
+                const auto& p = scene_.nodes[prev];
+                // A Line without 'next' is a legitimate way to finish; anything
+                // else running off the graph is almost certainly a data bug.
+                if (p.type == NT::Line)
+                    DIALOG_LOG(Info, "run_: -> Ended after last Line "
+                                     << detail::node_label(scene_, prev)
+                                     << " (no 'next')");
+                else
+                    DIALOG_LOG(Warn, "run_: -> Ended because "
+                                     << detail::node_type_name(p.type) << " node "
+                                     << detail::node_label(scene_, prev) << " has no '"
+                                     << via << "' target (unset, or unresolved due to a "
+                                        "load error; load_errors=" << errors_.size() << ")");
+            }
+            return;
+        }
+        if (current_ >= scene_.nodes.size()) {
+            DIALOG_LOG(Error, "run_: node id " << current_ << " out of range ("
+                              << scene_.nodes.size() << " nodes) - scene not loaded?");
+            frame_ = Frame{}; frame_.kind = FrameKind::Ended;
+            return;
         }
         const auto& n = scene_.nodes[current_];
 
@@ -816,47 +1218,85 @@ inline void Runtime::run_() {
             frame_.text    = n.text;
             if (!n.speaker.empty()) {
                 auto it = scene_.characters.find(n.speaker);
+                if (it == scene_.characters.end())
+                    DIALOG_LOG(Warn, "run_: speaker '" << n.speaker << "' at "
+                                     << detail::node_label(scene_, current_)
+                                     << " is not in 'characters' - using the id as name");
                 frame_.speaker_name = (it != scene_.characters.end()) ? it->second : n.speaker;
             }
+            DIALOG_LOG(Debug, "run_: -> Line " << detail::node_label(scene_, current_)
+                              << " speaker='" << n.speaker << "' text='"
+                              << detail::clip(n.text) << "'");
             return;
         }
 
         if (n.type == NT::Choice) {
             frame_ = Frame{};
             visible_choices_.clear();
+            std::string hidden;
             for (uint32_t i = 0; i < n.choice_count; ++i) {
                 const auto& c = scene_.choices[n.choice_begin + i];
-                if (c.cond != detail::kNoExpr && !eval_expr_(c.cond)) continue;
+                if (c.cond != detail::kNoExpr && !eval_expr_(c.cond)) {
+                    hidden += " [" + detail::clip(c.text, 24) + "]";
+                    continue;
+                }
                 visible_choices_.push_back(n.choice_begin + i);
                 frame_.choices.push_back(c.text);
             }
             if (visible_choices_.empty()) {
                 frame_.kind = FrameKind::Error;
                 frame_.error = "no visible choices";
+                DIALOG_LOG(Error, "run_: -> Error 'no visible choices' at "
+                                  << detail::node_label(scene_, current_) << ": "
+                                  << n.choice_count << " choice(s) defined, "
+                                  << (n.choice_count ? "all hidden by conditions:"
+                                                     : "none defined (bad 'choices' array?)")
+                                  << hidden);
                 current_ = detail::kInvalid;
                 return;
             }
             frame_.kind = FrameKind::Choice;
+            DIALOG_LOG(Debug, "run_: -> Choice " << detail::node_label(scene_, current_)
+                              << " visible=" << visible_choices_.size() << "/"
+                              << n.choice_count
+                              << (hidden.empty() ? "" : " hidden:") << hidden);
             return;
         }
 
         if (n.type == NT::If) {
-            current_ = eval_expr_(n.cond) ? n.then_ : n.else_;
+            if (n.cond == detail::kNoExpr)
+                DIALOG_LOG(Error, "run_: If node " << detail::node_label(scene_, current_)
+                                  << " has NO compiled condition (load error)");
+            const bool c = eval_expr_(n.cond);
+            DIALOG_LOG(Debug, "run_: If " << detail::node_label(scene_, current_)
+                              << " cond=" << (c ? "true" : "false") << " -> "
+                              << detail::node_label(scene_, c ? n.then_ : n.else_));
+            prev = current_; via = c ? "then" : "else";
+            current_ = c ? n.then_ : n.else_;
             continue;
         }
 
         if (n.type == NT::Set) {
             apply_set_(n);
+            DIALOG_LOG(Debug, "run_: Set " << detail::node_label(scene_, current_)
+                              << " var='" << n.set_var << "' -> "
+                              << detail::node_label(scene_, n.next));
+            prev = current_; via = "next";
             current_ = n.next;
             continue;
         }
 
         if (n.type == NT::Jump) {
+            DIALOG_LOG(Debug, "run_: Jump " << detail::node_label(scene_, current_)
+                              << " -> " << detail::node_label(scene_, n.next));
+            prev = current_; via = "target";
             current_ = n.next;
             continue;
         }
 
         // NT::End
+        DIALOG_LOG(Info, "run_: -> Ended at End node "
+                         << detail::node_label(scene_, current_));
         current_ = detail::kInvalid;
         frame_ = Frame{}; frame_.kind = FrameKind::Ended;
         return;
@@ -882,12 +1322,12 @@ inline bool Runtime::load(const std::string& json,
                           std::vector<std::string>& warnings)
 {
     auto j = nlohmann::json::parse(json, nullptr, false);
-    if (j.is_discarded())      { warnings.push_back("save: invalid JSON"); return false; }
-    if (j.value("version", 0) != 1) { warnings.push_back("save: bad version"); return false; }
-    if (j.value("scene", "") != scene_.id) { warnings.push_back("save: scene mismatch"); return false; }
+    if (j.is_discarded())      { detail::warn(warnings, "save: invalid JSON"); return false; }
+    if (j.value("version", 0) != 1) { detail::warn(warnings, "save: bad version"); return false; }
+    if (j.value("scene", "") != scene_.id) { detail::warn(warnings, "save: scene mismatch"); return false; }
 
     const std::string stage_id = j.value("stage", "");
-    if (!scene_.stages.count(stage_id)) { warnings.push_back("save: stage missing"); return false; }
+    if (!scene_.stages.count(stage_id)) { detail::warn(warnings, "save: stage missing"); return false; }
     current_stage_ = stage_id;
 
     bools_ = scene_.bool_defaults;
@@ -896,11 +1336,11 @@ inline bool Runtime::load(const std::string& json,
     if (j.contains("bools") && j["bools"].is_object())
         for (auto it = j["bools"].begin(); it != j["bools"].end(); ++it) {
             if (!scene_.bool_defaults.count(it.key())) {
-                warnings.push_back("save: unknown bool var '" + it.key() + "'");
+                detail::warn(warnings, "save: unknown bool var '" + it.key() + "'");
                 continue;
             }
             if (!it.value().is_boolean()) {
-                warnings.push_back("save: bool var '" + it.key() + "' wrong type");
+                detail::warn(warnings, "save: bool var '" + it.key() + "' wrong type");
                 continue;
             }
             bools_[it.key()] = it.value().get<bool>();
@@ -908,11 +1348,11 @@ inline bool Runtime::load(const std::string& json,
     if (j.contains("ints") && j["ints"].is_object())
         for (auto it = j["ints"].begin(); it != j["ints"].end(); ++it) {
             if (!scene_.int_defaults.count(it.key())) {
-                warnings.push_back("save: unknown int var '" + it.key() + "'");
+                detail::warn(warnings, "save: unknown int var '" + it.key() + "'");
                 continue;
             }
             if (!it.value().is_number_integer()) {
-                warnings.push_back("save: int var '" + it.key() + "' wrong type");
+                detail::warn(warnings, "save: int var '" + it.key() + "' wrong type");
                 continue;
             }
             ints_[it.key()] = it.value().get<int64_t>();
@@ -939,20 +1379,24 @@ inline bool Runtime::load(const std::string& json,
                     auto git = sit->second.graph_entries.find(grp);
                     if (git != sit->second.graph_entries.end()) {
                         current_ = git->second;
-                        warnings.push_back("save: node missing, using graph start");
+                        detail::warn(warnings, "save: node missing, using graph start");
                     } else {
-                        warnings.push_back("save: graph missing, no active conversation");
+                        detail::warn(warnings, "save: graph missing, no active conversation");
                     }
                 } else {
-                    warnings.push_back("save: stage in path missing");
+                    detail::warn(warnings, "save: stage in path missing");
                 }
             } else {
-                warnings.push_back("save: malformed node path");
+                detail::warn(warnings, "save: malformed node path");
             }
         }
     }
 
+    DIALOG_LOG(Info, "load(): restored stage='" << current_stage_ << "' node="
+                     << detail::node_label(scene_, current_));
     if (current_ != detail::kInvalid) run_();
+    DIALOG_LOG(Info, "load(): resulting frame=" << detail::kind_name(frame_.kind)
+                     << " warnings=" << warnings.size());
     return true;
 }
 
