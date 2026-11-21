@@ -113,10 +113,14 @@ void SetupInputs() {
     Lil::Input::Vector2Action walk("walk");
     Lil::Input::RegisterVector2Action(walk);
     Lil::Input::Vector2Action look("look");
+    Lil::Input::BoolAction sprint("sprint");
+    Lil::Input::RegisterBoolAction(sprint);
     Lil::Input::RegisterVector2Action(look, "look");
     Lil::Input::BoolAction jump("jump");
     Lil::Input::RegisterBoolAction(jump);
   
+    Lil::Input::BoolAction switch_camera("switch_camera");
+    Lil::Input::RegisterBoolAction(switch_camera);
 
     Lil::Input::FloatAction drive("car_drive");
     Lil::Input::RegisterFloatAction(drive, "car");
@@ -130,7 +134,10 @@ void SetupInputs() {
 
     Lil::Input::BoolAction dialog_right("dialog_right");
     Lil::Input::RegisterBoolAction(dialog_right, "dialog");
-
+    Lil::Input::BoolAction dialog_up("dialog_up");
+    Lil::Input::RegisterBoolAction(dialog_up, "dialog");
+    Lil::Input::BoolAction dialog_down("dialog_down");
+    Lil::Input::RegisterBoolAction(dialog_down, "dialog");
 
     // Binding
     #if defined(PLATFORM_ANDROID) || defined(__ANDROID__)
@@ -164,32 +171,42 @@ void SetupInputs() {
     Vector2 left_third  = Vector2{third_l, third_h};
     Vector2 right_third = Vector2{third_r, third_h};
 
-    Font* buttons_font = Lil::Assets::GetFontData("JetBrainsMono-Medium.ttf");
+    Font* buttons_font = Lil::Assets::GetFontData("Font Awesome 7 Free-Solid-900.otf");
     if (!buttons_font) {
         TraceLog(LOG_ERROR, "buttons_font is null");
     }
 
     // move
-    walk.BindScreenJoystick(left_main, joystick_radius, knob_radius);
-    look.BindScreenRectangleDelta(Rectangle{0.5f, 0.0f, 0.5f, 1.0f}, 0.005f).Negate(Lil::Input::Axes::Y);
-    jump.BindScreenButton(right_main, button_radius, "Jump", *buttons_font);
+    walk.BindTouchJoystick(left_main, joystick_radius, knob_radius);
+    sprint.BindTouchButton(right_sec, button_radius, ICON_FA_PERSON_RUNNING, *buttons_font);
+    look.BindTouchAreaDelta(Rectangle{0.5f, 0.0f, 0.5f, 1.0f}, 0.005f).Negate(Lil::Input::Axes::Y);
+    jump.BindTouchButton(right_main, button_radius, ICON_FA_ARROW_UP, *buttons_font);
+
+    // camera
+    switch_camera.BindTouchButton(right_third, button_radius, ICON_FA_CAMERA, *buttons_font);
 
     // car
-    drive.BindScreenAxis(Vector2{0.85, 0.4}, axis_length, knob_radius, Lil::Input::ScreenAxis::Vertical, true).Deadzone(0.2, 1.0f);;
-    steer.BindScreenAxis(left_main, axis_length, knob_radius, Lil::Input::ScreenAxis::Horizontal, false).Deadzone(0.2, 1.0f);
-    car_break.BindScreenButton(right_sec, button_radius, "car_break", *buttons_font);
+    Vector2 drive_touch_pos = Vector2{0.85f, 0.85f};
+    drive.BindTouchButtonPair(drive_touch_pos+Vector2{-button_radius*0.5f, 0.0f}, ICON_FA_ARROW_DOWN, drive_touch_pos+Vector2{button_radius*0.5f, 0.0f}, ICON_FA_ARROW_UP, button_radius, *buttons_font);
+    steer.BindTouchAxis(left_main, axis_length, knob_radius, Lil::Input::ScreenAxis::Horizontal, false).Deadzone(0.2, 1.0f);
+    car_break.BindTouchButton(right_sec, button_radius, ICON_FA_STOP, *buttons_font);
     
-    interact.BindScreenButton(left_third, button_radius, "interact", *buttons_font);
+    interact.BindTouchButton(left_third, button_radius, ICON_FA_HAND, *buttons_font);
 
     // dialog
-    dialog_right.BindScreenButton(right_sec, button_radius, ">", *buttons_font);
+    dialog_right.BindTouchButton(right_sec, button_radius, ">", *buttons_font);
+    dialog_up.BindTouchButton(right_sec, button_radius, ">", *buttons_font);
 
     #else
     // move
     walk.BindKeys(KEY_W, KEY_S, KEY_A, KEY_D);
+    sprint.BindKey(KEY_LEFT_SHIFT);
     look.BindMouseDelta(0.005f);
     jump.BindKey(KEY_SPACE);
     
+    // camera
+    switch_camera.BindKey(KEY_C);
+
     // car
     drive.BindKeyPair(KEY_S, KEY_W);
     steer.BindKeyPair(KEY_A, KEY_D);

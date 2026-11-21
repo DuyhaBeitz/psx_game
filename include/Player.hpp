@@ -15,6 +15,7 @@ private:
     PlayerPerspective m_perspective = PlayerPerspective::FIRST_PERSON;
 
     Lil::Input::Vector2Action m_walk_action = "walk";
+    Lil::Input::BoolAction    m_sprint = "sprint";
     Lil::Input::Vector2Action m_look_action = "look";
     Lil::Input::BoolAction    m_jump_action = "jump";
 

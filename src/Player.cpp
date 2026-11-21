@@ -55,7 +55,7 @@ void Player::SimulationUpdate(float delta_time) {
     
     CameraUpdate();
 
-    bool sprinting = IsKeyDown(KEY_LEFT_SHIFT);
+    bool sprinting = m_sprint.IsDown();
     float sprint_coef = 1.5f;
     const float base_speed = 4.0f;
     const float speed = sprinting ? base_speed * sprint_coef : base_speed;
